@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 200% 200%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    background-color: aliceblue;
+    border-radius: 30px;
+    height: 80%;
+    width: 80%;
+    min-height: 500px;
+    min-width: 250px;
+    max-width: 400px;
+    display: grid;
+    grid-template-rows: 4fr 5fr;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* align-items: center; */
+    padding: 5px;
+}
+
+.grid-1 {
+    background-color: blueviolet;
+    margin: 5px;
+    border-radius: 25px 25px 0 0;
+    color: white;
+    align-items: center;
+}
+
+#input-el {
+    background-color: inherit;
+    border-style: none;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 20px 20px;
+    min-width: 150px;
+    text-align: center;
+    font-size: 3rem;
+    color: white;
+    outline: none;
+}
+
+button {
+    width: 150px;
+    height: 50px;
+    background-color: white;
+    border: white;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: medium;
+    color: blueviolet;
+}
+
+button:hover {
+    color: black;
+}
+
+h3 {
+    color: blueviolet;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.grid-2 {
+    text-align: center;
+    /* align-items: center; */
+    font-size: 1.5rem;
+}
+.text{
+  width:100%;
+}
+
+
+
+
+@media only screen and (max-width: 400px),
+(max-height: 650px) {
+    html {
+        font-size: 10px;
+    }
+}
+

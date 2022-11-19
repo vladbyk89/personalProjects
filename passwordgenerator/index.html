@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Password Generator</title>
+  </head>
+  <body>
+    <div class="generator-grid">
+      <div class="grid text-grid">
+        <h1 class="text">Generate a</h1>
+        <h2 class="text">random password</h2>
+        <h3 class="text">Never use an insecure password again</h3>
+      </div>
+
+      <div class="grid btn-grid">
+        <button id="gen-btn" onclick="generatePasswords()">
+          Generate password
+        </button>
+        <div class="checkbox">
+          <label for="use-num"
+            >Include Numbers <input id="use-num" type="checkbox"
+          /></label>
+          <label for="use-symb"
+            >Include Symbols <input id="use-symb" type="checkbox"
+          /></label>
+        </div>
+        <label class="char-num" for="input-id"
+          >How many characters should the password have?<input
+            type="number"
+            id="input-id"
+            placeholder="8 to 15"
+        /></label>
+      </div>
+      <div class="grid output-grid">
+        <div class="password-area">
+          <button class="password" id="option-1" onclick="copyToClipBoard1()">
+            123456789012345
+          </button>
+          <button class="password" id="option-2" onclick="copyToClipBoard2()">
+            abcdefghijklmpo
+          </button>
+        </div>
+        <div id="message">user message</div>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>

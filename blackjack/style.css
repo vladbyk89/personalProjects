@@ -1,0 +1,89 @@
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Verdana, 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
+:root {
+    --main-color: #256B31;
+    --title-color: #A85A05;
+    --message-color: #F5952C;
+    --cardShadow-color: #712CF5;
+    --btn-color: #14F539;
+}
+
+.wrapper {
+    height: 100vh;
+    width: 100%;
+    background-color: var(--main-color);
+    background-size: cover;
+    font-weight: bold;
+    color: white;
+    display: grid;
+    grid-template-rows: 1fr 2fr 2fr 1fr;
+}
+
+.grid {
+    font-family: 'Arial Narrow', Arial, sans-serif;
+}
+
+.title-grid {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1rem;
+    color: var(--title-color);
+}
+
+#user-message {
+    color: var(--message-color);
+    margin-top: 1rem;
+}
+
+.cards {
+    aspect-ratio: 3/5;
+    width: 4rem;
+    margin: 0 .5rem;
+}
+
+.score{
+    font-size: 1.5rem;
+}
+
+.game-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 2rem;
+}
+
+.btn-grid {
+    /* outline: 3px solid black; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+button {
+    background-color: var(--btn-color);
+    border: none;
+    width: 25%;
+    height: 3rem;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+
+button:hover {
+    color: var(--cardShadow-color);
+    cursor: pointer;
+}
