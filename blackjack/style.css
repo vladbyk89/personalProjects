@@ -49,7 +49,7 @@
     margin: 0 .5rem;
 }
 
-.score{
+.score {
     font-size: 1.5rem;
 }
 
@@ -77,8 +77,8 @@
 button {
     background-color: var(--btn-color);
     border: none;
-    width: 25%;
-    height: 3rem;
+    width: 20%;
+    height: 2rem;
     font-weight: bolder;
     font-size: 1rem;
 }
