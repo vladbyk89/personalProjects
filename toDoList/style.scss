@@ -1,0 +1,57 @@
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Verdana, 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
+body{
+    border: 3px solid black;
+    height: 100vh;
+    width: 100vw;
+    background-color: cadetblue;
+}
+
+.wrapper{
+    // border: 3px solid black;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1{
+        color: darkmagenta;
+        font-size: 3rem;
+        margin-top: 2rem;
+    }
+    p{
+        margin-top: 1rem;
+    }
+    input{
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 800px;
+        height: 2rem;
+    }
+    button{
+        margin-top: 5px;
+    }
+}
+
+ol{
+    margin: 0 auto;
+    width: 50%;
+    li{
+        // border: 1px solid black;
+        margin-top: 1rem;
+        button{
+            position: absolute;
+            right: 60%;
+        }
+    }
+    .delete{
+        display: none;
+    }
+}
