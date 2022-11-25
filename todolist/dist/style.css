@@ -7,16 +7,20 @@
   font-family: Verdana, "Segoe UI", Tahoma, Geneva, sans-serif;
 }
 
+:root {
+  --background-color: #ABA23C;
+  --title-color: #4D2BAB;
+  --listitems-color: #936FF7;
+}
+
 body {
-  border: 3px solid black;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
 }
 
 .wrapper {
-  border: 3px solid black;
-  background-color: cadetblue;
+  background-color: var(--background-color);
   margin: 0 auto;
   width: 100%;
   max-width: 1000px;
@@ -27,8 +31,8 @@ body {
   align-items: center;
 }
 .wrapper h1 {
-  color: darkmagenta;
-  font-size: 3rem;
+  color: var(--title-color);
+  font-size: 5rem;
   margin-top: 2rem;
 }
 .wrapper p {
@@ -43,22 +47,23 @@ body {
 .wrapper button {
   margin-top: 5px;
 }
-
-ul {
+.wrapper ul {
   margin: 0 auto;
   width: 80%;
 }
-ul li::before {
+.wrapper ul li::before {
   content: "->";
+  color: var(--listitems-color);
 }
-ul li {
+.wrapper ul li {
+  color: var(--title-color);
   font-size: 1.5em;
   margin-top: 1rem;
   padding: 0.5em;
   display: flex;
   gap: 10px;
 }
-ul li button {
+.wrapper ul li button {
   padding: 0.5em;
   margin-left: auto;
 }
