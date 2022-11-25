@@ -3,3 +3,12 @@
 Repo with my first applications 
 
 https://vladbyk89.github.io/todolist/index.html
+
+https://vladbyk89.github.io/landingpageriri/index.html
+
+https://vladbyk89.github.io/passwordgenerator/index.html
+
+https://vladbyk89.github.io/blackjack/index.html
+
+https://vladbyk89.github.io/unitconverter/index.html
+
