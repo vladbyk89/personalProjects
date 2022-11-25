@@ -44,21 +44,21 @@ body {
   margin-top: 5px;
 }
 
-ol {
+ul {
   margin: 0 auto;
   width: 80%;
 }
-ol li::before {
+ul li::before {
   content: "->";
 }
-ol li {
+ul li {
   font-size: 1.5em;
   margin-top: 1rem;
   padding: 0.5em;
   display: flex;
   gap: 10px;
 }
-ol li button {
+ul li button {
   padding: 0.5em;
   margin-left: auto;
 }
