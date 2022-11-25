@@ -42,8 +42,8 @@ function renderTask(task){
     liEl.textContent = task
     let btn = document.createElement('button')
     liEl.setAttribute('id', myTasks.length)
-    btn.addEventListener("click", () => liEl.classList.add("delete"))
-    btn.textContent = 'X'
+    btn.addEventListener("click", () => liEl.remove())
+    btn.textContent = 'Remove'
     liEl.appendChild(btn)
     ulEl.append(liEl)
     console.log(myTasks)

@@ -40,9 +40,9 @@ function renderTask(task) {
   var btn = document.createElement('button');
   liEl.setAttribute('id', myTasks.length);
   btn.addEventListener("click", function () {
-    return liEl.classList.add("delete");
+    return liEl.remove();
   });
-  btn.textContent = 'X';
+  btn.textContent = 'Remove';
   liEl.appendChild(btn);
   ulEl.append(liEl);
   console.log(myTasks);
