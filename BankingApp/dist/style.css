@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.signUp input {
+  padding: 0.5em;
+  font-size: 1.3rem;
+}
+.signUp input:placeholder {
+  padding: 0.5em;
+}
+
+button {
+  padding: 1em;
+}
