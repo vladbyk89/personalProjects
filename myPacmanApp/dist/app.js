@@ -54,7 +54,7 @@ function creatMaze() {
         }
     }
 }
-creatMaze(layout);
+creatMaze();
 var pacmanIndex = 283;
 squares[pacmanIndex].classList.add("pacman");
 squares[pacmanIndex].append(eye);

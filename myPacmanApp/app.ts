@@ -36,7 +36,7 @@ const layout: number[] = [
 // 2 = cherry
 // 3 = lair
 
-let squares: Array<Element> = [];
+let squares= [] as Array<HTMLElement>;
 
 function creatMaze() {
   for (let i = 0; i < layout.length; i++) {
@@ -61,7 +61,7 @@ function creatMaze() {
   }
 }
 
-creatMaze(layout);
+creatMaze();
 
 let pacmanIndex = 283;
 squares[pacmanIndex].classList.add("pacman");
@@ -146,6 +146,12 @@ function unScareGhosts() {
 }
 
 class Ghost {
+  className: string;
+  startIndex: number;
+  speed: number;
+  currentIndex: number;
+  isScared: boolean;
+  timerId: number;
   constructor(className, startIndex, speed) {
     this.className = className;
     this.startIndex = startIndex;
