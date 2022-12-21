@@ -1,0 +1,81 @@
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  font-family: Verdana, "Segoe UI", Tahoma, Geneva, sans-serif;
+}
+
+img, embed, object, video {
+  max-width: 100%;
+}
+
+:root {
+  --div-size: calc(90vh / 21) ;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.maze {
+  border: 5px solid black;
+  width: 90vh;
+  height: 90vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+.maze div {
+  width: var(--div-size);
+  height: var(--div-size);
+  background-color: white;
+}
+.maze .pacman {
+  border-radius: 50%;
+  background-color: darkorange;
+}
+.maze .wall {
+  background-color: black;
+}
+.maze .point {
+  border-radius: 50%;
+  background-color: green;
+  border: calc(var(--div-size) / 3) solid white;
+  box-sizing: border-box;
+}
+.maze .cherry {
+  border-radius: 50%;
+  background-color: red;
+  border: calc(var(--div-size) / 3) solid white;
+  box-sizing: border-box;
+}
+.maze .lair {
+  background-color: gray;
+}
+.maze .blinky {
+  background-color: purple;
+  border: 0px;
+  border-radius: 0;
+}
+.maze .pinky {
+  background-color: pink;
+  border: 0px;
+  border-radius: 0;
+}
+.maze .inky {
+  background-color: blue;
+  border: 0px;
+  border-radius: 0;
+}
+.maze .clyde {
+  background-color: darkgreen;
+  border: 0px;
+  border-radius: 0;
+}
+.maze .scaredGhost {
+  background-color: aquamarine;
+}
