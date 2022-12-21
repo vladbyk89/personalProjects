@@ -70,11 +70,21 @@ function movePaman(e) {
                 pacmanIndex -= 1;
                 squares[pacmanIndex].style.transform = "scaleX(-1)";
             }
+            else if (pacmanIndex == 210) {
+                squares[pacmanIndex].removeAttribute("style");
+                pacmanIndex = 230;
+                squares[pacmanIndex].style.transform = "scaleX(1)";
+            }
             break;
         case "ArrowRight":
             if (!squares[pacmanIndex + 1].classList.contains("wall")) {
                 squares[pacmanIndex].removeAttribute("style");
                 pacmanIndex += 1;
+                squares[pacmanIndex].style.transform = "scaleX(1)";
+            }
+            else if (pacmanIndex == 230) {
+                squares[pacmanIndex].removeAttribute("style");
+                pacmanIndex = 210;
                 squares[pacmanIndex].style.transform = "scaleX(1)";
             }
             break;
@@ -170,7 +180,6 @@ function moveGhost(ghost) {
         //else => find another direction
         else {
             direction = directions[Math.floor(Math.random() * directions.length)];
-            test();
             checkForGamneOver();
         }
         //Change ghost color if scared
@@ -231,3 +240,4 @@ function checkForScaredGhost() {
         }
     });
 }
+// squares[210].classList.add('pacman')
