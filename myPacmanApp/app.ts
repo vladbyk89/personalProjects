@@ -10,8 +10,8 @@ let score = 0;
 let palletsLeft = 144;
 const MAX_SCORE = 144;
 let width = 21;
-const winMessage = document.querySelector('.winMessage') as HTMLHeadElement;
-const loseMessage = document.querySelector('.loseMessage') as HTMLHeadElement;
+const winMessage = document.querySelector(".winMessage") as HTMLHeadElement;
+const loseMessage = document.querySelector(".loseMessage") as HTMLHeadElement;
 
 const layout: number[] = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
@@ -38,7 +38,7 @@ const layout: number[] = [
 // 2 = cherry
 // 3 = lair
 
-let squares= [] as Array<HTMLElement>;
+let squares = [] as Array<HTMLElement>;
 
 function creatMaze() {
   for (let i = 0; i < layout.length; i++) {
@@ -105,14 +105,14 @@ function movePaman(e) {
       ) {
         squares[pacmanIndex].removeAttribute("style");
         pacmanIndex += width;
-        squares[pacmanIndex].style.transform = 'rotate(90deg)'
+        squares[pacmanIndex].style.transform = "rotate(90deg)";
       }
       break;
   }
 
   squares[pacmanIndex].classList.add("pacman");
-  squares[pacmanIndex].append(eye)
-  squares[pacmanIndex].append(mouth)
+  squares[pacmanIndex].append(eye);
+  squares[pacmanIndex].append(mouth);
 
   checkForPoint();
   checkForCherry();
@@ -121,7 +121,7 @@ function movePaman(e) {
   // checkForScaredGhost();
 }
 
-const interval = setInterval(checkForScaredGhost, 100);
+const interval = setInterval(checkForScaredGhost, 1);
 
 document.addEventListener("keydown", movePaman);
 
@@ -189,7 +189,7 @@ function moveGhost(ghost) {
   const directions = [-1, +1, -width, width];
   let direction = directions[Math.floor(Math.random() * directions.length)];
 
-  ghost.timerId = setInterval(function () {
+  ghost.timerId = setInterval(function test() {
     // if the square in the direction the ghost is going not containing another ghost or a wall => then he can move here
     if (
       !squares[ghost.currentIndex + direction].classList.contains("wall") &&
@@ -209,6 +209,7 @@ function moveGhost(ghost) {
     //else => find another direction
     else {
       direction = directions[Math.floor(Math.random() * directions.length)];
+      test();
       checkForGamneOver();
     }
 
@@ -247,30 +248,39 @@ function checkForGamneOver() {
 
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     document.removeEventListener("keydown", movePaman);
-    loseMessage.style.opacity = '1';
+    loseMessage.style.opacity = "1";
   }
 }
-
-
 
 function checkForWin() {
   if (palletsLeft == 0) {
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     document.removeEventListener("keydown", movePaman);
-    setTimeout(() => {winMessage.style.opacity = '1'}, 500)
+    setTimeout(() => {
+      winMessage.style.opacity = "1";
+    }, 500);
   }
 }
 
-function checkForScaredGhost(){
-  ghosts.forEach(ghost => {
-    if (squares[pacmanIndex].classList.contains(ghost.className) && ghost.isScared){
-      squares[pacmanIndex].classList.remove(ghost.className, 'ghost', 'scaredGhost');
-      squares[pacmanIndex].innerHTML = '';
+function checkForScaredGhost() {
+  ghosts.forEach((ghost) => {
+    if (
+      squares[pacmanIndex].classList.contains(ghost.className) &&
+      ghost.isScared
+    ) {
+      squares[pacmanIndex].classList.remove(
+        ghost.className,
+        "ghost",
+        "scaredGhost"
+      );
+      squares[pacmanIndex].innerHTML = "";
+      squares[pacmanIndex].append(eye);
+      squares[pacmanIndex].append(mouth);
       ghost.currentIndex = ghost.startIndex;
       squares[ghost.currentIndex].classList.add("ghost", ghost.className);
-      console.log('Working')
+      console.log("Working");
       score += 100;
       scoreEl.textContent = score.toString();
     }
-  })
+  });
 }
