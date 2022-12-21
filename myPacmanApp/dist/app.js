@@ -9,6 +9,8 @@ var score = 0;
 var palletsLeft = 144;
 var MAX_SCORE = 144;
 var width = 21;
+var winMessage = document.querySelector('.winMessage');
+var loseMessage = document.querySelector('.loseMessage');
 var layout = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 1,
@@ -99,7 +101,9 @@ function movePaman(e) {
     checkForCherry();
     checkForGamneOver();
     checkForWin();
+    // checkForScaredGhost();
 }
+var interval = setInterval(checkForScaredGhost, 100);
 document.addEventListener("keydown", movePaman);
 function checkForPoint() {
     if (squares[pacmanIndex].classList.contains("point")) {
@@ -173,32 +177,51 @@ function moveGhost(ghost) {
             squares[ghost.currentIndex].classList.add("scaredGhost");
         }
         // if pacman gets to ghost when it is scared he can eat it
-        if (ghost.isScared &&
-            squares[ghost.currentIndex].classList.contains("pacman")) {
-            squares[ghost.currentIndex].classList.remove("ghost", ghost.className, "scaredGhost");
-            squares[ghost.currentIndex].replaceChildren();
-            score += 100;
-            ghost.currentIndex = ghost.startIndex;
-            squares[ghost.currentIndex].classList.add("ghost", ghost.className);
-        }
+        // if (
+        //   ghost.isScared &&
+        //   squares[ghost.currentIndex].classList.contains("pacman")
+        // ) {
+        //   squares[ghost.currentIndex].classList.remove(
+        //     "ghost",
+        //     ghost.className,
+        //     "scaredGhost"
+        //   );
+        //   squares[ghost.currentIndex].replaceChildren();
+        //   score += 100;
+        //   ghost.currentIndex = ghost.startIndex;
+        //   squares[ghost.currentIndex].classList.add("ghost", ghost.className);
+        // }
     }, ghost.speed);
 }
 function checkForGamneOver() {
     if (squares[pacmanIndex].classList.contains("ghost") &&
         !squares[pacmanIndex].classList.contains("scaredGhost")) {
-        squares[pacmanIndex].classList.remove("pacman");
-        squares[pacmanIndex].removeChild(eye);
-        squares[pacmanIndex].removeChild(mouth);
-        squares[pacmanIndex].removeAttribute("style");
+        // squares[pacmanIndex].classList.remove("pacman");
+        // squares[pacmanIndex].removeChild(eye);
+        // squares[pacmanIndex].removeChild(mouth);
+        // squares[pacmanIndex].removeAttribute("style");
         ghosts.forEach(function (ghost) { return clearInterval(ghost.timerId); });
         document.removeEventListener("keydown", movePaman);
-        alert("Game Over");
+        loseMessage.style.opacity = '1';
     }
 }
 function checkForWin() {
     if (palletsLeft == 0) {
         ghosts.forEach(function (ghost) { return clearInterval(ghost.timerId); });
         document.removeEventListener("keydown", movePaman);
-        setTimeout(function () { alert("You Win!"); }, 500);
+        setTimeout(function () { winMessage.style.opacity = '1'; }, 500);
     }
+}
+function checkForScaredGhost() {
+    ghosts.forEach(function (ghost) {
+        if (squares[pacmanIndex].classList.contains(ghost.className) && ghost.isScared) {
+            squares[pacmanIndex].classList.remove(ghost.className, 'ghost', 'scaredGhost');
+            squares[pacmanIndex].innerHTML = '';
+            ghost.currentIndex = ghost.startIndex;
+            squares[ghost.currentIndex].classList.add("ghost", ghost.className);
+            console.log('Working');
+            score += 100;
+            scoreEl.textContent = score.toString();
+        }
+    });
 }

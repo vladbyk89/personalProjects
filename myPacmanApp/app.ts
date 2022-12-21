@@ -10,6 +10,8 @@ let score = 0;
 let palletsLeft = 144;
 const MAX_SCORE = 144;
 let width = 21;
+const winMessage = document.querySelector('.winMessage') as HTMLHeadElement;
+const loseMessage = document.querySelector('.loseMessage') as HTMLHeadElement;
 
 const layout: number[] = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
@@ -116,7 +118,10 @@ function movePaman(e) {
   checkForCherry();
   checkForGamneOver();
   checkForWin();
+  // checkForScaredGhost();
 }
+
+const interval = setInterval(checkForScaredGhost, 100);
 
 document.addEventListener("keydown", movePaman);
 
@@ -213,20 +218,20 @@ function moveGhost(ghost) {
     }
 
     // if pacman gets to ghost when it is scared he can eat it
-    if (
-      ghost.isScared &&
-      squares[ghost.currentIndex].classList.contains("pacman")
-    ) {
-      squares[ghost.currentIndex].classList.remove(
-        "ghost",
-        ghost.className,
-        "scaredGhost"
-      );
-      squares[ghost.currentIndex].replaceChildren();
-      score += 100;
-      ghost.currentIndex = ghost.startIndex;
-      squares[ghost.currentIndex].classList.add("ghost", ghost.className);
-    }
+    // if (
+    //   ghost.isScared &&
+    //   squares[ghost.currentIndex].classList.contains("pacman")
+    // ) {
+    //   squares[ghost.currentIndex].classList.remove(
+    //     "ghost",
+    //     ghost.className,
+    //     "scaredGhost"
+    //   );
+    //   squares[ghost.currentIndex].replaceChildren();
+    //   score += 100;
+    //   ghost.currentIndex = ghost.startIndex;
+    //   squares[ghost.currentIndex].classList.add("ghost", ghost.className);
+    // }
   }, ghost.speed);
 }
 
@@ -235,21 +240,37 @@ function checkForGamneOver() {
     squares[pacmanIndex].classList.contains("ghost") &&
     !squares[pacmanIndex].classList.contains("scaredGhost")
   ) {
-    squares[pacmanIndex].classList.remove("pacman");
-    squares[pacmanIndex].removeChild(eye);
-    squares[pacmanIndex].removeChild(mouth);
-    squares[pacmanIndex].removeAttribute("style");
+    // squares[pacmanIndex].classList.remove("pacman");
+    // squares[pacmanIndex].removeChild(eye);
+    // squares[pacmanIndex].removeChild(mouth);
+    // squares[pacmanIndex].removeAttribute("style");
 
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     document.removeEventListener("keydown", movePaman);
-    alert("Game Over");
+    loseMessage.style.opacity = '1';
   }
 }
+
+
 
 function checkForWin() {
   if (palletsLeft == 0) {
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     document.removeEventListener("keydown", movePaman);
-    setTimeout(() => {alert("You Win!")}, 500)
+    setTimeout(() => {winMessage.style.opacity = '1'}, 500)
   }
+}
+
+function checkForScaredGhost(){
+  ghosts.forEach(ghost => {
+    if (squares[pacmanIndex].classList.contains(ghost.className) && ghost.isScared){
+      squares[pacmanIndex].classList.remove(ghost.className, 'ghost', 'scaredGhost');
+      squares[pacmanIndex].innerHTML = '';
+      ghost.currentIndex = ghost.startIndex;
+      squares[ghost.currentIndex].classList.add("ghost", ghost.className);
+      console.log('Working')
+      score += 100;
+      scoreEl.textContent = score.toString();
+    }
+  })
 }
