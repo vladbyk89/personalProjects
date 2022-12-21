@@ -32,6 +32,30 @@ h1{
     height: 90vh;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    h1{
+        position: absolute;
+        top: 15%;
+        left: 15%;
+        font-size: 4rem;
+        z-index: 1;
+        width: 70%;
+        height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .5s;
+    }
+    .winMessage{
+        color: rgb(134, 26, 134);
+        background-color: rgb(35, 106, 70);
+        opacity: 0;
+    }
+    .loseMessage{
+        color: orange;
+        background-color: rgb(141, 24, 24);
+        opacity: 0;
+    }
     div{
         width: var(--div-size);
         height: var(--div-size);

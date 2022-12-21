@@ -30,6 +30,30 @@ h1 {
   height: 90vh;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+}
+.maze h1 {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  font-size: 4rem;
+  z-index: 1;
+  width: 70%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+.maze .winMessage {
+  color: #861a86;
+  background-color: #236a46;
+  opacity: 0;
+}
+.maze .loseMessage {
+  color: orange;
+  background-color: #8d1818;
+  opacity: 0;
 }
 .maze div {
   width: var(--div-size);
