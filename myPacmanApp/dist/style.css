@@ -32,7 +32,12 @@ body {
 .maze div {
   width: var(--div-size);
   height: var(--div-size);
-  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.maze div svg {
+  width: calc(var(--div-size) - 1.5vh);
 }
 .maze .pacman {
   border-radius: 50%;
@@ -53,29 +58,38 @@ body {
   border: calc(var(--div-size) / 3) solid white;
   box-sizing: border-box;
 }
-.maze .lair {
-  background-color: gray;
-}
 .maze .blinky {
-  background-color: purple;
   border: 0px;
   border-radius: 0;
+  background-color: white;
+}
+.maze .blinky svg {
+  fill: purple;
 }
 .maze .pinky {
-  background-color: pink;
   border: 0px;
   border-radius: 0;
+  background-color: white;
+}
+.maze .pinky svg {
+  fill: pink;
 }
 .maze .inky {
-  background-color: blue;
   border: 0px;
   border-radius: 0;
+  background-color: white;
+}
+.maze .inky svg {
+  fill: blue;
 }
 .maze .clyde {
-  background-color: darkgreen;
   border: 0px;
   border-radius: 0;
+  background-color: white;
 }
-.maze .scaredGhost {
-  background-color: aquamarine;
+.maze .clyde svg {
+  fill: darkgreen;
+}
+.maze .scaredGhost svg {
+  fill: aquamarine;
 }

@@ -32,7 +32,12 @@ body{
     div{
         width: var(--div-size);
         height: var(--div-size);
-        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg{
+            width: calc(var(--div-size) - 1.5vh);
+        }
     }
     .pacman{
         border-radius: 50%;
@@ -57,31 +62,42 @@ body{
         border: calc(var(--div-size) / 3) solid white;
         box-sizing: border-box;
     }
-    .lair{
-        background-color: gray;
-    }
     .blinky{
-        background-color: purple;
         border: 0px;
         border-radius: 0;
+        background-color: white;
+        svg{
+            fill: purple;
+        }
     }
     .pinky{
-        background-color: pink;
         border: 0px;
         border-radius: 0;
+        background-color: white;
+        svg{
+            fill: pink;
+        }
     }
     .inky{
-        background-color: blue;
         border: 0px;
         border-radius: 0;
+        background-color: white;
+        svg{
+            fill: blue;
+        }
     }
     .clyde{
-        background-color: darkgreen;
         border: 0px;
         border-radius: 0;
+        background-color: white;
+        svg{
+            fill: darkgreen;
+        }
     }
     .scaredGhost{
-        background-color: aquamarine;
+        svg{
+            fill: aquamarine;
+        }
     }
 }
 
