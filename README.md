@@ -12,3 +12,4 @@ https://vladbyk89.github.io/blackjack/index.html
 
 https://vladbyk89.github.io/unitconverter/index.html
 
+https://vladbyk89.github.io/myPacmanApp/index
