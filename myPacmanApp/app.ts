@@ -70,35 +70,36 @@ squares[pacmanIndex].classList.add("pacman");
 squares[pacmanIndex].append(eye);
 squares[pacmanIndex].append(mouth);
 
-function movePaman(e) {
-  squares[pacmanIndex].classList.remove("pacman");
+let glide = setInterval(movePacman, 200);
 
-  switch (e.key) {
-    case "ArrowLeft":
+function movePacman(direction: string) {
+  squares[pacmanIndex].classList.remove("pacman");
+  switch (direction) {
+    case "left":
       if (!squares[pacmanIndex - 1].classList.contains("wall")) {
         squares[pacmanIndex].removeAttribute("style"); //removing the style attribute from square that pacman leaves
         pacmanIndex -= 1;
         squares[pacmanIndex].style.transform = "scaleX(-1)";
-      }else if (pacmanIndex == 210){
+      } else if (pacmanIndex == 210) {
         squares[pacmanIndex].removeAttribute("style");
         pacmanIndex = 230;
         squares[pacmanIndex].style.transform = "scaleX(1)";
       }
       break;
 
-    case "ArrowRight":
+    case "right":
       if (!squares[pacmanIndex + 1].classList.contains("wall")) {
         squares[pacmanIndex].removeAttribute("style");
         pacmanIndex += 1;
         squares[pacmanIndex].style.transform = "scaleX(1)";
-      }else if (pacmanIndex == 230){
+      } else if (pacmanIndex == 230) {
         squares[pacmanIndex].removeAttribute("style");
         pacmanIndex = 210;
         squares[pacmanIndex].style.transform = "scaleX(1)";
       }
       break;
 
-    case "ArrowUp":
+    case "up":
       if (!squares[pacmanIndex - width].classList.contains("wall")) {
         squares[pacmanIndex].removeAttribute("style");
         pacmanIndex -= width;
@@ -106,7 +107,7 @@ function movePaman(e) {
       }
       break;
 
-    case "ArrowDown":
+    case "down":
       if (
         !squares[pacmanIndex + width].classList.contains("wall") &&
         !squares[pacmanIndex + width].classList.contains("lair")
@@ -130,8 +131,34 @@ function movePaman(e) {
 }
 
 const interval = setInterval(checkForScaredGhost, 1);
+document.addEventListener("keydown", (e) => {
+  if (e.repeat) return;
 
-document.addEventListener("keydown", movePaman);
+  switch (e.key) {
+    case "ArrowLeft":
+      clearInterval(glide);
+      movePacman("left");
+      glide = setInterval(movePacman, 200, 'left');
+      break;
+
+    case "ArrowRight":
+      clearInterval(glide);
+      movePacman("right");
+      glide = setInterval(movePacman, 200, 'right');
+      break;
+
+    case "ArrowUp":
+      clearInterval(glide);
+      movePacman("up");
+      glide = setInterval(movePacman, 200, 'up');
+      break;
+    case "ArrowDown":
+      clearInterval(glide);
+      movePacman("down");
+      glide = setInterval(movePacman, 200, 'down');
+      break;
+  }
+});
 
 function checkForPoint() {
   if (squares[pacmanIndex].classList.contains("point")) {
@@ -179,7 +206,7 @@ let ghosts = [
   new Ghost("blinky", 239, 250),
   new Ghost("pinky", 197, 400),
   new Ghost("inky", 201, 300),
-  new Ghost("clyde", 243, 500),
+  new Ghost("clyde", 243, 200),
 ];
 
 // draw ghosts to grid
@@ -254,7 +281,7 @@ function checkForGamneOver() {
     // squares[pacmanIndex].removeAttribute("style");
 
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
-    document.removeEventListener("keydown", movePaman);
+    document.removeEventListener("keydown", movePacman);
     loseMessage.style.opacity = "1";
   }
 }
@@ -262,10 +289,10 @@ function checkForGamneOver() {
 function checkForWin() {
   if (palletsLeft == 0) {
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
-    document.removeEventListener("keydown", movePaman);
+    document.removeEventListener("keydown", movePacman);
     setTimeout(() => {
       winMessage.style.opacity = "1";
-    }, 500);
+    }, 200);
   }
 }
 
@@ -291,6 +318,5 @@ function checkForScaredGhost() {
     }
   });
 }
-
 
 // squares[210].classList.add('pacman')

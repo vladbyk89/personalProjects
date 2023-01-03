@@ -61,10 +61,11 @@ var pacmanIndex = 283;
 squares[pacmanIndex].classList.add("pacman");
 squares[pacmanIndex].append(eye);
 squares[pacmanIndex].append(mouth);
-function movePaman(e) {
+var glide = setInterval(movePacman, 200);
+function movePacman(direction) {
     squares[pacmanIndex].classList.remove("pacman");
-    switch (e.key) {
-        case "ArrowLeft":
+    switch (direction) {
+        case "left":
             if (!squares[pacmanIndex - 1].classList.contains("wall")) {
                 squares[pacmanIndex].removeAttribute("style"); //removing the style attribute from square that pacman leaves
                 pacmanIndex -= 1;
@@ -76,7 +77,7 @@ function movePaman(e) {
                 squares[pacmanIndex].style.transform = "scaleX(1)";
             }
             break;
-        case "ArrowRight":
+        case "right":
             if (!squares[pacmanIndex + 1].classList.contains("wall")) {
                 squares[pacmanIndex].removeAttribute("style");
                 pacmanIndex += 1;
@@ -88,14 +89,14 @@ function movePaman(e) {
                 squares[pacmanIndex].style.transform = "scaleX(1)";
             }
             break;
-        case "ArrowUp":
+        case "up":
             if (!squares[pacmanIndex - width].classList.contains("wall")) {
                 squares[pacmanIndex].removeAttribute("style");
                 pacmanIndex -= width;
                 squares[pacmanIndex].style.transform = "rotate(-90deg)";
             }
             break;
-        case "ArrowDown":
+        case "down":
             if (!squares[pacmanIndex + width].classList.contains("wall") &&
                 !squares[pacmanIndex + width].classList.contains("lair")) {
                 squares[pacmanIndex].removeAttribute("style");
@@ -114,7 +115,32 @@ function movePaman(e) {
     // checkForScaredGhost();
 }
 var interval = setInterval(checkForScaredGhost, 1);
-document.addEventListener("keydown", movePaman);
+document.addEventListener("keydown", function (e) {
+    if (e.repeat)
+        return;
+    switch (e.key) {
+        case "ArrowLeft":
+            clearInterval(glide);
+            movePacman("left");
+            glide = setInterval(movePacman, 200, 'left');
+            break;
+        case "ArrowRight":
+            clearInterval(glide);
+            movePacman("right");
+            glide = setInterval(movePacman, 200, 'right');
+            break;
+        case "ArrowUp":
+            clearInterval(glide);
+            movePacman("up");
+            glide = setInterval(movePacman, 200, 'up');
+            break;
+        case "ArrowDown":
+            clearInterval(glide);
+            movePacman("down");
+            glide = setInterval(movePacman, 200, 'down');
+            break;
+    }
+});
 function checkForPoint() {
     if (squares[pacmanIndex].classList.contains("point")) {
         score++;
@@ -152,7 +178,7 @@ var ghosts = [
     new Ghost("blinky", 239, 250),
     new Ghost("pinky", 197, 400),
     new Ghost("inky", 201, 300),
-    new Ghost("clyde", 243, 500),
+    new Ghost("clyde", 243, 200),
 ];
 // draw ghosts to grid
 ghosts.forEach(function (ghost) {
@@ -211,17 +237,17 @@ function checkForGamneOver() {
         // squares[pacmanIndex].removeChild(mouth);
         // squares[pacmanIndex].removeAttribute("style");
         ghosts.forEach(function (ghost) { return clearInterval(ghost.timerId); });
-        document.removeEventListener("keydown", movePaman);
+        document.removeEventListener("keydown", movePacman);
         loseMessage.style.opacity = "1";
     }
 }
 function checkForWin() {
     if (palletsLeft == 0) {
         ghosts.forEach(function (ghost) { return clearInterval(ghost.timerId); });
-        document.removeEventListener("keydown", movePaman);
+        document.removeEventListener("keydown", movePacman);
         setTimeout(function () {
             winMessage.style.opacity = "1";
-        }, 500);
+        }, 200);
     }
 }
 function checkForScaredGhost() {
