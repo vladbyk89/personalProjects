@@ -67,9 +67,11 @@ function movePacman(direction) {
     switch (direction) {
         case "left":
             if (!squares[pacmanIndex - 1].classList.contains("wall")) {
+                clearInterval(glide);
                 squares[pacmanIndex].removeAttribute("style"); //removing the style attribute from square that pacman leaves
                 pacmanIndex -= 1;
                 squares[pacmanIndex].style.transform = "scaleX(-1)";
+                glide = setInterval(movePacman, 200, 'left');
             }
             else if (pacmanIndex == 210) {
                 squares[pacmanIndex].removeAttribute("style");
@@ -79,9 +81,11 @@ function movePacman(direction) {
             break;
         case "right":
             if (!squares[pacmanIndex + 1].classList.contains("wall")) {
+                clearInterval(glide);
                 squares[pacmanIndex].removeAttribute("style");
                 pacmanIndex += 1;
                 squares[pacmanIndex].style.transform = "scaleX(1)";
+                glide = setInterval(movePacman, 200, 'right');
             }
             else if (pacmanIndex == 230) {
                 squares[pacmanIndex].removeAttribute("style");
@@ -91,17 +95,21 @@ function movePacman(direction) {
             break;
         case "up":
             if (!squares[pacmanIndex - width].classList.contains("wall")) {
+                clearInterval(glide);
                 squares[pacmanIndex].removeAttribute("style");
                 pacmanIndex -= width;
                 squares[pacmanIndex].style.transform = "rotate(-90deg)";
+                glide = setInterval(movePacman, 200, 'up');
             }
             break;
         case "down":
             if (!squares[pacmanIndex + width].classList.contains("wall") &&
                 !squares[pacmanIndex + width].classList.contains("lair")) {
+                clearInterval(glide);
                 squares[pacmanIndex].removeAttribute("style");
                 pacmanIndex += width;
                 squares[pacmanIndex].style.transform = "rotate(90deg)";
+                glide = setInterval(movePacman, 200, 'down');
             }
             break;
     }
@@ -120,24 +128,16 @@ document.addEventListener("keydown", function (e) {
         return;
     switch (e.key) {
         case "ArrowLeft":
-            clearInterval(glide);
             movePacman("left");
-            glide = setInterval(movePacman, 200, 'left');
             break;
         case "ArrowRight":
-            clearInterval(glide);
             movePacman("right");
-            glide = setInterval(movePacman, 200, 'right');
             break;
         case "ArrowUp":
-            clearInterval(glide);
             movePacman("up");
-            glide = setInterval(movePacman, 200, 'up');
             break;
         case "ArrowDown":
-            clearInterval(glide);
             movePacman("down");
-            glide = setInterval(movePacman, 200, 'down');
             break;
     }
 });
@@ -237,14 +237,14 @@ function checkForGamneOver() {
         // squares[pacmanIndex].removeChild(mouth);
         // squares[pacmanIndex].removeAttribute("style");
         ghosts.forEach(function (ghost) { return clearInterval(ghost.timerId); });
-        document.removeEventListener("keydown", movePacman);
         loseMessage.style.opacity = "1";
+        clearInterval(glide);
     }
 }
 function checkForWin() {
     if (palletsLeft == 0) {
         ghosts.forEach(function (ghost) { return clearInterval(ghost.timerId); });
-        document.removeEventListener("keydown", movePacman);
+        clearInterval(glide);
         setTimeout(function () {
             winMessage.style.opacity = "1";
         }, 200);
