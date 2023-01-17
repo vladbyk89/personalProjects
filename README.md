@@ -1,4 +1,4 @@
-# personalProjects
+# my first apps
 
 Repo with my first applications 
 
