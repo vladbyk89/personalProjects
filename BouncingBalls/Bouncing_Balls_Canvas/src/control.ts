@@ -1,6 +1,6 @@
 function generateCircles(amount: number) {
   for (let i = 0; i < amount; i++) {
-    const radius = Math.random() * 50 + 20;
+    const radius = window.innerWidth / (Math.random() * 50 + 10);
     const locationX = Math.random() * (window.innerWidth - radius * 2) + radius;
     const locationY =
       Math.random() * (window.innerHeight - radius * 2) + radius;
