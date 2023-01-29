@@ -2,6 +2,7 @@
   html {
     font-size: 13px;
   }
+
   .score {
     color: black;
     font-size: 2rem;
@@ -16,6 +17,7 @@
   html {
     font-size: 20px;
   }
+
   body {
     width: 800px;
     margin: 0 auto;

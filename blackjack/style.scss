@@ -24,32 +24,33 @@
   color: white;
   display: grid;
   grid-template-rows: 1fr 2fr 2fr 1fr;
-}
-.gameContainer__title {
-  text-align: center;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 1rem;
-  color: var(--title-color);
-}
-.gameContainer__title__userMessage {
-  color: var(--message-color);
-  margin-top: 1rem;
-}
-.gameContainer__playerArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
-.gameContainer__playerArea__score {
-  font-size: 1.5rem;
-}
-.gameContainer__buttonGrid {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem;
+  &__title {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1rem;
+    color: var(--title-color);
+    &__userMessage {
+      color: var(--message-color);
+      margin-top: 1rem;
+    }
+  }
+  &__playerArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    &__score {
+      font-size: 1.5rem;
+    }
+  }
+  &__buttonGrid {
+    //   outline: 3px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem;
+  }
 }
 
 .displayedCard {
