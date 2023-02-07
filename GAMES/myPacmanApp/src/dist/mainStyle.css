@@ -7,69 +7,85 @@
 }
 
 :root {
-  --div-size: calc(90vh / 21) ;
+  --boardSize: 80vh;
+  --div-size: calc(var(--boardSize) / 21);
 }
 
 body {
+  overflow: hidden;
+}
+
+.gameWrapper {
   height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  background-color: darkblue;
 }
-
-h1 {
-  width: 12vw;
-  display: flex;
-  justify-content: space-between;
+.gameWrapper .liveScore {
+  position: absolute;
+  color: darkblue;
+  font-size: 1.5rem;
 }
 
 .maze {
-  border: 5px solid black;
-  width: 90vh;
-  height: 90vh;
+  box-shadow: 0 0 50px black;
+  width: var(--boardSize);
+  height: var(--boardSize);
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  background-color: white;
 }
-.maze h1 {
+.maze .endGameWindow {
   position: absolute;
-  top: 15%;
-  left: 15%;
   font-size: 5vh;
   z-index: 1;
-  width: 70%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   transition: all 0.5s;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.maze .endGameWindow button {
+  padding: 0.5em 1em;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #333333;
+  color: whitesmoke;
+}
+.maze .endGameWindow button:hover {
+  cursor: pointer;
+  box-shadow: 0 0 20px black;
+  transition: box-shadow 0.5s;
 }
 .maze .winMessage {
-  color: #861a86;
+  color: lightcoral;
   background-color: #236a46;
-  opacity: 0;
 }
 .maze .loseMessage {
   color: orange;
   background-color: #8d1818;
-  opacity: 0;
 }
-.maze div {
+.maze .square {
   width: var(--div-size);
   height: var(--div-size);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.maze div svg {
+.maze .square svg {
   width: calc(var(--div-size) - 1.5vh);
 }
 .maze .pacman {
   border-radius: 50%;
   background-color: darkorange;
   position: relative;
-  transform: scaleY(1);
 }
 .maze .pacman .eye {
   position: absolute;
@@ -116,52 +132,58 @@ h1 {
   border: calc(var(--div-size) / 3) solid white;
   box-sizing: border-box;
 }
-.maze .cherry {
-  border-radius: 50%;
-  background-color: red;
-  border: calc(var(--div-size) / 3) solid white;
-  box-sizing: border-box;
+.maze .cherry svg {
+  fill: red;
+  filter: drop-shadow(3px 5px 2px black);
 }
-.maze .blinky {
+.maze .ghost {
   border: 0px;
+}
+.maze .purple {
   border-radius: 0;
   background-color: white;
 }
-.maze .blinky svg {
+.maze .purple svg {
   fill: purple;
+  filter: drop-shadow(3px 5px 2px black);
 }
-.maze .pinky {
-  border: 0px;
+.maze .pink {
   border-radius: 0;
   background-color: white;
 }
-.maze .pinky svg {
-  fill: pink;
+.maze .pink svg {
+  fill: palevioletred;
+  filter: drop-shadow(3px 5px 2px black);
 }
-.maze .inky {
-  border: 0px;
+.maze .blue {
   border-radius: 0;
   background-color: white;
 }
-.maze .inky svg {
+.maze .blue svg {
   fill: blue;
+  filter: drop-shadow(3px 5px 2px black);
 }
-.maze .clyde {
-  border: 0px;
+.maze .green {
   border-radius: 0;
   background-color: white;
 }
-.maze .clyde svg {
+.maze .green svg {
   fill: darkgreen;
+  filter: drop-shadow(3px 5px 2px black);
 }
 .maze .scaredGhost svg {
-  fill: aquamarine;
+  animation-name: scared;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
 }
 @keyframes scared {
   0% {
-    opacity: 1;
+    fill: #333333;
+  }
+  50% {
+    fill: aquamarine;
   }
   100% {
-    opacity: 0;
+    fill: #333333;
   }
 }
