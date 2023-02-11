@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
+
+:root {
+  --background-color: rgba(112, 101, 101, 0.342);
+  --main-color: #d96900;
+  --secondary-color: #2c039c;
+  --complimentary-color: #5b27e8;
+  --secondcomplimentary-color: #27e839;
+}
+
+.navBar {
+  // border: 1px solid black;
+  position: absolute;
+  right: 15%;
+  bottom: 0%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 15%;
+  width: 70%;
+  z-index: 10;
+  i {
+    font-size: 5vh;
+    color: black;
+    text-shadow: 0 0 10px white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  i:hover {
+    color: darkgoldenrod;
+    cursor: pointer;
+  }
+}
+
+section {
+  background-color: var(--background-color);
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+}
+
+.main {
+  background-image: url("https://img-19.ccm.net/eEIu6-VP4DRlzwW6U_VU_RevK8w=/1000x420/smart/adc83aa0ff504e81a0af6959b88c02c2/ccmcms-enccm/28353106.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // background: no-repeat cover
+  //   url("https://img-19.ccm.net/eEIu6-VP4DRlzwW6U_VU_RevK8w=/1000x420/smart/adc83aa0ff504e81a0af6959b88c02c2/ccmcms-enccm/28353106.jpg");
+  // border: 100px solid white;
+
+  text-shadow: 0 0 10px black;
+  transition: all 0.3s;
+  &__text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10vh;
+    color: white;
+    font-size: 1.5rem;
+    &__name {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 3rem;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      span {
+        color: darkorange;
+      }
+    }
+    .cv-btn {
+      padding: 1em;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(
+          to left,
+          whitesmoke 50%,
+          rgb(150, 149, 149) 50%
+        )
+        right;
+      background-size: 200%;
+      transition: 0.5s ease-out;
+      a {
+        color: inherit;
+        display: flex;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        i {
+          margin-left: 1em;
+        }
+      }
+    }
+    .cv-btn:hover {
+      cursor: pointer;
+      background-position: left;
+    }
+  }
+}
+
+.aboutMe {
+  display: grid;
+  grid-template:
+    "a a"
+    "b c";
+  grid-template-rows: 10rem auto;
+  grid-template-columns: repeat(2, 1fr);
+  position: absolute;
+  top: 0;
+  // transform: translateY(-100vh);
+  background-color: #27e839;
+  &__header {
+    // border:1px solid blue;
+    grid-area: a;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      // border:1px solid black;
+      font-size: 4em;
+      color: darkorange;
+      z-index: 1;
+    }
+    &__shadow {
+      font-weight: bold;
+      color: rgba(128, 128, 128, 0.268);
+      content: "About Me";
+      font-size: 5rem;
+      position: absolute;
+    }
+  }
+  &__text {
+    border: 5px solid white;
+    grid-area: b;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    gap: 5vh;
+    padding: 2em;
+    h2 {
+      font-size: 2em;
+      text-align: center;
+    }
+  }
+  &__photo {
+    border: 5px solid white;
+    grid-area: c;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    img {
+      width: 50%;
+    }
+  }
+}
+
+.skills {
+  background-color: blue;
+  position: absolute;
+  top: 0;
+  transform: translateX(-100vw);
+}
+
+.projects {
+  background-color: red;
+  position: absolute;
+  top: 0;
+  transform: translateX(100vw);
+}
+
+.contact {
+  position: absolute;
+  top: 0;
+  transform: translateY(100vh);
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}

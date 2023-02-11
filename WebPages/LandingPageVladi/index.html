@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Landing Page</title>
+    <link rel="stylesheet" href="./src/dist/style.css" defer />
+    <script src="./src/dist/main.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/0d9e773bea.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+  </head>
+  <body>
+    <nav class="navBar">
+      <i
+        data-pos="translateX(-100vw)"
+        title="skills"
+        class="control fa-solid fa-cubes"
+        id="skills"
+      ></i>
+      <i
+        data-pos="translateY(-100vh)"
+        title="about me"
+        class="control fas fa-user"
+        id="aboutMe"
+      ></i>
+      <i title="main" class="control fas fa-home" id="main"></i>
+      <i
+        data-pos="translateX(100vw)"
+        title="projects"
+        class="control fa-regular fa-folder-open"
+        id="projects"
+      ></i>
+      <i
+        data-pos="translateY(100vh)"
+        title="contact"
+        class="control fas fa-envelope"
+        id="contact"
+      ></i>
+    </nav>
+    <!-- new section -->
+    <section class="main">
+      <div class="main__text">
+        <div class="main__text__name">
+          <h1>Hi I'm <span>Vladislav Bykanov</span></h1>
+          <h2>a new Full Stack Developer</h2>
+        </div>
+        <h3>Let me take a moment to introduce myself</h3>
+        <button class="cv-btn">
+          <a target="_blank" href="./img/CV.pdf">
+            <span>Download CV</span>
+            <i class="fas fa-envelope-open"></i
+          ></a>
+        </button>
+      </div>
+    </section>
+    <!-- new section -->
+    <section class="aboutMe">
+      <div class="aboutMe__header">
+        <span class="aboutMe__header__shadow">About Me</span>
+        <h1>About Me</h1>
+      </div>
+      <div class="aboutMe__text">
+        <h2>Information About Me</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat optio
+          libero quam ratione rem repudiandae enim molestiae rerum aliquam
+          atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident,
+          numquam totam possimus explicabo cupiditate at quaerat cum eum nisi
+          laboriosam!
+        </p>
+      </div>
+      <div class="aboutMe__photo">
+        <img src="./img/hero.png" alt="">
+      </div>
+    </section>
+    <!-- new section -->
+    <section class="skills">
+      <h1>skills</h1>
+    </section>
+    <!-- new section -->
+    <section class="projects"></section>
+    <!-- new section -->
+    <section class="contact">
+      <img src="./img/port5.jpg" alt="">
+    </section>
+  </body>
+</html>
