@@ -123,77 +123,66 @@ section {
 }
 
 .aboutMe {
-  // display: grid;
-  // grid-template:
-  //   "a a"
-  //   "b c";
-  // grid-template-rows: 10rem auto;
-  // grid-template-columns: repeat(2, 1fr);
   position: absolute;
   top: 0;
   transform: translateY(-100vh);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  
-  background-image: url("https://img.freepik.com/free-vector/black-background-with-focus-spot-light_1017-27230.jpg?w=1480&t=st=1676300930~exp=1676301530~hmac=710fa348744c475bc48ae8d8158e378a5e22b7edbb0640e6809ef7d895b7c1e3");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  &__header {
-    // border:1px solid blue;
-    // grid-area: a;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: url("https://images.unsplash.com/photo-1591562821999-119734a7ab3a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80")
+    no-repeat center / cover;
+  &__textContainer {
+    height: 100%;
     width: 100%;
-    height: 20%;
-    h1 {
-      // border:1px solid black;
-      font-size: 4em;
-      color: darkorange;
-      z-index: 1;
-    }
-    &__shadow {
-      font-weight: bold;
-      color: rgba(128, 128, 128, 0.268);
-      content: "About Me";
-      font-size: 5rem;
-      position: absolute;
-    }
-  }
-  &__text {
-    // border: 5px solid white;
-    width: 40%;
-    height: 60%;
-    // grid-area: b;
-    font-weight: bold;
     display: flex;
     flex-direction: column;
-    // justify-content: center;
-    text-align: center;
-    gap: 5vh;
-    padding: 2em;
-    color: whitesmoke;
-    font-size: 1.4rem;
-
-    h2 {
-      font-size: 2em;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0) 20%,
+      rgba(0, 0, 0, 0.49634105351124824) 50%,
+      rgba(255, 255, 255, 0) 80%
+    );
+    &__header {
+      // border: 1px solid blue;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 20%;
+      h1 {
+        // border:1px solid black;
+        font-size: 4em;
+        color: darkorange;
+        z-index: 1;
+      }
+      &__shadow {
+        font-weight: bold;
+        color: rgb(128, 128, 128);
+        content: "About Me";
+        font-size: 5rem;
+        position: absolute;
+      }
+    }
+    &__text {
+      // border: 5px solid white;
+      width: 50%;
+      height: 60%;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      // justify-content: center;
       text-align: center;
+      gap: 5vh;
+      padding: 2em;
+      color: whitesmoke;
+      font-size: 1.4rem;
+
+      h2 {
+        font-size: 2em;
+        text-align: center;
+      }
     }
   }
-  // &__photo {
-  //   // border: 5px solid white;
-  //   grid-area: c;
-  //   display: flex;
-  //   align-items: start;
-  //   justify-content: center;
-  //   img {
-  //     width: 50%;
-  //   }
-  // }
 }
 
 .skills {
@@ -204,25 +193,46 @@ section {
 }
 
 .projects {
-  background-color: white;
+  background-color: #F0F0F2;
   position: absolute;
   top: 0;
-  transform: translateX(100vw);
-  
-  background-image: url("https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  // transform: translateX(100vw);
+  &__projectsContainer {
+    // border: 10px solid black;
+    width: 100%;
+    height: 100%;
+    background: url("https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80")
+      no-repeat center / contain;
+    &__links {
+      border: 1px solid black;
+      width: 100%;
+      height: 40%;
+      padding: 1rem;
+      display: flex;
+      a {
+        border: 1px solid black;
+        height: 100%;
+        width: 20%;
+        background: url("../../img/Screenshots/BlackJack.png")
+          no-repeat center / cover;
+          border-radius: 10px;
+      }
+      a:nth-child(2) {
+        border: 1px solid black;
+        height: 100%;
+        width: 20%;
+        background: url("../../img/Screenshots/passwordGenerator.png")
+          no-repeat center / contain;
+          border-radius: 10px;
+      }
+    }
+  }
 }
 
 .contact {
   position: absolute;
   top: 0;
   transform: translateY(100vh);
-  
-  background-image: url("https://images.unsplash.com/photo-1463797221720-6b07e6426c24?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background: url("https://images.unsplash.com/photo-1463797221720-6b07e6426c24?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80")
+    no-repeat center / cover;
 }
-
