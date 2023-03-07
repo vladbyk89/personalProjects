@@ -190,6 +190,8 @@ section {
   position: absolute;
   top: 0;
   transform: translateX(-100vw);
+  background: url("https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")
+    no-repeat center / cover;
 }
 
 .projects {
@@ -203,27 +205,40 @@ section {
     height: 100%;
     background: url("https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80")
       no-repeat center / contain;
-    &__links {
-      border: 1px solid black;
+    &__topLinks {
       width: 100%;
       height: 40%;
       padding: 1rem;
       display: flex;
+      justify-content: space-between;
       a {
-        border: 1px solid black;
         height: 100%;
-        width: 20%;
-        background: url("../../img/Screenshots/BlackJack.png")
-          no-repeat center / cover;
+        transition: transform .5s;
+        img{
+          height: 100%;
           border-radius: 10px;
+        }
       }
-      a:nth-child(2) {
-        border: 1px solid black;
+      a:hover{
+        transform: scale(1.1);
+      }
+    }
+    &__botLinks {
+      width: 100%;
+      height: 40%;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      a {
         height: 100%;
-        width: 20%;
-        background: url("../../img/Screenshots/passwordGenerator.png")
-          no-repeat center / contain;
+        transition: transform .5s;
+        img{
+          height: 100%;
           border-radius: 10px;
+        }
+      }
+      a:hover{
+        transform: scale(1.1);
       }
     }
   }
