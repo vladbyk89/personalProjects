@@ -1,8 +1,8 @@
-// if user is in entryPage.html run this
-if (window.location.pathname.endsWith("entryPage.html")) {
+// if user is in index.html run this
+if (window.location.pathname.endsWith("index.html")) {
     window.addEventListener("load", function () {
         if (localStorage.getItem("currentUser")) {
-            window.location.href = "index.html";
+            window.location.href = "main.html";
         }
     });
     signUpPanelBtn.addEventListener("click", function () {
@@ -26,11 +26,11 @@ if (window.location.pathname.endsWith("entryPage.html")) {
 if (window.location.pathname.endsWith("forgotPassword.html")) {
     recoveryForm.addEventListener("submit", handleRecovery);
 }
-// ---------------------- index.html ----------------------
-if (window.location.pathname.endsWith("index.html")) {
+// ---------------------- main.html ----------------------
+if (window.location.pathname.endsWith("main.html")) {
     window.addEventListener("load", function () {
         if (!localStorage.getItem("currentUser")) {
-            window.location.href = "entryPage.html";
+            window.location.href = "index.html";
         }
     });
     renderBoardsToMain(currentUser.boardList);
@@ -81,7 +81,7 @@ if (window.location.pathname.endsWith("index.html")) {
 if (window.location.pathname.endsWith("board.html")) {
     window.addEventListener("load", function () {
         if (!localStorage.getItem("currentUser")) {
-            window.location.href = "entryPage.html";
+            window.location.href = "index.html";
         }
     });
     renderBoardInBoardPage();

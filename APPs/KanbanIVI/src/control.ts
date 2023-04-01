@@ -35,7 +35,7 @@ function handleSignUp(e: Event) {
     signedUpUsers.push(newUser);
     localStorage.setItem("signedUpUsers", JSON.stringify(signedUpUsers));
     localStorage.setItem("currentUser", JSON.stringify(newUser));
-    location.href = "index.html";
+    location.href = "main.html";
     this.reset();
   } catch (error) {
     console.log(error);
@@ -51,7 +51,7 @@ function handleSignIn(e: Event) {
     if (checkIfUserExists(userName, password)) {
       User.setCurrentUser(userName);
       signInForm.reset();
-      window.location.href = "index.html";
+      window.location.href = "main.html";
     } else {
       alert("User does not exist.");
     }

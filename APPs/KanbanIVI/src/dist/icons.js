@@ -9,14 +9,14 @@ window.addEventListener("click", function (e) {
     }
     if (target.classList.contains("signOutbtn")) {
         localStorage.removeItem("currentUser");
-        window.location.href = "entryPage.html";
+        window.location.href = "index.html";
     }
     if (target.classList.contains("exitProfilePage")) {
         profileWindow.style.display = "none";
     }
     if (target.classList.contains("backToMainIcon")) {
         localStorage.removeItem("currentBoard");
-        window.location.href = "index.html";
+        window.location.href = "main.html";
     }
     if (target.classList.contains("editBoardIcon")) {
         editBoardWindow.style.display = "flex";
