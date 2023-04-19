@@ -2,14 +2,14 @@ function handleSignUp(e: Event) {
   try {
     e.preventDefault();
     // e.stopPropagation();
-    const gender = this.elements.gender.value;
-    const firstName = this.elements.firstName.value;
-    const lastName = this.elements.lastName.value;
-    const password = this.elements.password.value;
-    const confirmPassword = this.elements.confirmPassword.value;
-    const userName = this.elements.userName.value;
-    const email = this.elements.email.value;
-    const phone = this.elements.phoneNumber.value;
+    const gender = signUpForm.gender.value;
+    const firstName = signUpForm.firstName.value;
+    const lastName = signUpForm.lastName.value;
+    const password = signUpForm.password.value;
+    const confirmPassword = signUpForm.confirmPassword.value;
+    const userName = signUpForm.userName.value;
+    const email = signUpForm.email.value;
+    const phone = signUpForm.phoneNumber.value;
     if (confirmPassword != password) return alert("Passwords don't match");
     if (!/^\d+$/.test(phone))
       return alert("Please use only digit for phone number field");
@@ -36,7 +36,7 @@ function handleSignUp(e: Event) {
     localStorage.setItem("signedUpUsers", JSON.stringify(signedUpUsers));
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     location.href = "main.html";
-    this.reset();
+    signUpForm.reset();
   } catch (error) {
     console.log(error);
   }
@@ -63,11 +63,11 @@ function handleSignIn(e: Event) {
 function handleRecovery(e: Event) {
   try {
     e.preventDefault();
-    const firstName = this.elements.firstName.value;
-    const lastName = this.elements.lastName.value;
-    const userName = this.elements.userName.value;
-    const email = this.elements.email.value;
-    const phone = this.elements.phoneNumber.value;
+    const firstName = recoveryForm.firstName.value;
+    const lastName = recoveryForm.lastName.value;
+    const userName = recoveryForm.userName.value;
+    const email = recoveryForm.email.value;
+    const phone = recoveryForm.phoneNumber.value;
     const arr = [firstName, lastName, userName, email, phone];
     if (arr.some((ele) => ele == "")) return alert("missing field");
     const userList = userListFromStorage();
@@ -218,7 +218,7 @@ function makeListFunctional(listContainer: HTMLElement) {
   }
 }
 
-function dragginCard({ clientY }) {
+function dragginCard(this: HTMLElement, e: MouseEvent) {
   try {
     let cardIsDragged = false;
     cards.forEach((card) => {
@@ -229,7 +229,7 @@ function dragginCard({ clientY }) {
     if (!cardIsDragged) return;
     // e.preventDefault();
 
-    const bottomTask = insertAboveTask(this, clientY);
+    const bottomTask = insertAboveTask(this, e.clientY);
     const curTask = document.querySelector(".isDragging") as HTMLElement;
 
     if (!bottomTask) {
@@ -243,7 +243,7 @@ function dragginCard({ clientY }) {
   }
 }
 
-function editList() {
+function editList(this: HTMLElement) {
   try {
     const listTitle = this.parentNode as HTMLElement;
     const listTitleText = listTitle.querySelector("h2") as HTMLElement;
