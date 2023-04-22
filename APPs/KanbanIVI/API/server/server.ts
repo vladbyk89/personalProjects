@@ -2,8 +2,8 @@ import express, { NextFunction, Request, Response } from "express";
 const app = express();
 import mongoose from "mongoose";
 import path from "path";
-import { config } from "./config/config";
-import { userRouter } from "./routes/userRoutes";
+import { config } from "../config/config";
+import { userRouter } from "../routes/userRoutes";
 
 StartServer();
 
@@ -16,7 +16,7 @@ async function StartServer() {
     .catch((err) => {
       console.error(err);
     });
-  app.use("/public", express.static(__dirname + "public"));
+  app.use(express.static("public"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 

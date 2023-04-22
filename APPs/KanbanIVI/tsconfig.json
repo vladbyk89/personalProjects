@@ -100,5 +100,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["API/server.ts", "public/**/*"]
+  "include": ["API/server/server.ts", "public/**/*"],
+  "exclude": ["config", "controller", "model", "routes"]
 }
