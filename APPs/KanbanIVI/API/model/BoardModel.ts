@@ -1,25 +1,23 @@
 import mongoose, { Schema } from "mongoose";
+import UserSchema from "./UserModel";
 
-interface User {
+interface Board {
   name: string;
-  userName: string;
-  password: string;
   _id: string;
-  //   courses: [string];
 }
 
-export const UserSchema: Schema = new Schema(
+export const BoardSchema: Schema = new Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    userName: {
+    imageSrc: {
       type: String,
       required: true,
     },
-    password: {
-      type: String,
+    userList: {
+      type: [UserSchema],
       required: true,
     },
   },
@@ -28,4 +26,4 @@ export const UserSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.model<User>("User", UserSchema);
+export default mongoose.model<Board>("Board", BoardSchema);

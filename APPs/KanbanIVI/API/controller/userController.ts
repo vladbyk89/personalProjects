@@ -7,8 +7,9 @@ export const getAllUsers = async (
   next: NextFunction
 ) => {
   try {
-    const users = await User.find({});
-    res.status(200).json({ users });
+    const { userName, password } = req.body;
+    const user = await User.find({});
+    res.status(200).json({ user });
   } catch (error) {
     console.error(error);
   }
@@ -20,10 +21,13 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { name } = req.body;
-    const user = await User.create({ name });
-    // await user.save();
-    res.status(200).json({ msg: `User ${user} is created...` });
+    const { name, userName, password } = req.body;
+    const user = await User.create({ name, userName, password });
+    const users = await User.find({});
+    res.status(200).json({
+      msg: `User ${user} is added to:
+    ${users}`,
+    });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
