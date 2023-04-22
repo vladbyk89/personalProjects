@@ -7,9 +7,8 @@ export const getAllUsers = async (
   next: NextFunction
 ) => {
   try {
-    const { userName, password } = req.body;
-    const user = await User.find({});
-    res.status(200).json({ user });
+    const users = await User.find({});
+    res.status(200).json({ users });
   } catch (error) {
     console.error(error);
   }
@@ -40,10 +39,10 @@ export const getUser = async (
   next: NextFunction
 ) => {
   try {
-    const { id: userId } = req.params;
-    const user = await User.findById(userId);
-    // const courses = await Course.find({ users: user });
-    res.status(200).json({ user });
+    const { userName, password } = req.query;
+    const user = await User.find({ userName, password });
+    res.redirect("/main");
+    // res.status(200).json({ user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

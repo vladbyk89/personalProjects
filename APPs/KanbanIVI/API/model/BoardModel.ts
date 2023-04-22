@@ -1,8 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import UserSchema from "./UserModel";
+import { UserSchema } from "./UserModel";
+import { ListSchema } from "./ListModel";
 
 interface Board {
   name: string;
+  imageSrc: string;
+  userList: [string];
   _id: string;
 }
 
@@ -16,9 +19,12 @@ export const BoardSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    userList: {
+    userArray: {
       type: [UserSchema],
       required: true,
+    },
+    listArray: {
+      type: [ListSchema],
     },
   },
   {

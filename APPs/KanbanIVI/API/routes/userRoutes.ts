@@ -9,6 +9,8 @@ import {
 } from "../controller/userController";
 
 userRouter.route("/").get(getAllUsers).post(createUser);
-userRouter.route("/:id").get(getUser).patch(updateUser).delete(deleteUser);
+userRouter.route("/user").get(getUser);
+
+userRouter.route("/:id").patch(updateUser).delete(deleteUser);
 
 export { userRouter };

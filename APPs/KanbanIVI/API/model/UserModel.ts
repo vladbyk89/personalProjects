@@ -5,7 +5,6 @@ interface User {
   userName: string;
   password: string;
   _id: string;
-  //   courses: [string];
 }
 
 export const UserSchema: Schema = new Schema(
