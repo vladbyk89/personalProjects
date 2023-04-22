@@ -42,19 +42,22 @@ function handleSignUp(e: Event) {
   }
 }
 
-function handleSignIn(e: Event) {
+async function handleSignIn(e: Event) {
   try {
     e.preventDefault();
-    const userName = userNameInput.value;
-    const password = passwordInput.value;
 
-    if (checkIfUserExists(userName, password)) {
-      User.setCurrentUser(userName);
-      signInForm.reset();
-      window.location.href = "main.html";
-    } else {
-      alert("User does not exist.");
-    }
+    await fetch("/api/v1/users").catch((err) => console.error(err));
+
+    // const userName = userNameInput.value;
+    // const password = passwordInput.value;
+
+    // if (checkIfUserExists(userName, password)) {
+    //   User.setCurrentUser(userName);
+    //   signInForm.reset();
+    //   window.location.href = "main.html";
+    // } else {
+    //   alert("User does not exist.");
+    // }
   } catch (error) {
     console.log(error);
   }

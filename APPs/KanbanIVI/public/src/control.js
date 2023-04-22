@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 function handleSignUp(e) {
     try {
         e.preventDefault();
@@ -34,22 +43,24 @@ function handleSignUp(e) {
     }
 }
 function handleSignIn(e) {
-    try {
-        e.preventDefault();
-        const userName = userNameInput.value;
-        const password = passwordInput.value;
-        if (checkIfUserExists(userName, password)) {
-            User.setCurrentUser(userName);
-            signInForm.reset();
-            window.location.href = "main.html";
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            e.preventDefault();
+            yield fetch("/api/v1/users").catch((err) => console.error(err));
+            // const userName = userNameInput.value;
+            // const password = passwordInput.value;
+            // if (checkIfUserExists(userName, password)) {
+            //   User.setCurrentUser(userName);
+            //   signInForm.reset();
+            //   window.location.href = "main.html";
+            // } else {
+            //   alert("User does not exist.");
+            // }
         }
-        else {
-            alert("User does not exist.");
+        catch (error) {
+            console.log(error);
         }
-    }
-    catch (error) {
-        console.log(error);
-    }
+    });
 }
 function handleRecovery(e) {
     try {

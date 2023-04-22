@@ -7,8 +7,13 @@ export const getAllUsers = async (
   next: NextFunction
 ) => {
   try {
+    const { userName, password } = req.query;
+    console.log(userName);
+    const user = await User.find({ userName, password });
+    if (!user) res.send("No user found");
     const users = await User.find({});
-    res.status(200).json({ users });
+    res.redirect("/main");
+    // res.status(200).json({ users });
   } catch (error) {
     console.error(error);
   }
@@ -41,8 +46,8 @@ export const getUser = async (
   try {
     const { userName, password } = req.query;
     const user = await User.find({ userName, password });
-    res.redirect("/main");
-    // res.status(200).json({ user });
+    // res.redirect("/main");
+    res.status(200).json({ user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

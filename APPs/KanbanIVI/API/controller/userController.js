@@ -16,8 +16,14 @@ exports.updateUser = exports.deleteUser = exports.getUser = exports.createUser =
 const UserModel_1 = __importDefault(require("../model/UserModel"));
 const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { userName, password } = req.query;
+        console.log(userName);
+        const user = yield UserModel_1.default.find({ userName, password });
+        if (!user)
+            res.send("No user found");
         const users = yield UserModel_1.default.find({});
-        res.status(200).json({ users });
+        res.redirect("/main");
+        // res.status(200).json({ users });
     }
     catch (error) {
         console.error(error);
@@ -44,8 +50,8 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { userName, password } = req.query;
         const user = yield UserModel_1.default.find({ userName, password });
-        res.redirect("/main");
-        // res.status(200).json({ user });
+        // res.redirect("/main");
+        res.status(200).json({ user });
     }
     catch (error) {
         console.error(error);

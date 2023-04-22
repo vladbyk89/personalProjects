@@ -10,7 +10,7 @@ const signUpPanelBtn = document.querySelector(
 const signInPanelBtn = document.querySelector(
   "#signInPanel"
 ) as HTMLButtonElement;
-const signInBtn = document.querySelector("#signInBtn") as HTMLButtonElement;
+// const signInBtn = document.querySelector("#signInBtn") as HTMLButtonElement;
 const userNameInput = document.querySelector(
   "#userNameInput"
 ) as HTMLInputElement;

@@ -12,7 +12,7 @@ if (window.location.pathname.endsWith("index.html")) {
     signInPanelBtn.addEventListener("click", () => {
         entryPageMainContainer.classList.remove("active");
     });
-    signUpForm.addEventListener("submit", handleSignUp);
+    // signUpForm.addEventListener("submit", handleSignUp);
     signInForm.addEventListener("submit", handleSignIn);
     signInForm.addEventListener("keydown", (e) => {
         if (e.key == "Enter") {

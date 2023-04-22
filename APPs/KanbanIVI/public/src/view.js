@@ -5,7 +5,7 @@ const signUpForm = document.querySelector("#signUpForm");
 const entryPageMainContainer = document.querySelector(".mainContainer");
 const signUpPanelBtn = document.querySelector("#signUpPanel");
 const signInPanelBtn = document.querySelector("#signInPanel");
-const signInBtn = document.querySelector("#signInBtn");
+// const signInBtn = document.querySelector("#signInBtn") as HTMLButtonElement;
 const userNameInput = document.querySelector("#userNameInput");
 const passwordInput = document.querySelector("#passwordInput");
 //------------------ Recovery page elements -----------------//
