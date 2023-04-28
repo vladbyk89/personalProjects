@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { UserSchema } from "./UserModel";
 import { ListSchema } from "./ListModel";
 
-interface Board {
+export interface BoardInterface {
   name: string;
   imageSrc: string;
   userList: [string];
@@ -32,4 +32,4 @@ export const BoardSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.model<Board>("Board", BoardSchema);
+export default mongoose.model<BoardInterface>("Board", BoardSchema);

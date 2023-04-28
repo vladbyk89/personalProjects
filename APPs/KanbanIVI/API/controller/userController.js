@@ -28,13 +28,26 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllUsers = getAllUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, userName, password } = req.body;
-        const user = yield UserModel_1.default.create({ name, userName, password });
-        const users = yield UserModel_1.default.find({});
-        res.status(200).json({
-            msg: `User ${user} is added to:
-    ${users}`,
+        const { firstName, lastName, gender, userName, password, email } = req.body;
+        const findUser = yield UserModel_1.default.findOne({ email });
+        if (findUser)
+            return res.send(`Email exists in the system`);
+        const user = yield UserModel_1.default.create({
+            firstName,
+            lastName,
+            gender,
+            userName,
+            password,
+            email,
         });
+        if (!secret)
+            throw new Error("Missing jwt secret");
+        const token = jwt_simple_1.default.encode({ userId: user._id, role: "public" }, secret);
+        res.cookie("user", token, {
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        res.redirect("/main");
     }
     catch (error) {
         console.error(error);
@@ -64,7 +77,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         if (!secret)
             throw new Error("Missing jwt secret");
         const token = jwt_simple_1.default.encode({ userId: findUser._id, role: "public" }, secret);
-        res.cookie("signedUpUsers", token, {
+        res.cookie("user", token, {
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
         });

@@ -22,7 +22,7 @@ const cookieAuthintication = (req, res, next) => __awaiter(void 0, void 0, void 
         const token = req.cookies;
         if (!token)
             throw new Error("Missing token from cookise");
-        const decodedToken = jwt_simple_1.default.decode(token.signedUpUsers, secret);
+        const decodedToken = jwt_simple_1.default.decode(token.user, secret);
         req.body = decodedToken.userId;
         next();
     }

@@ -22,13 +22,33 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { name, userName, password } = req.body;
-    const user = await User.create({ name, userName, password });
-    const users = await User.find({});
-    res.status(200).json({
-      msg: `User ${user} is added to:
-    ${users}`,
+    const { firstName, lastName, gender, userName, password, email } = req.body;
+
+    
+    const findUser = await User.findOne({ email });
+
+    if (findUser) return res.send(`Email exists in the system`);
+
+    const user = await User.create({
+      firstName,
+      lastName,
+      gender,
+      userName,
+      password,
+      email,
     });
+
+    
+    if (!secret) throw new Error("Missing jwt secret");
+
+    const token = jwt.encode({ userId: user._id, role: "public" }, secret);
+
+    res.cookie("user", token, {
+      maxAge: 24 * 60 * 60 * 1000, //24 hours
+      httpOnly: true,
+    });
+
+    res.redirect("/main");
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
@@ -68,7 +88,7 @@ export const login = async (
 
     const token = jwt.encode({ userId: findUser._id, role: "public" }, secret);
 
-    res.cookie("signedUpUsers", token, {
+    res.cookie("user", token, {
       maxAge: 24 * 60 * 60 * 1000, //24 hours
       httpOnly: true,
     });

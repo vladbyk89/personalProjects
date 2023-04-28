@@ -9,16 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class User {
-    constructor(firstName, lastName, gender, userName, password, email, phoneNumber, boardList = [], uid = Math.random().toString(36).slice(2)) {
+    constructor(firstName, lastName, gender, userName, password, email, boardList = [], id = '') {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.boardList = boardList;
-        this.uid = uid;
+        this.id = id;
     }
     static currentUserFromStorage() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -100,7 +99,7 @@ class Board {
         currentUser.boardList.splice(boardIndex, 1);
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
         const userList = userListFromStorage();
-        const findUser = userList.find((user) => user.uid === currentUser.uid);
+        const findUser = userList.find((user) => user.id === currentUser.id);
         if (findUser)
             findUser.boardList.splice(boardIndex, 1);
         localStorage.setItem("signedUpUsers", JSON.stringify(userList));
@@ -175,9 +174,9 @@ class List {
 }
 // ---------------------- pre made users ---------------------- //
 const preMadeUserList = [
-    new User("Vladislav", "Bykanov", "male", "vladb89", "12345678", "vladi@gmail.com", "0548155232"),
-    new User("Itai", "Gelberg", "male", "itaiG", "87654321", "itaiGel@gmail.com", "0541234567"),
-    new User("Itay", "Amosi", "male", "itayz1e", "144322144", "itayAmosi@gmail.com", "0540987654"),
+    new User("Vladislav", "Bykanov", "male", "vladb89", "12345678", "vladi@gmail.com"),
+    new User("Itai", "Gelberg", "male", "itaiG", "87654321", "itaiGel@gmail.com"),
+    new User("Itay", "Amosi", "male", "itayz1e", "144322144", "itayAmosi@gmail.com"),
 ];
 const preMadeBoardList = [
     new Board("Golden Board", "./img/NASA.jpg"),

@@ -14,7 +14,7 @@ export const cookieAuthintication = async (
 
     if (!token) throw new Error("Missing token from cookise");
 
-    const decodedToken = jwt.decode(token.signedUpUsers, secret);
+    const decodedToken = jwt.decode(token.user, secret);
 
     req.body = decodedToken.userId;
     next();

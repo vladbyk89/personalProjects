@@ -69,8 +69,7 @@ function handleRecovery(e) {
         const findUser = userList.find((user) => user.userName == userName ||
             user.firstName == firstName ||
             user.lastName == lastName ||
-            user.email == email ||
-            user.phoneNumber == phone);
+            user.email == email);
         if (!findUser)
             return alert("No such user exists");
         recoveredPassword.textContent = findUser.password;
@@ -90,7 +89,6 @@ function displayProfile(user) {
           <li>Name: ${user.firstName} ${user.lastName}</li>
           <li>Gender: ${user.gender}</li>
           <li>Email: ${user.email}</li>
-          <li>Phone Number: ${user.phoneNumber}</li>
           <li>User Name: ${user.userName}</li>
           <li>Password: ${user.password}</li>
         </ul>
@@ -105,7 +103,7 @@ function updateUserBoardList(userToUpdate, boardToUpdate) {
     try {
         const userList = userListFromStorage();
         if (userList) {
-            const findUser = userList.find((user) => user.uid === userToUpdate.uid);
+            const findUser = userList.find((user) => user.id === userToUpdate.id);
             if (findUser) {
                 const findBoard = findUser.boardList.find((board) => board.uid === boardToUpdate.uid);
                 if (findBoard) {

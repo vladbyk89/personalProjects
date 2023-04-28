@@ -6,9 +6,8 @@ class User {
     public userName: string,
     public password: string,
     public email: string,
-    public phoneNumber: string,
     public boardList: Board[] = [],
-    public uid: string = Math.random().toString(36).slice(2)
+    public id: string = ''
   ) {}
 
   static async currentUserFromStorage() {
@@ -101,7 +100,7 @@ class Board {
     currentUser.boardList.splice(boardIndex, 1);
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
     const userList = userListFromStorage();
-    const findUser = userList.find((user) => user.uid === currentUser.uid);
+    const findUser = userList.find((user) => user.id === currentUser.id);
     if (findUser) findUser.boardList.splice(boardIndex, 1);
     localStorage.setItem("signedUpUsers", JSON.stringify(userList));
   }
@@ -188,8 +187,7 @@ const preMadeUserList: User[] = [
     "male",
     "vladb89",
     "12345678",
-    "vladi@gmail.com",
-    "0548155232"
+    "vladi@gmail.com"
   ),
   new User(
     "Itai",
@@ -197,8 +195,7 @@ const preMadeUserList: User[] = [
     "male",
     "itaiG",
     "87654321",
-    "itaiGel@gmail.com",
-    "0541234567"
+    "itaiGel@gmail.com"
   ),
   new User(
     "Itay",
@@ -206,8 +203,7 @@ const preMadeUserList: User[] = [
     "male",
     "itayz1e",
     "144322144",
-    "itayAmosi@gmail.com",
-    "0540987654"
+    "itayAmosi@gmail.com"
   ),
 ];
 

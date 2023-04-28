@@ -22,7 +22,7 @@
   <body>
     <div class="mainContainer">
       <div class="signUpContainer">
-        <form id="signUpForm">
+        <form id="signUpForm" action="/api/v1/users" method="post">
           <h1>Create Account</h1>
           <!-- <div class="iconsArea">
             <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -67,6 +67,7 @@
             placeholder="Password"
             required
           />
+
           <input
             minlength="8"
             type="password"
@@ -77,13 +78,6 @@
 
           <input type="email" name="email" placeholder="Email" required />
 
-          <input
-            minlength="8"
-            type="tel"
-            name="phoneNumber"
-            placeholder="Phone Number"
-            required
-          />
           <button type="submit">Sign Up</button>
         </form>
       </div>
