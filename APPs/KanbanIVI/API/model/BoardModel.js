@@ -28,7 +28,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const UserModel_1 = require("./UserModel");
 const ListModel_1 = require("./ListModel");
 exports.BoardSchema = new mongoose_1.Schema({
-    name: {
+    boardName: {
         type: String,
         required: true,
     },

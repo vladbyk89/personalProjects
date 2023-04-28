@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class User {
-    constructor(firstName, lastName, gender, userName, password, email, boardList = [], id = '') {
+    constructor(firstName, lastName, gender, userName, password, email, boardList = [], id = "") {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -44,7 +44,7 @@ class User {
                 .then((res) => res.json())
                 .then(({ user }) => user)
                 .catch((error) => console.error(error));
-            console.log(getUser);
+            currentUser = getUser;
         });
     }
     static setCurrentUser(userName) {

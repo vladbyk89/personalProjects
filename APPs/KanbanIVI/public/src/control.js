@@ -1,55 +1,51 @@
 "use strict";
-function handleSignUp(e) {
-    try {
-        e.preventDefault();
-        // e.stopPropagation();
-        const gender = signUpForm.gender.value;
-        const firstName = signUpForm.firstName.value;
-        const lastName = signUpForm.lastName.value;
-        const password = signUpForm.password.value;
-        const confirmPassword = signUpForm.confirmPassword.value;
-        const userName = signUpForm.userName.value;
-        const email = signUpForm.email.value;
-        const phone = signUpForm.phoneNumber.value;
-        if (confirmPassword != password)
-            return alert("Passwords don't match");
-        if (!/^\d+$/.test(phone))
-            return alert("Please use only digit for phone number field");
-        const arr = [gender, firstName, lastName, password, userName, email, phone];
-        const regex = /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/;
-        if (arr.some((ele) => !regex.test(ele)))
-            return alert("Please check your input(Only English characters allowed)");
-        if (checkIfEmailExists(email))
-            return alert("Email is alreay in the system");
-        const newUser = new User(firstName, lastName, gender, userName, password, email, phone);
-        const signedUpUsers = JSON.parse(localStorage.getItem("signedUpUsers") || "[]");
-        signedUpUsers.push(newUser);
-        localStorage.setItem("signedUpUsers", JSON.stringify(signedUpUsers));
-        localStorage.setItem("currentUser", JSON.stringify(newUser));
-        location.href = "main.html";
-        signUpForm.reset();
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-// async function handleSignIn(e: Event) {
+// function handleSignUp(e: Event) {
 //   try {
 //     e.preventDefault();
-//     const user = await fetch("/api/v1/users")
-//       .then((res) => res.json())
-//       .then(({ user }) => user)
-//       .catch((err) => console.error(err));
-//     console.log(user);
-//     // const userName = userNameInput.value;
-//     // const password = passwordInput.value;
-//     // if (checkIfUserExists(userName, password)) {
-//     //   User.setCurrentUser(userName);
-//     //   signInForm.reset();
-//     //   window.location.href = "main.html";
-//     // } else {
-//     //   alert("User does not exist.");
-//     // }
+//     // e.stopPropagation();
+//     const gender = signUpForm.gender.value;
+//     const firstName = signUpForm.firstName.value;
+//     const lastName = signUpForm.lastName.value;
+//     const password = signUpForm.password.value;
+//     const confirmPassword = signUpForm.confirmPassword.value;
+//     const userName = signUpForm.userName.value;
+//     const email = signUpForm.email.value;
+//     const phone = signUpForm.phoneNumber.value;
+//     if (confirmPassword != password) return alert("Passwords don't match");
+//     if (!/^\d+$/.test(phone))
+//       return alert("Please use only digit for phone number field");
+//     const arr = [gender, firstName, lastName, password, userName, email, phone];
+//     const regex = /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/;
+//     if (arr.some((ele) => !regex.test(ele)))
+//       return alert("Please check your input(Only English characters allowed)");
+//     if (checkIfEmailExists(email))
+//       return alert("Email is alreay in the system");
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+//     const newUser = new User(
+//       firstName,
+//       lastName,
+//       gender,
+//       userName,
+//       password,
+//       email,
+//       phone
+//     );
+//     const signedUpUsers = JSON.parse(
+//       localStorage.getItem("signedUpUsers") || "[]"
+//     ) as User[];
+//     signedUpUsers.push(newUser);
+//     localStorage.setItem("signedUpUsers", JSON.stringify(signedUpUsers));
+//     localStorage.setItem("currentUser", JSON.stringify(newUser));
+//     location.href = "main.html";
+//     signUpForm.reset();
 //   } catch (error) {
 //     console.log(error);
 //   }
@@ -150,25 +146,41 @@ function renderBoardsToMain(listOFBoards) {
         console.log(error);
     }
 }
-function createBoard(boardName, boardImage) {
-    try {
-        if (currentUser.boardList.length === 10)
-            return alert("maxinum amount of boards is 10");
-        if (boardName) {
-            if (currentUser.boardList.find((board) => board.name.toLocaleUpperCase() == boardName.toLocaleLowerCase()))
-                return alert("There is already a board with that name");
-            const newBoard = new Board(boardName, boardImage);
-            updateUserBoardList(currentUser, newBoard);
-            localStorage.setItem("currentBoard", JSON.stringify(newBoard));
-            location.href = "board.html";
+function createBoard(boardName, imageSrc) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const userId = currentUser.id;
+            const newBoard = yield fetch(`${boardsAPI}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ boardName, imageSrc, userId }),
+            }).catch((error) => console.error(error));
+            location.href = '/board';
+            // if (currentUser.boardList.length === 10)
+            //   return alert("maxinum amount of boards is 10");
+            // if (boardName) {
+            //   if (
+            //     currentUser.boardList.find(
+            //       (board) =>
+            //         board.name.toLocaleUpperCase() == boardName.toLocaleLowerCase()
+            //     )
+            //   )
+            //     return alert("There is already a board with that name");
+            //   const newBoard = new Board(boardName, boardImage);
+            //   updateUserBoardList(currentUser, newBoard);
+            //   localStorage.setItem("currentBoard", JSON.stringify(newBoard));
+            //   location.href = "board.html";
+            // } else {
+            //   alert("Board Name Is Missing");
+            // }
         }
-        else {
-            alert("Board Name Is Missing");
+        catch (error) {
+            console.log(error);
         }
-    }
-    catch (error) {
-        console.log(error);
-    }
+    });
 }
 function makeListFunctional(listContainer) {
     try {

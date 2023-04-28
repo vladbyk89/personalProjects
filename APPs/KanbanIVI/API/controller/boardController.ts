@@ -22,15 +22,15 @@ export const createBoard = async (
   next: NextFunction
 ) => {
   try {
-    const { name, imageSrc, userId } = req.body;
+    const { boardName, imageSrc, userId } = req.body;
     const user = await User.findById(userId);
-    // const board = await Board.create({
-    //   name,
-    //   imageSrc,
-    //   userArray: [user],
-    // });
+    const board = await Board.create({
+      boardName,
+      imageSrc,
+      userArray: [user],
+    });
     const boards = await Board.find({});
-    res.status(200).json({ user });
+    res.status(200).json({ ok: true });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

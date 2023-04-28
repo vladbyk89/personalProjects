@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { BoardSchema } from "./BoardModel";
 
-interface UserInterface {
+interface User {
   firstName: string;
   lastName: string;
   gender: string;
@@ -38,14 +38,10 @@ export const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    boardList: {
-      type: [BoardSchema],
-      // default: [],
-    },
   },
   {
     versionKey: false,
   }
 );
 
-export default mongoose.model<UserInterface>("User", UserSchema);
+export default mongoose.model<User>("User", UserSchema);

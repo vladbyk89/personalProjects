@@ -9,7 +9,7 @@ interface Board {
 
 export const BoardSchema: Schema = new Schema(
   {
-    name: {
+    boardName: {
       type: String,
       required: true,
     },

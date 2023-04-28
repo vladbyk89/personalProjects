@@ -27,15 +27,15 @@ const getAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 exports.getAllBoards = getAllBoards;
 const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, imageSrc, userId } = req.body;
+        const { boardName, imageSrc, userId } = req.body;
         const user = yield UserModel_1.default.findById(userId);
-        // const board = await Board.create({
-        //   name,
-        //   imageSrc,
-        //   userArray: [user],
-        // });
+        const board = yield BoardModel_1.default.create({
+            boardName,
+            imageSrc,
+            userArray: [user],
+        });
         const boards = yield BoardModel_1.default.find({});
-        res.status(200).json({ user });
+        res.status(200).json({ ok: true });
     }
     catch (error) {
         console.error(error);

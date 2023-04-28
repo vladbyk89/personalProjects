@@ -1,4 +1,5 @@
-const usersAPI = '/api/v1/users';
+const usersAPI = "/api/v1/users";
+const boardsAPI = "/api/v1/boards";
 
 // Entry Page elements
 const signInForm = document.querySelector("#signInForm") as HTMLFormElement;
@@ -85,7 +86,9 @@ const imageDisplayedInEdit = document.querySelector(
   "#imageEditWindow"
 ) as HTMLImageElement;
 const trashCan = document.querySelector("#trash") as HTMLElement;
-const trashCanDiv = document.querySelector(".boardContainer__main__trashDiv") as HTMLDivElement;
+const trashCanDiv = document.querySelector(
+  ".boardContainer__main__trashDiv"
+) as HTMLDivElement;
 
 //Buttons
 const addListBtn = document.querySelector("#addListBtn") as HTMLButtonElement;

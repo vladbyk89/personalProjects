@@ -7,7 +7,7 @@ class User {
     public password: string,
     public email: string,
     public boardList: Board[] = [],
-    public id: string = ''
+    public id: string = ""
   ) {}
 
   static async currentUserFromStorage() {
@@ -34,7 +34,7 @@ class User {
       .then((res) => res.json())
       .then(({ user }) => user)
       .catch((error) => console.error(error));
-    console.log(getUser);
+    currentUser = getUser;
   }
 
   static setCurrentUser(userName: string) {
@@ -189,14 +189,7 @@ const preMadeUserList: User[] = [
     "12345678",
     "vladi@gmail.com"
   ),
-  new User(
-    "Itai",
-    "Gelberg",
-    "male",
-    "itaiG",
-    "87654321",
-    "itaiGel@gmail.com"
-  ),
+  new User("Itai", "Gelberg", "male", "itaiG", "87654321", "itaiGel@gmail.com"),
   new User(
     "Itay",
     "Amosi",

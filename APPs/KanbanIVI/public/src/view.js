@@ -1,5 +1,6 @@
 "use strict";
-const usersAPI = '/api/v1/users';
+const usersAPI = "/api/v1/users";
+const boardsAPI = "/api/v1/boards";
 // Entry Page elements
 const signInForm = document.querySelector("#signInForm");
 const signUpForm = document.querySelector("#signUpForm");

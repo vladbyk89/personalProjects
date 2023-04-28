@@ -1,11 +1,11 @@
 "use strict";
 // if user is in index.html run this
 if (window.location.pathname.endsWith("/")) {
-    window.addEventListener("load", () => {
-        if (localStorage.getItem("currentUser")) {
-            window.location.href = "main.html";
-        }
-    });
+    // window.addEventListener("load", () => {
+    //   if (localStorage.getItem("currentUser")) {
+    //     window.location.href = "main.html";
+    //   }
+    // });
     signUpPanelBtn.addEventListener("click", () => {
         entryPageMainContainer.classList.add("active");
     });
