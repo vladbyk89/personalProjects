@@ -41,14 +41,9 @@ export const getUser = async (
   next: NextFunction
 ) => {
   try {
-    if (!secret) throw new Error("Missing jwt secret");
-    const token = req.cookies;
-    console.log(token.signedUpUsers);
-    if (!token) throw new Error("Missing token from cookise");
-    const decodedToken = jwt.decode(token.signedUpUsers, secret);
-
-    console.log(decodedToken);
-    res.json({ ok: true });
+    const userId = req.body;
+    const user = await User.findById(userId);
+    res.json({ user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
@@ -70,9 +65,8 @@ export const login = async (
     if (!findUser) throw new Error("User not found on get user function");
 
     if (!secret) throw new Error("Missing jwt secret");
-    console.log(findUser._id);
+
     const token = jwt.encode({ userId: findUser._id, role: "public" }, secret);
-    // console.log(token);
 
     res.cookie("signedUpUsers", token, {
       maxAge: 24 * 60 * 60 * 1000, //24 hours

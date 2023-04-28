@@ -11,7 +11,7 @@ class User {
     public uid: string = Math.random().toString(36).slice(2)
   ) {}
 
-  static async currentUserFromStorage () {
+  static async currentUserFromStorage() {
     // try {
     //   const getUser = localStorage.getItem("currentUser");
     //   if (getUser) {
@@ -32,6 +32,10 @@ class User {
     //   console.log(error);
     // }
     const getUser = await fetch(`${usersAPI}/user`)
+      .then((res) => res.json())
+      .then(({ user }) => user)
+      .catch((error) => console.error(error));
+    console.log(getUser);
   }
 
   static setCurrentUser(userName: string) {

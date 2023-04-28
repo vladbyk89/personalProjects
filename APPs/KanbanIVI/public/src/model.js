@@ -41,7 +41,11 @@ class User {
             // } catch (error) {
             //   console.log(error);
             // }
-            const getUser = yield fetch(`${usersAPI}/user`);
+            const getUser = yield fetch(`${usersAPI}/user`)
+                .then((res) => res.json())
+                .then(({ user }) => user)
+                .catch((error) => console.error(error));
+            console.log(getUser);
         });
     }
     static setCurrentUser(userName) {

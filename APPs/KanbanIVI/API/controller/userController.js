@@ -44,15 +44,9 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.createUser = createUser;
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (!secret)
-            throw new Error("Missing jwt secret");
-        const token = req.cookies;
-        console.log(token.signedUpUsers);
-        if (!token)
-            throw new Error("Missing token from cookise");
-        const decodedToken = jwt_simple_1.default.decode(token.signedUpUsers, secret);
-        console.log(decodedToken);
-        res.json({ ok: true });
+        const userId = req.body;
+        const user = yield UserModel_1.default.findById(userId);
+        res.json({ user });
     }
     catch (error) {
         console.error(error);
@@ -69,9 +63,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             throw new Error("User not found on get user function");
         if (!secret)
             throw new Error("Missing jwt secret");
-        console.log(findUser._id);
         const token = jwt_simple_1.default.encode({ userId: findUser._id, role: "public" }, secret);
-        // console.log(token);
         res.cookie("signedUpUsers", token, {
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,

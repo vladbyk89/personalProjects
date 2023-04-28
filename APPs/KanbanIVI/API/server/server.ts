@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 const app = express();
 import mongoose from "mongoose";
 import path from "path";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 import { config } from "../config/config";
 import { userRouter } from "../routes/userRoutes";
 import { boardRouter } from "../routes/boardRoutes";
@@ -22,7 +22,7 @@ async function StartServer() {
   app.use(express.static("public"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  app.use(cookieParser())
+  app.use(cookieParser());
 
   //routes
   app.use("/api/v1/users", userRouter);
@@ -37,9 +37,6 @@ async function StartServer() {
     res.sendFile(path.join(__dirname, "../../public", "board.html"));
   });
 
-  app.use("/main", async (req: Request, res: Response, next: NextFunction) => {
-    res.sendFile(path.join(__dirname, "../../public", "main.html"));
-  });
 
   app.listen(config.server.port, () => {
     console.log(`Server is listening on port ${config.server.port}...`);

@@ -46,9 +46,6 @@ function StartServer() {
         app.get("/board", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.sendFile(path_1.default.join(__dirname, "../../public", "board.html"));
         }));
-        app.use("/main", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.sendFile(path_1.default.join(__dirname, "../../public", "main.html"));
-        }));
         app.listen(config_1.config.server.port, () => {
             console.log(`Server is listening on port ${config_1.config.server.port}...`);
         });
