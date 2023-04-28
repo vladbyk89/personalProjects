@@ -9,13 +9,13 @@ import {
   updateUser,
 } from "../controller/userController";
 
-import { cookieAuthintication } from "../middleware/cookieJwtAuthintication";
+import { userCookieAuthentication } from "../middleware/cookieJwtAuthintication";
 
 userRouter.route("/").get(getAllUsers).post(createUser);
 
 userRouter.route("/login").post(login);
 
-userRouter.route("/user").get(cookieAuthintication, getUser);
+userRouter.route("/user").get(userCookieAuthentication, getUser);
 
 userRouter.route("/:id").patch(updateUser).delete(deleteUser);
 

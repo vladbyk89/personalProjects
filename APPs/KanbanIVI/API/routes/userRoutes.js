@@ -11,5 +11,5 @@ const userController_1 = require("../controller/userController");
 const cookieJwtAuthintication_1 = require("../middleware/cookieJwtAuthintication");
 userRouter.route("/").get(userController_1.getAllUsers).post(userController_1.createUser);
 userRouter.route("/login").post(userController_1.login);
-userRouter.route("/user").get(cookieJwtAuthintication_1.cookieAuthintication, userController_1.getUser);
+userRouter.route("/user").get(cookieJwtAuthintication_1.userCookieAuthentication, userController_1.getUser);
 userRouter.route("/:id").patch(userController_1.updateUser).delete(userController_1.deleteUser);

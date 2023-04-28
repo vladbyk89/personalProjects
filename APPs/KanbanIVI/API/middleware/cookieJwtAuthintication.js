@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cookieAuthintication = void 0;
+exports.userCookieAuthentication = void 0;
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
-const cookieAuthintication = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const userCookieAuthentication = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!secret)
             throw new Error("Missing jwt secret");
@@ -31,4 +31,4 @@ const cookieAuthintication = (req, res, next) => __awaiter(void 0, void 0, void 
         res.status(500).json({ error: error.message });
     }
 });
-exports.cookieAuthintication = cookieAuthintication;
+exports.userCookieAuthentication = userCookieAuthentication;

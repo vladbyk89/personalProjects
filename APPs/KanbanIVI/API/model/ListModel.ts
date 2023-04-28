@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-interface List {
+interface ListInterface {
   name: string;
   cardsArray: [string];
   _id: string;
@@ -21,4 +21,4 @@ export const ListSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.model<List>("List", ListSchema);
+export default mongoose.model<ListInterface>("List", ListSchema);

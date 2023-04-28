@@ -53,7 +53,7 @@ exports.UserSchema = new mongoose_1.Schema({
     },
     boardList: {
         type: [BoardModel_1.BoardSchema],
-        default: [],
+        // default: [],
     },
 }, {
     versionKey: false,

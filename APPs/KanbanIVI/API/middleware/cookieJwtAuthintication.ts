@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from "express";
 import jwt from "jwt-simple";
 const secret = process.env.JWT_SECRET;
 
-export const cookieAuthintication = async (
+export const userCookieAuthentication = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -17,6 +17,7 @@ export const cookieAuthintication = async (
     const decodedToken = jwt.decode(token.user, secret);
 
     req.body = decodedToken.userId;
+    
     next();
   } catch (error: any) {
     console.error(error);

@@ -15,12 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBoard = exports.deleteBoard = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
 const BoardModel_1 = __importDefault(require("../model/BoardModel"));
 const UserModel_1 = __importDefault(require("../model/UserModel"));
-const ListModel_1 = __importDefault(require("../model/ListModel"));
 const getAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { boardName, password } = req.body;
-        const board = yield BoardModel_1.default.find({});
-        res.status(200).json({ board });
+        const allBoards = yield BoardModel_1.default.find({});
+        res.status(200).json({ allBoards });
     }
     catch (error) {
         console.error(error);
@@ -29,20 +27,15 @@ const getAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 exports.getAllBoards = getAllBoards;
 const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, imageSrc, userId, listId } = req.body;
+        const { name, imageSrc, userId } = req.body;
         const user = yield UserModel_1.default.findById(userId);
-        const list = yield ListModel_1.default.findById(listId);
-        const board = yield BoardModel_1.default.create({
-            name,
-            imageSrc,
-            userArray: [user],
-            listArray: [list],
-        });
+        // const board = await Board.create({
+        //   name,
+        //   imageSrc,
+        //   userArray: [user],
+        // });
         const boards = yield BoardModel_1.default.find({});
-        res.status(200).json({
-            msg: `Board ${board} is added to:
-    ${boards}`,
-        });
+        res.status(200).json({ user });
     }
     catch (error) {
         console.error(error);
