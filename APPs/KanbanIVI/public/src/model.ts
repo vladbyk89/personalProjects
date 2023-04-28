@@ -1,3 +1,13 @@
+interface UserTemplate {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  userName: string;
+  password: string;
+  email: string;
+  _id: string;
+}
+
 class User {
   constructor(
     public firstName: string,
@@ -34,7 +44,7 @@ class User {
       .then((res) => res.json())
       .then(({ user }) => user)
       .catch((error) => console.error(error));
-    currentUser = getUser;
+    return getUser;
   }
 
   static setCurrentUser(userName: string) {

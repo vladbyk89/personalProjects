@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userCookieAuthentication = void 0;
+exports.boardCookieAuthentication = exports.userCookieAuthentication = void 0;
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
 const userCookieAuthentication = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,3 +32,20 @@ const userCookieAuthentication = (req, res, next) => __awaiter(void 0, void 0, v
     }
 });
 exports.userCookieAuthentication = userCookieAuthentication;
+const boardCookieAuthentication = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!secret)
+            throw new Error("Missing jwt secret");
+        const token = req.cookies;
+        if (!token)
+            throw new Error("Missing token from cookise");
+        const decodedToken = jwt_simple_1.default.decode(token.board, secret);
+        req.body = decodedToken.boardId;
+        next();
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.boardCookieAuthentication = boardCookieAuthentication;

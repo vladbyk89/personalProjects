@@ -149,7 +149,9 @@ function renderBoardsToMain(listOFBoards) {
 function createBoard(boardName, imageSrc) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = currentUser.id;
+            const user = yield User.currentUserFromStorage();
+            const userId = user._id;
+            console.log(userId);
             const newBoard = yield fetch(`${boardsAPI}`, {
                 method: "POST",
                 headers: {
@@ -158,7 +160,7 @@ function createBoard(boardName, imageSrc) {
                 },
                 body: JSON.stringify({ boardName, imageSrc, userId }),
             }).catch((error) => console.error(error));
-            location.href = '/board';
+            location.href = "/board";
             // if (currentUser.boardList.length === 10)
             //   return alert("maxinum amount of boards is 10");
             // if (boardName) {
@@ -178,7 +180,7 @@ function createBoard(boardName, imageSrc) {
             // }
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     });
 }

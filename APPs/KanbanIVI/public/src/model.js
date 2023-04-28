@@ -44,7 +44,7 @@ class User {
                 .then((res) => res.json())
                 .then(({ user }) => user)
                 .catch((error) => console.error(error));
-            currentUser = getUser;
+            return getUser;
         });
     }
     static setCurrentUser(userName) {

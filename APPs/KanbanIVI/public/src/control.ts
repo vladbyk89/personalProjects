@@ -144,7 +144,9 @@ function renderBoardsToMain(listOFBoards: Board[]) {
 
 async function createBoard(boardName: string, imageSrc: string) {
   try {
-    const userId = currentUser.id;
+    const user: UserTemplate = await User.currentUserFromStorage();
+    const userId = user._id;
+    console.log(userId);
     const newBoard = await fetch(`${boardsAPI}`, {
       method: "POST",
       headers: {
@@ -153,8 +155,8 @@ async function createBoard(boardName: string, imageSrc: string) {
       },
       body: JSON.stringify({ boardName, imageSrc, userId }),
     }).catch((error) => console.error(error));
-    
-    location.href = '/board'
+
+    location.href = "/board";
     // if (currentUser.boardList.length === 10)
     //   return alert("maxinum amount of boards is 10");
     // if (boardName) {
@@ -173,7 +175,7 @@ async function createBoard(boardName: string, imageSrc: string) {
     //   alert("Board Name Is Missing");
     // }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 function makeListFunctional(listContainer: HTMLElement) {
