@@ -1,3 +1,5 @@
+const usersAPI = '/api/v1/users';
+
 // Entry Page elements
 const signInForm = document.querySelector("#signInForm") as HTMLFormElement;
 const signUpForm = document.querySelector("#signUpForm") as HTMLFormElement;

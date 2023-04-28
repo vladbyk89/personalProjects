@@ -1,6 +1,6 @@
 "use strict";
 // if user is in index.html run this
-if (window.location.pathname.endsWith("index.html")) {
+if (window.location.pathname.endsWith("/")) {
     window.addEventListener("load", () => {
         if (localStorage.getItem("currentUser")) {
             window.location.href = "main.html";
@@ -13,28 +13,29 @@ if (window.location.pathname.endsWith("index.html")) {
         entryPageMainContainer.classList.remove("active");
     });
     // signUpForm.addEventListener("submit", handleSignUp);
-    signInForm.addEventListener("submit", handleSignIn);
-    signInForm.addEventListener("keydown", (e) => {
-        if (e.key == "Enter") {
-            if (userNameInput.value === "" || passwordInput.value === "") {
-                return;
-            }
-            handleSignIn(e);
-        }
-    });
+    // signInForm.addEventListener("submit", handleSignIn);
+    // signInForm.addEventListener("keydown", (e) => {
+    //   if (e.key == "Enter") {
+    //     if (userNameInput.value === "" || passwordInput.value === "") {
+    //       return;
+    //     }
+    //     handleSignIn(e);
+    //   }
+    // });
 }
 // ---------------------- forgotPassword.html ----------------------
 if (window.location.pathname.endsWith("forgotPassword.html")) {
     recoveryForm.addEventListener("submit", handleRecovery);
 }
 // ---------------------- main.html ----------------------
-if (window.location.pathname.endsWith("main.html")) {
-    window.addEventListener("load", () => {
-        if (!localStorage.getItem("currentUser")) {
-            window.location.href = "index.html";
-        }
-    });
-    renderBoardsToMain(currentUser.boardList);
+if (window.location.pathname.endsWith("/main")) {
+    User.currentUserFromStorage();
+    // window.addEventListener("load", () => {
+    //   if (!localStorage.getItem("currentUser")) {
+    //     window.location.href = "index.html";
+    //   }
+    // });
+    // renderBoardsToMain(currentUser.boardList);
     createBoardWindowBtn.addEventListener("click", () => (newBoardWindow.style.display = "flex"));
     cancelCreateBoardBtn.addEventListener("click", () => (newBoardWindow.style.display = "none"));
     boardImageBtn.addEventListener("click", () => {

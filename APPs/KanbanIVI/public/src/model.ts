@@ -11,26 +11,27 @@ class User {
     public uid: string = Math.random().toString(36).slice(2)
   ) {}
 
-  static currentUserFromStorage() {
-    try {
-      const getUser = localStorage.getItem("currentUser");
-      if (getUser) {
-        const obj: User = JSON.parse(getUser);
-        currentUser = new User(
-          obj.firstName,
-          obj.lastName,
-          obj.gender,
-          obj.userName,
-          obj.password,
-          obj.email,
-          obj.phoneNumber,
-          obj.boardList,
-          obj.uid
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  static async currentUserFromStorage () {
+    // try {
+    //   const getUser = localStorage.getItem("currentUser");
+    //   if (getUser) {
+    //     const obj: User = JSON.parse(getUser);
+    //     currentUser = new User(
+    //       obj.firstName,
+    //       obj.lastName,
+    //       obj.gender,
+    //       obj.userName,
+    //       obj.password,
+    //       obj.email,
+    //       obj.phoneNumber,
+    //       obj.boardList,
+    //       obj.uid
+    //     );
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    const getUser = await fetch(`${usersAPI}/user`)
   }
 
   static setCurrentUser(userName: string) {
@@ -51,7 +52,7 @@ class User {
 }
 
 let currentUser: User;
-User.currentUserFromStorage();
+// User.currentUserFromStorage();
 
 class Board {
   constructor(

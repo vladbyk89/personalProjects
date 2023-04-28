@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 class User {
     constructor(firstName, lastName, gender, userName, password, email, phoneNumber, boardList = [], uid = Math.random().toString(36).slice(2)) {
         this.firstName = firstName;
@@ -12,16 +21,28 @@ class User {
         this.uid = uid;
     }
     static currentUserFromStorage() {
-        try {
-            const getUser = localStorage.getItem("currentUser");
-            if (getUser) {
-                const obj = JSON.parse(getUser);
-                currentUser = new User(obj.firstName, obj.lastName, obj.gender, obj.userName, obj.password, obj.email, obj.phoneNumber, obj.boardList, obj.uid);
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            // try {
+            //   const getUser = localStorage.getItem("currentUser");
+            //   if (getUser) {
+            //     const obj: User = JSON.parse(getUser);
+            //     currentUser = new User(
+            //       obj.firstName,
+            //       obj.lastName,
+            //       obj.gender,
+            //       obj.userName,
+            //       obj.password,
+            //       obj.email,
+            //       obj.phoneNumber,
+            //       obj.boardList,
+            //       obj.uid
+            //     );
+            //   }
+            // } catch (error) {
+            //   console.log(error);
+            // }
+            const getUser = yield fetch(`${usersAPI}/user`);
+        });
     }
     static setCurrentUser(userName) {
         try {
@@ -41,7 +62,7 @@ class User {
     }
 }
 let currentUser;
-User.currentUserFromStorage();
+// User.currentUserFromStorage();
 class Board {
     constructor(name, backgroundImage, lists = [], uid = Math.random().toString(36).slice(2)) {
         this.name = name;

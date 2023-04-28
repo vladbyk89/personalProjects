@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const mongoose_1 = __importDefault(require("mongoose"));
 const path_1 = __importDefault(require("path"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const config_1 = require("../config/config");
 const userRoutes_1 = require("../routes/userRoutes");
 const boardRoutes_1 = require("../routes/boardRoutes");
@@ -34,10 +35,17 @@ function StartServer() {
         app.use(express_1.default.static("public"));
         app.use(express_1.default.json());
         app.use(express_1.default.urlencoded({ extended: false }));
+        app.use((0, cookie_parser_1.default)());
         //routes
         app.use("/api/v1/users", userRoutes_1.userRouter);
         app.use("/api/v1/boards", boardRoutes_1.boardRouter);
         app.use("/api/v1/lists", listRoutes_1.listRouter);
+        app.get("/main", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            res.sendFile(path_1.default.join(__dirname, "../../public", "main.html"));
+        }));
+        app.get("/board", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            res.sendFile(path_1.default.join(__dirname, "../../public", "board.html"));
+        }));
         app.use("/main", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.sendFile(path_1.default.join(__dirname, "../../public", "main.html"));
         }));
