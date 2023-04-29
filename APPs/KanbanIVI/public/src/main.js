@@ -92,7 +92,7 @@ if (window.location.pathname.endsWith("/board")) {
             window.location.href = "/";
         }
     }));
-    addListBtn.addEventListener("click", () => List.createList(newListInput.value));
+    addListBtn.addEventListener("click", () => List.createList(newListInput.value, currentBoard._id));
     editBoardBtn.addEventListener("click", () => {
         // currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src);
         editBoardWindow.style.display = "none";
@@ -145,7 +145,7 @@ if (window.location.pathname.endsWith("/board")) {
     });
     newListInput.addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
-            List.createList(newListInput.value);
+            List.createList(newListInput.value, currentBoard._id);
         }
     });
     trashCan.addEventListener("drop", () => {

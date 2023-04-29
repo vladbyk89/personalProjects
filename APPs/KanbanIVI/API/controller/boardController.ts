@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import Board from "../model/BoardModel";
+import Board, { BoardSchema } from "../model/BoardModel";
 import User from "../model/UserModel";
 import List from "../model/ListModel";
 import jwt from "jwt-simple";
@@ -100,11 +100,14 @@ export const updateBoard = async (
 ) => {
   try {
     const { id: boardId } = req.params;
-    const data = req.body;
-    const boards = await Board.find({});
-    const board = await Board.findById({ _id: boardId });
 
-    res.status(201).json({ boards });
+    const { listId } = req.body;
+    const list = await List.findById(listId);
+
+    const board = await Board.findByIdAndUpdate(boardId, {
+      $push: { listArray: list },
+    });
+    res.status(201).json({ board });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

@@ -35,7 +35,7 @@ class User {
 }
 let currentUser;
 class Board {
-    constructor(name, backgroundImage, lists = [], uid = Math.random().toString(36).slice(2)) {
+    constructor(name, backgroundImage, lists = [], uid = "") {
         this.name = name;
         this.backgroundImage = backgroundImage;
         this.lists = lists;
@@ -100,12 +100,22 @@ class List {
         this.uid = uid;
         this.backColor = backColor;
     }
-    static createList(listName) {
-        if (newListInput.value == "")
-            return;
-        const newList = new List(listName);
-        boardContainer.insertBefore(newList.createListElement(), trashCanDiv);
-        newListInput.value = "";
+    static createList(listName, boardId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (newListInput.value == "")
+                return;
+            yield fetch(`${listsAPI}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ listName }),
+            }).catch((error) => console.error(error));
+            const newList = new List(listName);
+            boardContainer.insertBefore(newList.createListElement(), trashCanDiv);
+            newListInput.value = "";
+        });
     }
     createListElement() {
         const listContainer = document.createElement("div");

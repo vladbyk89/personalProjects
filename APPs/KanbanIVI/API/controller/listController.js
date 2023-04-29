@@ -26,10 +26,9 @@ const getAllLists = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllLists = getAllLists;
 const createList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, cardsArray } = req.body;
-        const list = yield ListModel_1.default.create({ name, cardsArray });
-        const lists = yield ListModel_1.default.find({});
-        res.status(200).json({ lists });
+        const { listName } = req.body;
+        const list = yield ListModel_1.default.create({ listName });
+        res.status(200).json({ list });
     }
     catch (error) {
         console.error(error);

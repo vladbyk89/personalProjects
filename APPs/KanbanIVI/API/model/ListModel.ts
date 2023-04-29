@@ -1,14 +1,14 @@
 import mongoose, { Schema } from "mongoose";
 
 interface ListInterface {
-  name: string;
+  listName: string;
   cardsArray: [string];
   _id: string;
 }
 
 export const ListSchema: Schema = new Schema(
   {
-    name: {
+    listName: {
       type: String,
       required: true,
     },

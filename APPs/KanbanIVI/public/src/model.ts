@@ -47,7 +47,7 @@ class Board {
     public name: string,
     public backgroundImage: string,
     public lists: List[] = [],
-    public uid: string = Math.random().toString(36).slice(2)
+    public uid: string = ""
   ) {}
 
   static async setCurrentBoard(boardId: string) {
@@ -117,12 +117,23 @@ class List {
     public backColor: string = `#${randomColor()}`
   ) {}
 
-  static createList(listName: string) {
+  static async createList(listName: string, boardId: string) {
     if (newListInput.value == "") return;
+
+    await fetch(`${listsAPI}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ listName }),
+    }).catch((error) => console.error(error));
+
     const newList = new List(listName);
     boardContainer.insertBefore(newList.createListElement(), trashCanDiv);
     newListInput.value = "";
   }
+
   createListElement() {
     const listContainer = document.createElement("div");
     listContainer.classList.add("boardContainer__main__list");

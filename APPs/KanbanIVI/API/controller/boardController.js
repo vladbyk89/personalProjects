@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBoard = exports.deleteBoard = exports.getAllUserBoards = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
 const BoardModel_1 = __importDefault(require("../model/BoardModel"));
 const UserModel_1 = __importDefault(require("../model/UserModel"));
+const ListModel_1 = __importDefault(require("../model/ListModel"));
 const secret = process.env.JWT_SECRET;
 const getAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -84,10 +85,12 @@ exports.deleteBoard = deleteBoard;
 const updateBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id: boardId } = req.params;
-        const data = req.body;
-        const boards = yield BoardModel_1.default.find({});
-        const board = yield BoardModel_1.default.findById({ _id: boardId });
-        res.status(201).json({ boards });
+        const { listId } = req.body;
+        const list = yield ListModel_1.default.findById(listId);
+        const board = yield BoardModel_1.default.findByIdAndUpdate(boardId, {
+            $push: { listArray: list },
+        });
+        res.status(201).json({ board });
     }
     catch (error) {
         console.error(error);

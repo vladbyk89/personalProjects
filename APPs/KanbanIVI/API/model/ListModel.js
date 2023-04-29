@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 exports.ListSchema = new mongoose_1.Schema({
-    name: {
+    listName: {
         type: String,
         required: true,
     },

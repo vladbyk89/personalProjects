@@ -20,10 +20,10 @@ export const createList = async (
   next: NextFunction
 ) => {
   try {
-    const { name, cardsArray } = req.body;
-    const list = await List.create({ name, cardsArray });
-    const lists = await List.find({});
-    res.status(200).json({ lists });
+    const { listName } = req.body;
+    const list = await List.create({ listName });
+
+    res.status(200).json({ list });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

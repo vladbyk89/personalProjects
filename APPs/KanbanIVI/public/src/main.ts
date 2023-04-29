@@ -114,7 +114,7 @@ if (window.location.pathname.endsWith("/board")) {
   });
 
   addListBtn.addEventListener("click", () =>
-    List.createList(newListInput.value)
+    List.createList(newListInput.value, currentBoard._id)
   );
 
   editBoardBtn.addEventListener("click", () => {
@@ -180,7 +180,7 @@ if (window.location.pathname.endsWith("/board")) {
   });
   newListInput.addEventListener("keyup", (event) => {
     if (event.key === "Enter") {
-      List.createList(newListInput.value);
+      List.createList(newListInput.value, currentBoard._id);
     }
   });
 
