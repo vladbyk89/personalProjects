@@ -33,13 +33,11 @@ export const boardCookieAuthentication = async (
     if (!secret) throw new Error("Missing jwt secret");
 
     const token = req.cookies;
-    console.log(token);
+
     if (!token) throw new Error("Missing token from cookise");
 
     const decodedToken = jwt.decode(token.board, secret);
-    console.log(decodedToken);
-    console.log(decodedToken.boardId);
-    
+
     req.body = decodedToken.boardId;
 
     next();
