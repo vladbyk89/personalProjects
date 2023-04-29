@@ -229,7 +229,7 @@ function dragginCard(e) {
         else {
             this.insertBefore(curTask, bottomTask);
         }
-        currentBoard.update();
+        // currentBoard.update();
     }
     catch (error) {
         console.log(error);
@@ -249,7 +249,7 @@ function editList() {
             if (event.key === "Enter") {
                 listTitle.replaceChild(listTitleText, editListInput);
                 listTitleText.textContent = editListInput.value.trim();
-                currentBoard.update();
+                // currentBoard.update();
             }
         });
     }
@@ -289,7 +289,7 @@ function createCardElement(cardName, list) {
             });
             cardTitle.replaceWith(editCardInput);
             editCardInput.focus();
-            currentBoard.update();
+            // currentBoard.update();
         });
         card.addEventListener("dragstart", (ev) => {
             card.classList.add("isDragging");
@@ -297,7 +297,7 @@ function createCardElement(cardName, list) {
         card.addEventListener("dragend", () => {
             card.classList.remove("isDragging");
         });
-        currentBoard.update();
+        // currentBoard.update();
         // Add new card to cards variable
         cards = document.querySelectorAll(".boardContainer__main__list__card");
     }
@@ -307,15 +307,15 @@ function createCardElement(cardName, list) {
 }
 function renderBoardInBoardPage() {
     try {
-        boardTitle.textContent = currentBoard.name;
-        boardContainer.style.background = `url(${currentBoard.backgroundImage}) no-repeat center / cover`;
-        currentBoard.lists.forEach((list) => {
-            const listObj = new List(list.name, list.cards, list.uid, list.backColor);
-            const ListElement = listObj.createListElement();
-            list.cards.forEach((card) => {
-                createCardElement(card, ListElement);
-            });
-        });
+        boardTitle.textContent = currentBoard.boardName;
+        boardContainer.style.background = `url(${currentBoard.imageSrc}) no-repeat center / cover`;
+        // currentBoard.listArray.forEach((list) => {
+        //   const listObj = new List(list.name, list.cards, list.uid, list.backColor);
+        //   const ListElement = listObj.createListElement();
+        //   list.cards.forEach((card) => {
+        //     createCardElement(card, ListElement);
+        //   });
+        // });
     }
     catch (error) {
         console.log(error);

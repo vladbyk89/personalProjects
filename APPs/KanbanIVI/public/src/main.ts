@@ -94,9 +94,10 @@ if (window.location.pathname.endsWith("/main")) {
 
     if (target.classList.contains("boardClick")) {
       const board = target.parentElement as HTMLDivElement;
-      if (board) console.log(board.id);
-      Board.setCurrentBoard(board.id);
-      window.location.href = "/board";
+      if (board.id) {
+        await Board.setCurrentBoard(board.id);
+        window.location.href = "/board";
+      }
     }
   });
 }
@@ -104,19 +105,20 @@ if (window.location.pathname.endsWith("/main")) {
 //---------------------- board.html ----------------------
 if (window.location.pathname.endsWith("/board")) {
   window.addEventListener("load", async () => {
-    const currentBoard = await Board.getCurrentBoard();
+    await Board.getCurrentBoard();
+    renderBoardInBoardPage();
+    console.log(currentBoard);
     if (!currentBoard) {
       window.location.href = "/";
     }
   });
-  // renderBoardInBoardPage();
 
   addListBtn.addEventListener("click", () =>
     List.createList(newListInput.value)
   );
 
   editBoardBtn.addEventListener("click", () => {
-    currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src);
+    // currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src);
     editBoardWindow.style.display = "none";
   });
 
@@ -152,7 +154,7 @@ if (window.location.pathname.endsWith("/board")) {
     } else {
       boardContainer.insertBefore(curList, leftList);
     }
-    currentBoard.update();
+    // currentBoard.update();
   });
 
   window.addEventListener("click", (e) => {
@@ -174,7 +176,7 @@ if (window.location.pathname.endsWith("/board")) {
   });
 
   boardContainer.addEventListener("keyup", () => {
-    currentBoard.update();
+    // currentBoard.update();
   });
   newListInput.addEventListener("keyup", (event) => {
     if (event.key === "Enter") {
@@ -187,7 +189,7 @@ if (window.location.pathname.endsWith("/board")) {
     if (confirmDelete) {
       const element = document.querySelector(".isDragging") as HTMLDivElement;
       element.remove();
-      currentBoard.update();
+      // currentBoard.update();
     }
   });
   document.addEventListener("dragover", (event) => {

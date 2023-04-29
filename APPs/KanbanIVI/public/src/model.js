@@ -21,10 +21,15 @@ class User {
     }
     static setCurrentUser() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (currentUser = yield fetch(`${usersAPI}/user`)
-                .then((res) => res.json())
-                .then(({ user }) => user)
-                .catch((error) => console.error(error)));
+            try {
+                return (currentUser = yield fetch(`${usersAPI}/user`)
+                    .then((res) => res.json())
+                    .then(({ user }) => user)
+                    .catch((error) => console.error(error)));
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     }
 }
@@ -38,18 +43,18 @@ class Board {
     }
     static setCurrentBoard(boardId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return (currentBoard = yield fetch(`${boardsAPI}/${boardId}`)
-                .then((res) => res.json())
-                .then(({ board }) => board)
-                .catch((error) => console.error(error)));
+            yield fetch(`${boardsAPI}/${boardId}`, {
+                method: "POST",
+                body: JSON.stringify({ boardId }),
+            }).catch((error) => console.error(error));
         });
     }
     static getCurrentBoard() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (currentBoard = yield fetch(`${boardsAPI}/getBoard`)
+            currentBoard = yield fetch(`${boardsAPI}/getBoard`)
                 .then((res) => res.json())
                 .then(({ board }) => board)
-                .catch((error) => console.error(error)));
+                .catch((error) => console.error(error));
         });
     }
     static deleteBoard(boardId) {
@@ -125,7 +130,7 @@ class List {
         header.style.backgroundColor = this.backColor;
         makeListFunctional(listContainer);
         boardContainer.insertBefore(listContainer, trashCanDiv);
-        currentBoard.update();
+        // currentBoard.update();
         return listContainer;
     }
 }

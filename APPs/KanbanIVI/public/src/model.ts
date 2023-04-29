@@ -22,10 +22,14 @@ class User {
   ) {}
 
   static async setCurrentUser() {
-    return (currentUser = await fetch(`${usersAPI}/user`)
-      .then((res) => res.json())
-      .then(({ user }) => user)
-      .catch((error) => console.error(error)));
+    try {
+      return (currentUser = await fetch(`${usersAPI}/user`)
+        .then((res) => res.json())
+        .then(({ user }) => user)
+        .catch((error) => console.error(error)));
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
@@ -46,18 +50,18 @@ class Board {
     public uid: string = Math.random().toString(36).slice(2)
   ) {}
 
-  static async setCurrentBoard(boardId:string) {
-    return (currentBoard = await fetch(`${boardsAPI}/${boardId}`)
-      .then((res) => res.json())
-      .then(({ board }) => board)
-      .catch((error) => console.error(error)));
+  static async setCurrentBoard(boardId: string) {
+    await fetch(`${boardsAPI}/${boardId}`, {
+      method: "POST",
+      body: JSON.stringify({ boardId }),
+    }).catch((error) => console.error(error));
   }
 
   static async getCurrentBoard() {
-    return (currentBoard = await fetch(`${boardsAPI}/getBoard`)
+    currentBoard =  await fetch(`${boardsAPI}/getBoard`)
       .then((res) => res.json())
       .then(({ board }) => board)
-      .catch((error) => console.error(error)));
+      .catch((error) => console.error(error));
   }
 
   static async deleteBoard(boardId: string) {
@@ -97,7 +101,7 @@ class Board {
   }
 }
 
-let currentBoard: Board;
+let currentBoard: BoardTemplate;
 
 interface ListTemplate {
   name: string;
@@ -143,7 +147,7 @@ class List {
     header.style.backgroundColor = this.backColor;
     makeListFunctional(listContainer);
     boardContainer.insertBefore(listContainer, trashCanDiv);
-    currentBoard.update();
+    // currentBoard.update();
     return listContainer;
   }
 }
