@@ -29,12 +29,12 @@ export const createUser = async (
     if (findUser) return res.send(`Email exists in the system`);
 
     const user = await User.create({
-      firstName,
-      lastName,
-      gender,
+      firstName: firstName.toLowerCase(),
+      lastName: lastName.toLowerCase(),
+      gender: gender.toLowerCase(),
       userName,
       password,
-      email,
+      email: email.toLowerCase(),
     });
 
     if (!secret) throw new Error("Missing jwt secret");
@@ -104,7 +104,7 @@ export const passwordRecovery = async (
 ) => {
   try {
     const { firstName, lastName, userName, email } = req.body;
-
+    console.log(req.body);
     const user = await User.findOne({
       firstName,
       lastName,

@@ -54,7 +54,23 @@ function handleRecovery(e) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             e.preventDefault();
-            const findUser = yield fetch(`${usersAPI}/userPassword`)
+            const firstName = recoveryForm.firstName.value;
+            const lastName = recoveryForm.lastName.value;
+            const userName = recoveryForm.userName.value;
+            const email = recoveryForm.email.value;
+            const findUser = yield fetch(`${usersAPI}/userPassword`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    firstName: firstName.toLowerCase(),
+                    lastName: lastName.toLowerCase(),
+                    userName,
+                    email: email.toLowerCase(),
+                }),
+            })
                 .then((res) => res.json())
                 .then(({ user }) => user);
             if (!findUser)

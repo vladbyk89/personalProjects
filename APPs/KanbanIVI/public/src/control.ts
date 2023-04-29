@@ -45,7 +45,25 @@
 async function handleRecovery(e: Event) {
   try {
     e.preventDefault();
-    const findUser: UserTemplate = await fetch(`${usersAPI}/userPassword`)
+
+    const firstName = recoveryForm.firstName.value;
+    const lastName = recoveryForm.lastName.value;
+    const userName = recoveryForm.userName.value;
+    const email = recoveryForm.email.value;
+
+    const findUser: UserTemplate = await fetch(`${usersAPI}/userPassword`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: firstName.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        userName,
+        email: email.toLowerCase(),
+      }),
+    })
       .then((res) => res.json())
       .then(({ user }) => user);
     if (!findUser) return alert("No such user exists");

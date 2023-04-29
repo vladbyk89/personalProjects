@@ -33,12 +33,12 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (findUser)
             return res.send(`Email exists in the system`);
         const user = yield UserModel_1.default.create({
-            firstName,
-            lastName,
-            gender,
+            firstName: firstName.toLowerCase(),
+            lastName: lastName.toLowerCase(),
+            gender: gender.toLowerCase(),
             userName,
             password,
-            email,
+            email: email.toLowerCase(),
         });
         if (!secret)
             throw new Error("Missing jwt secret");
@@ -92,6 +92,7 @@ exports.login = login;
 const passwordRecovery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, userName, email } = req.body;
+        console.log(req.body);
         const user = yield UserModel_1.default.findOne({
             firstName,
             lastName,
