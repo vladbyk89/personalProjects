@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBoard = exports.deleteBoard = exports.getAllUserBoards = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
 const BoardModel_1 = __importDefault(require("../model/BoardModel"));
 const UserModel_1 = __importDefault(require("../model/UserModel"));
-const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
 const getAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -36,14 +35,8 @@ const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             imageSrc,
             userArray: [user],
         });
-        if (!secret)
-            throw new Error("Missing jwt secret");
-        const token = jwt_simple_1.default.encode({ boardId: board._id, role: "public" }, secret);
-        res.cookie("board", token, {
-            maxAge: 24 * 60 * 60 * 1000,
-            httpOnly: true,
-        });
-        res.status(200).json({ board });
+        req.body = board._id;
+        next();
     }
     catch (error) {
         console.error(error);
@@ -80,8 +73,7 @@ const deleteBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     try {
         const { id: boardId } = req.params;
         const board = yield BoardModel_1.default.deleteOne({ _id: boardId });
-        const boards = yield BoardModel_1.default.find({});
-        res.status(200).send({ boards });
+        res.status(200).send({ ok: true });
     }
     catch (error) {
         console.error(error);

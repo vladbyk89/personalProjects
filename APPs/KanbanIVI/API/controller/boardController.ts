@@ -33,16 +33,8 @@ export const createBoard = async (
       imageSrc,
       userArray: [user],
     });
-
-    if (!secret) throw new Error("Missing jwt secret");
-
-    const token = jwt.encode({ boardId: board._id, role: "public" }, secret);
-
-    res.cookie("board", token, {
-      maxAge: 24 * 60 * 60 * 1000, //24 hours
-      httpOnly: true,
-    });
-    res.status(200).json({ board });
+    req.body = board._id;
+    next();
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
@@ -93,9 +85,8 @@ export const deleteBoard = async (
   try {
     const { id: boardId } = req.params;
     const board = await Board.deleteOne({ _id: boardId });
-    const boards = await Board.find({});
 
-    res.status(200).send({ boards });
+    res.status(200).send({ ok: true });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: error.message });

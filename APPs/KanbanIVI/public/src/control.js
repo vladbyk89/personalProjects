@@ -137,22 +137,19 @@ function checkIfUserExists(userName, password) {
         console.log(error);
     }
 }
-function renderBoardsToMain(userId) {
+function renderBoardsToMain(boards) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield fetch(`${boardsAPI}/${userId}`)
-                .then((res) => res.json())
-                .then(({ boards }) => (boardArea.innerHTML = boards
+            boardArea.innerHTML = boards
                 .map((board) => {
                 return `
-      <div class='board' style="background: url(${board.imageSrc}) center center / cover no-repeat">
+      <div id="${board._id}" class='board' style="background: url(${board.imageSrc}) center center / cover no-repeat">
       <p class="boardClick">${board.boardName}</p>
-      <button class="removeBoard" data-name="${board.boardName}">Delete</button>
+      <button class="removeBoard" data-name="${board._id}">Delete</button>
       </div>
       `;
             })
-                .join("")))
-                .catch((error) => console.error(error));
+                .join("");
         }
         catch (error) {
             console.log(error);

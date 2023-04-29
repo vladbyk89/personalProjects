@@ -46,23 +46,27 @@ class Board {
     public uid: string = Math.random().toString(36).slice(2)
   ) {}
 
-  static async setCurrentBoard() {
+  static async setCurrentBoard(boardId:string) {
+    return (currentBoard = await fetch(`${boardsAPI}/${boardId}`)
+      .then((res) => res.json())
+      .then(({ board }) => board)
+      .catch((error) => console.error(error)));
+  }
+
+  static async getCurrentBoard() {
     return (currentBoard = await fetch(`${boardsAPI}/getBoard`)
       .then((res) => res.json())
       .then(({ board }) => board)
       .catch((error) => console.error(error)));
   }
 
-  static deleteBoard(boardName: string) {
-    // const boardIndex = currentUser.boardList.findIndex(
-    //   (board) => board.name === boardName
-    // );
-    // currentUser.boardList.splice(boardIndex, 1);
-    // localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    // const userList = userListFromStorage();
-    // const findUser = userList.find((user) => user.id === currentUser.id);
-    // if (findUser) findUser.boardList.splice(boardIndex, 1);
-    // localStorage.setItem("signedUpUsers", JSON.stringify(userList));
+  static async deleteBoard(boardId: string) {
+    await fetch(`${boardsAPI}/${boardId}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(({ boards }) => boards)
+      .catch((error) => console.error(error));
   }
 
   update() {

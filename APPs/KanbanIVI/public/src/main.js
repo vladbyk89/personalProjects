@@ -13,7 +13,7 @@ if (window.location.pathname.endsWith("/")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
         currentUser = yield User.setCurrentUser();
         if (currentUser) {
-            window.location.href = "/main";
+            // window.location.href = "/main";
         }
     }));
     signUpPanelBtn.addEventListener("click", () => {
@@ -34,7 +34,8 @@ if (window.location.pathname.endsWith("/main")) {
         if (!currentUser) {
             window.location.href = "/";
         }
-        renderBoardsToMain(currentUser._id);
+        const boards = yield getUserBoards(currentUser._id);
+        renderBoardsToMain(boards);
     }));
     createBoardWindowBtn.addEventListener("click", () => (newBoardWindow.style.display = "flex"));
     cancelCreateBoardBtn.addEventListener("click", () => (newBoardWindow.style.display = "none"));
@@ -49,37 +50,43 @@ if (window.location.pathname.endsWith("/main")) {
         });
     });
     createBoardBtn.addEventListener("click", () => createBoard(newBoardName.value, imageDisplayedInCreate.src.toString(), currentUser._id));
-    searchBar.addEventListener("keyup", () => {
+    searchBar.addEventListener("keyup", () => __awaiter(void 0, void 0, void 0, function* () {
+        const boards = yield getUserBoards(currentUser._id);
         if (searchBar.value != "") {
             boardArea.innerHTML = "";
-            const listToDisplay = currentUser.boardList.filter((ele) => ele.boardName.toLowerCase().includes(searchBar.value));
+            const listToDisplay = boards.filter((ele) => ele.boardName.toLowerCase().includes(searchBar.value));
             if (listToDisplay) {
-                // renderBoardsToMain(listToDisplay);
+                renderBoardsToMain(listToDisplay);
             }
         }
         else {
-            // renderBoardsToMain(currentUser.boardList);
+            renderBoardsToMain(boards);
         }
-    });
-    boardArea.addEventListener("click", (e) => {
+    }));
+    boardArea.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, function* () {
         const target = e.target;
         if (target.dataset.name) {
             const check = confirm("Are you sure you want to delete?");
-            if (check)
-                Board.deleteBoard(target.dataset.name);
-            // renderBoardsToMain(currentUser.boardList);
+            if (check) {
+                yield Board.deleteBoard(target.dataset.name);
+                const boards = yield getUserBoards(currentUser._id);
+                renderBoardsToMain(boards);
+            }
         }
         if (target.classList.contains("boardClick")) {
-            // Board.setCurrentBoard(target.innerHTML);
-            window.location.href = "board.html";
+            const board = target.parentElement;
+            if (board)
+                console.log(board.id);
+            Board.setCurrentBoard(board.id);
+            window.location.href = "/board";
         }
-    });
+    }));
 }
 //---------------------- board.html ----------------------
 if (window.location.pathname.endsWith("/board")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        const currentBoard = yield Board.setCurrentBoard();
-        if (!currentUser) {
+        const currentBoard = yield Board.getCurrentBoard();
+        if (!currentBoard) {
             window.location.href = "/";
         }
     }));

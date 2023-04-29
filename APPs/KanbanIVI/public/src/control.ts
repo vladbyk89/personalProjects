@@ -74,7 +74,7 @@ async function handleRecovery(e: Event) {
   }
 }
 
-function displayProfile(user: User) {
+function displayProfile(user: UserTemplate) {
   try {
     profileWindow.style.display = "flex";
     if (user) {
@@ -131,24 +131,18 @@ function checkIfUserExists(userName: string, password: string) {
   }
 }
 
-async function renderBoardsToMain(userId: string) {
+async function renderBoardsToMain(boards: BoardTemplate[]) {
   try {
-    await fetch(`${boardsAPI}/${userId}`)
-      .then((res) => res.json())
-      .then(
-        ({ boards }) =>
-          (boardArea.innerHTML = boards
-            .map((board: BoardTemplate) => {
-              return `
-      <div class='board' style="background: url(${board.imageSrc}) center center / cover no-repeat">
+    boardArea.innerHTML = boards
+      .map((board: BoardTemplate) => {
+        return `
+      <div id="${board._id}" class='board' style="background: url(${board.imageSrc}) center center / cover no-repeat">
       <p class="boardClick">${board.boardName}</p>
-      <button class="removeBoard" data-name="${board.boardName}">Delete</button>
+      <button class="removeBoard" data-name="${board._id}">Delete</button>
       </div>
       `;
-            })
-            .join(""))
-      )
-      .catch((error) => console.error(error));
+      })
+      .join("");
   } catch (error) {
     console.log(error);
   }
@@ -190,6 +184,7 @@ async function createBoard(
     console.error(error);
   }
 }
+
 function makeListFunctional(listContainer: HTMLElement) {
   try {
     listContainer.addEventListener("dragstart", (ev) => {

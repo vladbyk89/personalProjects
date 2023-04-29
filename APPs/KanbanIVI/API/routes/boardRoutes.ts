@@ -12,10 +12,17 @@ import {
 
 import { boardCookieAuthentication } from "../middleware/cookieJwtAuthintication";
 
-boardRouter.route("/").get(getAllBoards).post(createBoard);
+import { setBoardCookie } from "../middleware/setCookieJWT";
+
+boardRouter.route("/").get(getAllBoards).post(createBoard, setBoardCookie);
 
 boardRouter.route("/getBoard").get(boardCookieAuthentication, getBoard);
 
-boardRouter.route("/:id").get(getAllUserBoards).patch(updateBoard).delete(deleteBoard);
+boardRouter
+  .route("/:id")
+  .get(getAllUserBoards)
+  .post(setBoardCookie)
+  .patch(updateBoard)
+  .delete(deleteBoard);
 
 export { boardRouter };

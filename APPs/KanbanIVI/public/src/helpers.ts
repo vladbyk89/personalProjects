@@ -63,3 +63,10 @@ function checkIfEmailExists(email: string) {
 }
 
 const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+
+async function getUserBoards(userId: string) {
+  return await fetch(`${boardsAPI}/${userId}`)
+    .then((res) => res.json())
+    .then(({ boards }) => boards)
+    .catch((error) => console.error(error));
+}

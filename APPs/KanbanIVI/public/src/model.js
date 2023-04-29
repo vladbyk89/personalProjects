@@ -36,7 +36,15 @@ class Board {
         this.lists = lists;
         this.uid = uid;
     }
-    static setCurrentBoard() {
+    static setCurrentBoard(boardId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (currentBoard = yield fetch(`${boardsAPI}/${boardId}`)
+                .then((res) => res.json())
+                .then(({ board }) => board)
+                .catch((error) => console.error(error)));
+        });
+    }
+    static getCurrentBoard() {
         return __awaiter(this, void 0, void 0, function* () {
             return (currentBoard = yield fetch(`${boardsAPI}/getBoard`)
                 .then((res) => res.json())
@@ -44,16 +52,15 @@ class Board {
                 .catch((error) => console.error(error)));
         });
     }
-    static deleteBoard(boardName) {
-        // const boardIndex = currentUser.boardList.findIndex(
-        //   (board) => board.name === boardName
-        // );
-        // currentUser.boardList.splice(boardIndex, 1);
-        // localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        // const userList = userListFromStorage();
-        // const findUser = userList.find((user) => user.id === currentUser.id);
-        // if (findUser) findUser.boardList.splice(boardIndex, 1);
-        // localStorage.setItem("signedUpUsers", JSON.stringify(userList));
+    static deleteBoard(boardId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield fetch(`${boardsAPI}/${boardId}`, {
+                method: "DELETE",
+            })
+                .then((res) => res.json())
+                .then(({ boards }) => boards)
+                .catch((error) => console.error(error));
+        });
     }
     update() {
         this.lists = [];

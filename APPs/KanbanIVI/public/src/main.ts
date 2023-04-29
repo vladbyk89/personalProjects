@@ -3,7 +3,7 @@ if (window.location.pathname.endsWith("/")) {
   window.addEventListener("load", async () => {
     currentUser = await User.setCurrentUser();
     if (currentUser) {
-      window.location.href = "/main";
+      // window.location.href = "/main";
     }
   });
   signUpPanelBtn.addEventListener("click", () => {
@@ -27,7 +27,8 @@ if (window.location.pathname.endsWith("/main")) {
     if (!currentUser) {
       window.location.href = "/";
     }
-    renderBoardsToMain(currentUser._id);
+    const boards: BoardTemplate[] = await getUserBoards(currentUser._id);
+    renderBoardsToMain(boards);
   });
 
   createBoardWindowBtn.addEventListener(
@@ -63,31 +64,39 @@ if (window.location.pathname.endsWith("/main")) {
     )
   );
 
-  searchBar.addEventListener("keyup", () => {
+  searchBar.addEventListener("keyup", async () => {
+    const boards: BoardTemplate[] = await getUserBoards(currentUser._id);
+
     if (searchBar.value != "") {
       boardArea.innerHTML = "";
-      const listToDisplay: BoardTemplate[] = currentUser.boardList.filter(
-        (ele) => ele.boardName.toLowerCase().includes(searchBar.value)
+
+      const listToDisplay: BoardTemplate[] = boards.filter((ele) =>
+        ele.boardName.toLowerCase().includes(searchBar.value)
       );
       if (listToDisplay) {
-        // renderBoardsToMain(listToDisplay);
+        renderBoardsToMain(listToDisplay);
       }
     } else {
-      // renderBoardsToMain(currentUser.boardList);
+      renderBoardsToMain(boards);
     }
   });
 
-  boardArea.addEventListener("click", (e) => {
+  boardArea.addEventListener("click", async (e) => {
     const target = e.target as HTMLElement;
     if (target.dataset.name) {
       const check = confirm("Are you sure you want to delete?");
-      if (check) Board.deleteBoard(target.dataset.name);
-      // renderBoardsToMain(currentUser.boardList);
+      if (check) {
+        await Board.deleteBoard(target.dataset.name);
+        const boards = await getUserBoards(currentUser._id);
+        renderBoardsToMain(boards);
+      }
     }
 
     if (target.classList.contains("boardClick")) {
-      // Board.setCurrentBoard(target.innerHTML);
-      window.location.href = "board.html";
+      const board = target.parentElement as HTMLDivElement;
+      if (board) console.log(board.id);
+      Board.setCurrentBoard(board.id);
+      window.location.href = "/board";
     }
   });
 }
@@ -95,8 +104,8 @@ if (window.location.pathname.endsWith("/main")) {
 //---------------------- board.html ----------------------
 if (window.location.pathname.endsWith("/board")) {
   window.addEventListener("load", async () => {
-    const currentBoard = await Board.setCurrentBoard();
-    if (!currentUser) {
+    const currentBoard = await Board.getCurrentBoard();
+    if (!currentBoard) {
       window.location.href = "/";
     }
   });
