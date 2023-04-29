@@ -8,7 +8,6 @@ export const userCookieAuthentication = async (
   next: NextFunction
 ) => {
   try {
-
     if (!secret) throw new Error("Missing jwt secret");
     const token = req.cookies;
 
@@ -17,7 +16,7 @@ export const userCookieAuthentication = async (
     const decodedToken = jwt.decode(token.user, secret);
 
     req.body = decodedToken.userId;
-    
+
     next();
   } catch (error: any) {
     console.error(error);
@@ -31,8 +30,8 @@ export const boardCookieAuthentication = async (
   next: NextFunction
 ) => {
   try {
-
     if (!secret) throw new Error("Missing jwt secret");
+
     const token = req.cookies;
 
     if (!token) throw new Error("Missing token from cookise");
@@ -40,7 +39,7 @@ export const boardCookieAuthentication = async (
     const decodedToken = jwt.decode(token.board, secret);
 
     req.body = decodedToken.boardId;
-    
+
     next();
   } catch (error: any) {
     console.error(error);

@@ -19,53 +19,16 @@ class User {
         this.boardList = boardList;
         this.id = id;
     }
-    static currentUserFromStorage() {
+    static setCurrentUser() {
         return __awaiter(this, void 0, void 0, function* () {
-            // try {
-            //   const getUser = localStorage.getItem("currentUser");
-            //   if (getUser) {
-            //     const obj: User = JSON.parse(getUser);
-            //     currentUser = new User(
-            //       obj.firstName,
-            //       obj.lastName,
-            //       obj.gender,
-            //       obj.userName,
-            //       obj.password,
-            //       obj.email,
-            //       obj.phoneNumber,
-            //       obj.boardList,
-            //       obj.uid
-            //     );
-            //   }
-            // } catch (error) {
-            //   console.log(error);
-            // }
-            const getUser = yield fetch(`${usersAPI}/user`)
+            return (currentUser = yield fetch(`${usersAPI}/user`)
                 .then((res) => res.json())
                 .then(({ user }) => user)
-                .catch((error) => console.error(error));
-            return getUser;
+                .catch((error) => console.error(error)));
         });
-    }
-    static setCurrentUser(userName) {
-        try {
-            const getLocalStorage = localStorage.getItem("signedUpUsers");
-            if (getLocalStorage) {
-                const usersList = JSON.parse(getLocalStorage);
-                const findUser = usersList.find((user) => user.userName === userName);
-                if (findUser) {
-                    currentUser = findUser;
-                    localStorage.setItem("currentUser", JSON.stringify(findUser));
-                }
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
     }
 }
 let currentUser;
-// User.currentUserFromStorage();
 class Board {
     constructor(name, backgroundImage, lists = [], uid = Math.random().toString(36).slice(2)) {
         this.name = name;
@@ -73,26 +36,13 @@ class Board {
         this.lists = lists;
         this.uid = uid;
     }
-    static getCurrentBoardFromStorage() {
-        try {
-            const getBoard = localStorage.getItem("currentBoard");
-            if (getBoard) {
-                const obj = JSON.parse(getBoard);
-                currentBoard = new Board(obj.name, obj.backgroundImage, obj.lists, obj.uid);
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
-    static setCurrentBoard(boardName) {
-        try {
-            const findBoard = currentUser.boardList.find((board) => board.name === boardName);
-            localStorage.setItem("currentBoard", JSON.stringify(findBoard));
-        }
-        catch (error) {
-            console.log(error);
-        }
+    static setCurrentBoard() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (currentBoard = yield fetch(`${boardsAPI}/getBoard`)
+                .then((res) => res.json())
+                .then(({ board }) => board)
+                .catch((error) => console.error(error)));
+        });
     }
     static deleteBoard(boardName) {
         const boardIndex = currentUser.boardList.findIndex((board) => board.name === boardName);
@@ -130,7 +80,6 @@ class Board {
     }
 }
 let currentBoard;
-Board.getCurrentBoardFromStorage();
 class List {
     constructor(name, cards = [], uid = Math.random().toString(36).slice(2), backColor = `#${randomColor()}`) {
         this.name = name;

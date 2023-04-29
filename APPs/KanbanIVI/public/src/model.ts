@@ -20,53 +20,20 @@ class User {
     public id: string = ""
   ) {}
 
-  static async currentUserFromStorage() {
-    // try {
-    //   const getUser = localStorage.getItem("currentUser");
-    //   if (getUser) {
-    //     const obj: User = JSON.parse(getUser);
-    //     currentUser = new User(
-    //       obj.firstName,
-    //       obj.lastName,
-    //       obj.gender,
-    //       obj.userName,
-    //       obj.password,
-    //       obj.email,
-    //       obj.phoneNumber,
-    //       obj.boardList,
-    //       obj.uid
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    const getUser = await fetch(`${usersAPI}/user`)
+  static async setCurrentUser() {
+    return (currentUser = await fetch(`${usersAPI}/user`)
       .then((res) => res.json())
       .then(({ user }) => user)
-      .catch((error) => console.error(error));
-    return getUser;
-  }
-
-  static setCurrentUser(userName: string) {
-    try {
-      const getLocalStorage = localStorage.getItem("signedUpUsers");
-      if (getLocalStorage) {
-        const usersList = JSON.parse(getLocalStorage) as User[];
-        const findUser = usersList.find((user) => user.userName === userName);
-        if (findUser) {
-          currentUser = findUser as User;
-          localStorage.setItem("currentUser", JSON.stringify(findUser));
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      .catch((error) => console.error(error)));
   }
 }
 
 let currentUser: User;
-// User.currentUserFromStorage();
 
+interface BoardTemplate {
+  name: string;
+  
+}
 class Board {
   constructor(
     public name: string,
@@ -75,32 +42,11 @@ class Board {
     public uid: string = Math.random().toString(36).slice(2)
   ) {}
 
-  static getCurrentBoardFromStorage() {
-    try {
-      const getBoard = localStorage.getItem("currentBoard");
-      if (getBoard) {
-        const obj = JSON.parse(getBoard);
-        currentBoard = new Board(
-          obj.name,
-          obj.backgroundImage,
-          obj.lists,
-          obj.uid
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  static setCurrentBoard(boardName: string) {
-    try {
-      const findBoard = currentUser.boardList.find(
-        (board) => board.name === boardName
-      );
-      localStorage.setItem("currentBoard", JSON.stringify(findBoard));
-    } catch (error) {
-      console.log(error);
-    }
+  static async setCurrentBoard() {
+    return (currentBoard = await fetch(`${boardsAPI}/getBoard`)
+      .then((res) => res.json())
+      .then(({ board }) => board)
+      .catch((error) => console.error(error)));
   }
 
   static deleteBoard(boardName: string) {
@@ -144,7 +90,6 @@ class Board {
 }
 
 let currentBoard: Board;
-Board.getCurrentBoardFromStorage();
 
 class List {
   constructor(

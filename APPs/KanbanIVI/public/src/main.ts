@@ -33,7 +33,7 @@ if (window.location.pathname.endsWith("forgotPassword.html")) {
 
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
-  User.currentUserFromStorage();
+  User.setCurrentUser();
   // window.addEventListener("load", () => {
   //   if (!localStorage.getItem("currentUser")) {
   //     window.location.href = "index.html";
@@ -91,20 +91,21 @@ if (window.location.pathname.endsWith("/main")) {
     }
 
     if (target.classList.contains("boardClick")) {
-      Board.setCurrentBoard(target.innerHTML);
+      // Board.setCurrentBoard(target.innerHTML);
       window.location.href = "board.html";
     }
   });
 }
 
 //---------------------- board.html ----------------------
-if (window.location.pathname.endsWith("board.html")) {
-  window.addEventListener("load", () => {
-    if (!localStorage.getItem("currentUser")) {
-      window.location.href = "index.html";
+if (window.location.pathname.endsWith("/board")) {
+  window.addEventListener("load", async () => {
+    const currentBoard = await Board.setCurrentBoard();
+    if (!currentUser) {
+      window.location.href = "/";
     }
   });
-  renderBoardInBoardPage();
+  // renderBoardInBoardPage();
 
   addListBtn.addEventListener("click", () =>
     List.createList(newListInput.value)

@@ -149,9 +149,8 @@ function renderBoardsToMain(listOFBoards) {
 function createBoard(boardName, imageSrc) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield User.currentUserFromStorage();
+            const user = yield User.setCurrentUser();
             const userId = user._id;
-            console.log(userId);
             const newBoard = yield fetch(`${boardsAPI}`, {
                 method: "POST",
                 headers: {

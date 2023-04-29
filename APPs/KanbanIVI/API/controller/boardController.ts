@@ -42,7 +42,7 @@ export const createBoard = async (
       maxAge: 24 * 60 * 60 * 1000, //24 hours
       httpOnly: true,
     });
-    res.status(200).json({ ok: true });
+    res.status(200).json({ board });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
@@ -55,8 +55,10 @@ export const getBoard = async (
   next: NextFunction
 ) => {
   try {
-    const { boardId } = req.body;
+    const boardId = req.body;
+
     const board = await Board.findById(boardId);
+
     res.status(200).json({ board });
   } catch (error: any) {
     console.error(error);

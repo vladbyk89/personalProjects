@@ -43,7 +43,7 @@ const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
         });
-        res.status(200).json({ ok: true });
+        res.status(200).json({ board });
     }
     catch (error) {
         console.error(error);
@@ -53,7 +53,7 @@ const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.createBoard = createBoard;
 const getBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { boardId } = req.body;
+        const boardId = req.body;
         const board = yield BoardModel_1.default.findById(boardId);
         res.status(200).json({ board });
     }
