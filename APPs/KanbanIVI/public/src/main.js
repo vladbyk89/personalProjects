@@ -33,7 +33,7 @@ if (window.location.pathname.endsWith("/")) {
     // });
 }
 // ---------------------- forgotPassword.html ----------------------
-if (window.location.pathname.endsWith("forgotPassword.html")) {
+if (window.location.pathname.endsWith("/passwordRecovery")) {
     recoveryForm.addEventListener("submit", handleRecovery);
 }
 // ---------------------- main.html ----------------------

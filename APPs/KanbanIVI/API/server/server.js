@@ -46,6 +46,9 @@ function StartServer() {
         app.get("/board", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.sendFile(path_1.default.join(__dirname, "../../public", "board.html"));
         }));
+        app.get("/passwordRecovery", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            res.sendFile(path_1.default.join(__dirname, "../../public", "forgotPassword.html"));
+        }));
         app.listen(config_1.config.server.port, () => {
             console.log(`Server is listening on port ${config_1.config.server.port}...`);
         });

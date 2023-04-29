@@ -37,6 +37,12 @@ async function StartServer() {
     res.sendFile(path.join(__dirname, "../../public", "board.html"));
   });
 
+  app.get(
+    "/passwordRecovery",
+    async (req: Request, res: Response, next: NextFunction) => {
+      res.sendFile(path.join(__dirname, "../../public", "forgotPassword.html"));
+    }
+  );
 
   app.listen(config.server.port, () => {
     console.log(`Server is listening on port ${config.server.port}...`);

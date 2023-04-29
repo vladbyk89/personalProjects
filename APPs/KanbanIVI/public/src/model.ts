@@ -32,7 +32,10 @@ let currentUser: User;
 
 interface BoardTemplate {
   name: string;
-  
+  imageSrc: string;
+  userArray: [UserTemplate];
+  listArray: [ListTemplate];
+  _id: string;
 }
 class Board {
   constructor(
@@ -90,6 +93,12 @@ class Board {
 }
 
 let currentBoard: Board;
+
+interface ListTemplate {
+  name: string;
+  cardsArray: [string];
+  _id: string;
+}
 
 class List {
   constructor(

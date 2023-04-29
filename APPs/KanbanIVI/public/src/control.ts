@@ -42,24 +42,12 @@
 //   }
 // }
 
-function handleRecovery(e: Event) {
+async function handleRecovery(e: Event) {
   try {
     e.preventDefault();
-    const firstName = recoveryForm.firstName.value;
-    const lastName = recoveryForm.lastName.value;
-    const userName = recoveryForm.userName.value;
-    const email = recoveryForm.email.value;
-    const phone = recoveryForm.phoneNumber.value;
-    const arr = [firstName, lastName, userName, email, phone];
-    if (arr.some((ele) => ele == "")) return alert("missing field");
-    const userList = userListFromStorage();
-    const findUser = userList.find(
-      (user) =>
-        user.userName == userName ||
-        user.firstName == firstName ||
-        user.lastName == lastName ||
-        user.email == email
-    );
+    const findUser: UserTemplate = await fetch(`${usersAPI}/userPassword`)
+      .then((res) => res.json())
+      .then(({ user }) => user);
     if (!findUser) return alert("No such user exists");
     recoveredPassword.textContent = findUser.password;
     passwordDisplayDiv.style.display = "flex";

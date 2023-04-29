@@ -51,29 +51,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 //   }
 // }
 function handleRecovery(e) {
-    try {
-        e.preventDefault();
-        const firstName = recoveryForm.firstName.value;
-        const lastName = recoveryForm.lastName.value;
-        const userName = recoveryForm.userName.value;
-        const email = recoveryForm.email.value;
-        const phone = recoveryForm.phoneNumber.value;
-        const arr = [firstName, lastName, userName, email, phone];
-        if (arr.some((ele) => ele == ""))
-            return alert("missing field");
-        const userList = userListFromStorage();
-        const findUser = userList.find((user) => user.userName == userName ||
-            user.firstName == firstName ||
-            user.lastName == lastName ||
-            user.email == email);
-        if (!findUser)
-            return alert("No such user exists");
-        recoveredPassword.textContent = findUser.password;
-        passwordDisplayDiv.style.display = "flex";
-    }
-    catch (error) {
-        console.log(error);
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            e.preventDefault();
+            const findUser = yield fetch(`${usersAPI}/userPassword`)
+                .then((res) => res.json())
+                .then(({ user }) => user);
+            if (!findUser)
+                return alert("No such user exists");
+            recoveredPassword.textContent = findUser.password;
+            passwordDisplayDiv.style.display = "flex";
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
 }
 function displayProfile(user) {
     try {

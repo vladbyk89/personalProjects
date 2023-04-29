@@ -24,7 +24,6 @@ export const createUser = async (
   try {
     const { firstName, lastName, gender, userName, password, email } = req.body;
 
-    
     const findUser = await User.findOne({ email });
 
     if (findUser) return res.send(`Email exists in the system`);
@@ -38,7 +37,6 @@ export const createUser = async (
       email,
     });
 
-    
     if (!secret) throw new Error("Missing jwt secret");
 
     const token = jwt.encode({ userId: user._id, role: "public" }, secret);
@@ -93,6 +91,30 @@ export const login = async (
       httpOnly: true,
     });
     res.redirect("/main");
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const passwordRecovery = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { firstName, lastName, userName, email } = req.body;
+
+    const user = await User.findOne({
+      firstName,
+      lastName,
+      userName,
+      email,
+    });
+
+    if (!user) throw new Error("User not found, check entered data");
+
+    res.status(200).send({ user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

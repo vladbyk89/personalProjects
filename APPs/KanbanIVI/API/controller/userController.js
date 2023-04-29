@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.deleteUser = exports.login = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.login = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const UserModel_1 = __importDefault(require("../model/UserModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
@@ -89,6 +89,25 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.login = login;
+const passwordRecovery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { firstName, lastName, userName, email } = req.body;
+        const user = yield UserModel_1.default.findOne({
+            firstName,
+            lastName,
+            userName,
+            email,
+        });
+        if (!user)
+            throw new Error("User not found, check entered data");
+        res.status(200).send({ user });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.passwordRecovery = passwordRecovery;
 const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id: userId } = req.params;
