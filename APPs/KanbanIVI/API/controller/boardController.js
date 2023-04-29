@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBoard = exports.deleteBoard = exports.getAllUserBoards = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
+exports.updateBoard = exports.addListToBoard = exports.deleteBoard = exports.getAllUserBoards = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
 const BoardModel_1 = __importDefault(require("../model/BoardModel"));
 const UserModel_1 = __importDefault(require("../model/UserModel"));
 const ListModel_1 = __importDefault(require("../model/ListModel"));
@@ -82,14 +82,28 @@ const deleteBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.deleteBoard = deleteBoard;
+const addListToBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { boardId, listId } = req.body;
+        const list = yield ListModel_1.default.findById(listId);
+        yield BoardModel_1.default.findByIdAndUpdate(boardId, {
+            $push: { listArray: list },
+        });
+        const board = yield BoardModel_1.default.findById(boardId);
+        res.status(201).json({ board });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.addListToBoard = addListToBoard;
 const updateBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id: boardId } = req.params;
-        const { listId } = req.body;
-        const list = yield ListModel_1.default.findById(listId);
-        const board = yield BoardModel_1.default.findByIdAndUpdate(boardId, {
-            $push: { listArray: list },
-        });
+        const { boardName, imageSrc } = req.body;
+        yield BoardModel_1.default.findByIdAndUpdate(boardId, { boardName, imageSrc });
+        const board = yield BoardModel_1.default.findById(boardId);
         res.status(201).json({ board });
     }
     catch (error) {

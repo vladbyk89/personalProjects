@@ -83,13 +83,22 @@ class Board {
         localStorage.setItem("currentBoard", JSON.stringify(this));
         // updateUserBoardList(currentUser, this);
     }
-    edit(newName, imageSrc) {
-        this.name = newName;
-        this.backgroundImage = imageSrc;
-        localStorage.setItem("currentBoard", JSON.stringify(this));
-        boardTitle.textContent = newName;
-        boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
-        // updateUserBoardList(currentUser, this);
+    static edit(boardName, imageSrc, boardId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // this.name = newName;
+            // this.backgroundImage = imageSrc;
+            yield fetch(`${boardsAPI}/${boardId}`, {
+                method: "PATCH",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ boardName, imageSrc, boardId }),
+            });
+            boardTitle.textContent = boardName;
+            boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
+            // updateUserBoardList(currentUser, this);
+        });
     }
 }
 let currentBoard;

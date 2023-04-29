@@ -5,9 +5,10 @@ import {
   getAllBoards,
   createBoard,
   getBoard,
+  updateBoard,
   getAllUserBoards,
   deleteBoard,
-  updateBoard,
+  addListToBoard,
 } from "../controller/boardController";
 
 import { boardCookieAuthentication } from "../middleware/cookieJwtAuthintication";
@@ -17,6 +18,8 @@ import { setBoardCookie } from "../middleware/setCookieJWT";
 boardRouter.route("/").get(getAllBoards).post(createBoard, setBoardCookie);
 
 boardRouter.route("/getBoard").get(boardCookieAuthentication, getBoard);
+
+boardRouter.route("/addList").patch(addListToBoard);
 
 boardRouter
   .route("/:id")

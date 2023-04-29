@@ -93,6 +93,28 @@ export const deleteBoard = async (
   }
 };
 
+export const addListToBoard = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { boardId, listId } = req.body;
+
+    const list = await List.findById(listId);
+
+    await Board.findByIdAndUpdate(boardId, {
+      $push: { listArray: list },
+    });
+
+    const board = await Board.findById(boardId);
+    res.status(201).json({ board });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
 export const updateBoard = async (
   req: Request,
   res: Response,
@@ -100,13 +122,13 @@ export const updateBoard = async (
 ) => {
   try {
     const { id: boardId } = req.params;
+    
+    const { boardName, imageSrc } = req.body;
 
-    const { listId } = req.body;
-    const list = await List.findById(listId);
+    await Board.findByIdAndUpdate(boardId, { boardName, imageSrc });
 
-    const board = await Board.findByIdAndUpdate(boardId, {
-      $push: { listArray: list },
-    });
+    const board = await Board.findById(boardId);
+
     res.status(201).json({ board });
   } catch (error: any) {
     console.error(error);

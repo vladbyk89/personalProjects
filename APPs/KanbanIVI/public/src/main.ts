@@ -118,7 +118,7 @@ if (window.location.pathname.endsWith("/board")) {
   );
 
   editBoardBtn.addEventListener("click", () => {
-    // currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src);
+    Board.edit(nameInputEle.value, imageDisplayedInEdit.src, currentBoard._id);
     editBoardWindow.style.display = "none";
   });
 

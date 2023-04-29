@@ -12,6 +12,7 @@ const cookieJwtAuthintication_1 = require("../middleware/cookieJwtAuthintication
 const setCookieJWT_1 = require("../middleware/setCookieJWT");
 boardRouter.route("/").get(boardController_1.getAllBoards).post(boardController_1.createBoard, setCookieJWT_1.setBoardCookie);
 boardRouter.route("/getBoard").get(cookieJwtAuthintication_1.boardCookieAuthentication, boardController_1.getBoard);
+boardRouter.route("/addList").patch(boardController_1.addListToBoard);
 boardRouter
     .route("/:id")
     .get(boardController_1.getAllUserBoards)

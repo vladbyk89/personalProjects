@@ -91,11 +91,18 @@ class Board {
     // updateUserBoardList(currentUser, this);
   }
 
-  edit(newName: string, imageSrc: string) {
-    this.name = newName;
-    this.backgroundImage = imageSrc;
-    localStorage.setItem("currentBoard", JSON.stringify(this));
-    boardTitle.textContent = newName;
+  static async edit(boardName: string, imageSrc: string, boardId: string) {
+    // this.name = newName;
+    // this.backgroundImage = imageSrc;
+    await fetch(`${boardsAPI}/${boardId}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ boardName, imageSrc, boardId }),
+    });
+    boardTitle.textContent = boardName;
     boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
     // updateUserBoardList(currentUser, this);
   }
