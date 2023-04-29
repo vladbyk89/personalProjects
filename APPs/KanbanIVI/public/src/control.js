@@ -113,11 +113,11 @@ function updateUserBoardList(userToUpdate, boardToUpdate) {
                 if (findBoard) {
                     const boardIndex = findUser.boardList.indexOf(findBoard);
                     findUser.boardList[boardIndex] = boardToUpdate;
-                    currentUser.boardList[boardIndex] = boardToUpdate;
+                    // currentUser.boardList[boardIndex] = boardToUpdate;
                 }
                 else {
                     findUser.boardList.unshift(boardToUpdate);
-                    currentUser.boardList.unshift(boardToUpdate);
+                    // currentUser.boardList.unshift(boardToUpdate);
                 }
             }
             localStorage.setItem("signedUpUsers", JSON.stringify(userList));
@@ -137,28 +137,40 @@ function checkIfUserExists(userName, password) {
         console.log(error);
     }
 }
-function renderBoardsToMain(listOFBoards) {
-    try {
-        boardArea.innerHTML = listOFBoards
-            .map((board) => {
-            return `
-      <div class='board' style="background: url(${board.backgroundImage}) center center / cover no-repeat">
-      <p class="boardClick">${board.name}</p>
-      <button class="removeBoard" data-name="${board.name}">Delete</button>
-      </div>
-      `;
-        })
-            .join("");
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-function createBoard(boardName, imageSrc) {
+function renderBoardsToMain(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield User.setCurrentUser();
-            const userId = user._id;
+            yield fetch(`${boardsAPI}/${userId}`)
+                .then((res) => res.json())
+                .then(({ boards }) => (boardArea.innerHTML = boards
+                .map((board) => {
+                return `
+      <div class='board' style="background: url(${board.imageSrc}) center center / cover no-repeat">
+      <p class="boardClick">${board.boardName}</p>
+      <button class="removeBoard" data-name="${board.boardName}">Delete</button>
+      </div>
+      `;
+            })
+                .join("")))
+                .catch((error) => console.error(error));
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+function createBoard(boardName, imageSrc, userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const userBoards = yield fetch(`${boardsAPI}/${userId}`)
+                .then((res) => res.json())
+                .then(({ boards }) => boards)
+                .catch((error) => console.error(error));
+            if (userBoards.length === 10)
+                return alert("maxinum amount of boards is 10");
+            if (userBoards.find((board) => board.boardName.toLowerCase() == boardName.toLowerCase())) {
+                return alert("There is already a board with that name");
+            }
             const newBoard = yield fetch(`${boardsAPI}`, {
                 method: "POST",
                 headers: {
@@ -168,23 +180,6 @@ function createBoard(boardName, imageSrc) {
                 body: JSON.stringify({ boardName, imageSrc, userId }),
             }).catch((error) => console.error(error));
             location.href = "/board";
-            // if (currentUser.boardList.length === 10)
-            //   return alert("maxinum amount of boards is 10");
-            // if (boardName) {
-            //   if (
-            //     currentUser.boardList.find(
-            //       (board) =>
-            //         board.name.toLocaleUpperCase() == boardName.toLocaleLowerCase()
-            //     )
-            //   )
-            //     return alert("There is already a board with that name");
-            //   const newBoard = new Board(boardName, boardImage);
-            //   updateUserBoardList(currentUser, newBoard);
-            //   localStorage.setItem("currentBoard", JSON.stringify(newBoard));
-            //   location.href = "board.html";
-            // } else {
-            //   alert("Board Name Is Missing");
-            // }
         }
         catch (error) {
             console.error(error);

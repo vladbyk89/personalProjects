@@ -5,6 +5,7 @@ import {
   getAllBoards,
   createBoard,
   getBoard,
+  getAllUserBoards,
   deleteBoard,
   updateBoard,
 } from "../controller/boardController";
@@ -15,6 +16,6 @@ boardRouter.route("/").get(getAllBoards).post(createBoard);
 
 boardRouter.route("/getBoard").get(boardCookieAuthentication, getBoard);
 
-boardRouter.route("/:id").get(getBoard).patch(updateBoard).delete(deleteBoard);
+boardRouter.route("/:id").get(getAllUserBoards).patch(updateBoard).delete(deleteBoard);
 
 export { boardRouter };

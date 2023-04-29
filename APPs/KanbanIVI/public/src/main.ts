@@ -1,6 +1,6 @@
 // if user is in index.html run this
 if (window.location.pathname.endsWith("/")) {
-  window.addEventListener("load", async() => {
+  window.addEventListener("load", async () => {
     currentUser = await User.setCurrentUser();
     if (currentUser) {
       window.location.href = "/main";
@@ -22,14 +22,13 @@ if (window.location.pathname.endsWith("/passwordRecovery")) {
 
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
-
   window.addEventListener("load", async () => {
     currentUser = await User.setCurrentUser();
     if (!currentUser) {
       window.location.href = "/";
     }
+    renderBoardsToMain(currentUser._id);
   });
-  // renderBoardsToMain(currentUser.boardList);
 
   createBoardWindowBtn.addEventListener(
     "click",
@@ -47,7 +46,7 @@ if (window.location.pathname.endsWith("/main")) {
     const backgroundImages = document.querySelectorAll(
       ".backgroundImage"
     ) as NodeListOf<HTMLImageElement>;
-    
+
     backgroundImages.forEach((img) => {
       img.addEventListener("click", () => {
         imageDisplayedInCreate.src = img.src;
@@ -57,20 +56,24 @@ if (window.location.pathname.endsWith("/main")) {
   });
 
   createBoardBtn.addEventListener("click", () =>
-    createBoard(newBoardName.value, imageDisplayedInCreate.src.toString())
+    createBoard(
+      newBoardName.value,
+      imageDisplayedInCreate.src.toString(),
+      currentUser._id
+    )
   );
 
   searchBar.addEventListener("keyup", () => {
     if (searchBar.value != "") {
       boardArea.innerHTML = "";
-      const listToDisplay: Board[] = currentUser.boardList.filter((ele) =>
-        ele.name.toLowerCase().includes(searchBar.value)
+      const listToDisplay: BoardTemplate[] = currentUser.boardList.filter(
+        (ele) => ele.boardName.toLowerCase().includes(searchBar.value)
       );
       if (listToDisplay) {
-        renderBoardsToMain(listToDisplay);
+        // renderBoardsToMain(listToDisplay);
       }
     } else {
-      renderBoardsToMain(currentUser.boardList);
+      // renderBoardsToMain(currentUser.boardList);
     }
   });
 
@@ -79,7 +82,7 @@ if (window.location.pathname.endsWith("/main")) {
     if (target.dataset.name) {
       const check = confirm("Are you sure you want to delete?");
       if (check) Board.deleteBoard(target.dataset.name);
-      renderBoardsToMain(currentUser.boardList);
+      // renderBoardsToMain(currentUser.boardList);
     }
 
     if (target.classList.contains("boardClick")) {

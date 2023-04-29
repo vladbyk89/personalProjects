@@ -106,10 +106,10 @@ function updateUserBoardList(userToUpdate: User, boardToUpdate: Board) {
         if (findBoard) {
           const boardIndex = findUser.boardList.indexOf(findBoard);
           findUser.boardList[boardIndex] = boardToUpdate;
-          currentUser.boardList[boardIndex] = boardToUpdate;
+          // currentUser.boardList[boardIndex] = boardToUpdate;
         } else {
           findUser.boardList.unshift(boardToUpdate);
-          currentUser.boardList.unshift(boardToUpdate);
+          // currentUser.boardList.unshift(boardToUpdate);
         }
       }
       localStorage.setItem("signedUpUsers", JSON.stringify(userList));
@@ -131,28 +131,50 @@ function checkIfUserExists(userName: string, password: string) {
   }
 }
 
-function renderBoardsToMain(listOFBoards: Board[]) {
+async function renderBoardsToMain(userId: string) {
   try {
-    boardArea.innerHTML = listOFBoards
-      .map((board) => {
-        return `
-      <div class='board' style="background: url(${board.backgroundImage}) center center / cover no-repeat">
-      <p class="boardClick">${board.name}</p>
-      <button class="removeBoard" data-name="${board.name}">Delete</button>
+    await fetch(`${boardsAPI}/${userId}`)
+      .then((res) => res.json())
+      .then(
+        ({ boards }) =>
+          (boardArea.innerHTML = boards
+            .map((board: BoardTemplate) => {
+              return `
+      <div class='board' style="background: url(${board.imageSrc}) center center / cover no-repeat">
+      <p class="boardClick">${board.boardName}</p>
+      <button class="removeBoard" data-name="${board.boardName}">Delete</button>
       </div>
       `;
-      })
-      .join("");
+            })
+            .join(""))
+      )
+      .catch((error) => console.error(error));
   } catch (error) {
     console.log(error);
   }
 }
 
-async function createBoard(boardName: string, imageSrc: string) {
+async function createBoard(
+  boardName: string,
+  imageSrc: string,
+  userId: string
+) {
   try {
-    const user: UserTemplate = await User.setCurrentUser();
+    const userBoards: BoardTemplate[] = await fetch(`${boardsAPI}/${userId}`)
+      .then((res) => res.json())
+      .then(({ boards }) => boards)
+      .catch((error) => console.error(error));
 
-    const userId = user._id;
+    if (userBoards.length === 10)
+      return alert("maxinum amount of boards is 10");
+
+    if (
+      userBoards.find(
+        (board) => board.boardName.toLowerCase() == boardName.toLowerCase()
+      )
+    ) {
+      return alert("There is already a board with that name");
+    }
 
     const newBoard = await fetch(`${boardsAPI}`, {
       method: "POST",
@@ -164,24 +186,6 @@ async function createBoard(boardName: string, imageSrc: string) {
     }).catch((error) => console.error(error));
 
     location.href = "/board";
-
-    // if (currentUser.boardList.length === 10)
-    //   return alert("maxinum amount of boards is 10");
-    // if (boardName) {
-    //   if (
-    //     currentUser.boardList.find(
-    //       (board) =>
-    //         board.name.toLocaleUpperCase() == boardName.toLocaleLowerCase()
-    //     )
-    //   )
-    //     return alert("There is already a board with that name");
-    //   const newBoard = new Board(boardName, boardImage);
-    //   updateUserBoardList(currentUser, newBoard);
-    //   localStorage.setItem("currentBoard", JSON.stringify(newBoard));
-    //   location.href = "board.html";
-    // } else {
-    //   alert("Board Name Is Missing");
-    // }
   } catch (error) {
     console.error(error);
   }

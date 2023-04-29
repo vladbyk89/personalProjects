@@ -5,6 +5,7 @@ interface UserTemplate {
   userName: string;
   password: string;
   email: string;
+  boardList: [BoardTemplate];
   _id: string;
 }
 
@@ -28,10 +29,10 @@ class User {
   }
 }
 
-let currentUser: User;
+let currentUser: UserTemplate;
 
 interface BoardTemplate {
-  name: string;
+  boardName: string;
   imageSrc: string;
   userArray: [UserTemplate];
   listArray: [ListTemplate];
@@ -53,15 +54,15 @@ class Board {
   }
 
   static deleteBoard(boardName: string) {
-    const boardIndex = currentUser.boardList.findIndex(
-      (board) => board.name === boardName
-    );
-    currentUser.boardList.splice(boardIndex, 1);
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    const userList = userListFromStorage();
-    const findUser = userList.find((user) => user.id === currentUser.id);
-    if (findUser) findUser.boardList.splice(boardIndex, 1);
-    localStorage.setItem("signedUpUsers", JSON.stringify(userList));
+    // const boardIndex = currentUser.boardList.findIndex(
+    //   (board) => board.name === boardName
+    // );
+    // currentUser.boardList.splice(boardIndex, 1);
+    // localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    // const userList = userListFromStorage();
+    // const findUser = userList.find((user) => user.id === currentUser.id);
+    // if (findUser) findUser.boardList.splice(boardIndex, 1);
+    // localStorage.setItem("signedUpUsers", JSON.stringify(userList));
   }
 
   update() {
@@ -79,7 +80,7 @@ class Board {
       this.lists.push(newList);
     });
     localStorage.setItem("currentBoard", JSON.stringify(this));
-    updateUserBoardList(currentUser, this);
+    // updateUserBoardList(currentUser, this);
   }
 
   edit(newName: string, imageSrc: string) {
@@ -88,7 +89,7 @@ class Board {
     localStorage.setItem("currentBoard", JSON.stringify(this));
     boardTitle.textContent = newName;
     boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
-    updateUserBoardList(currentUser, this);
+    // updateUserBoardList(currentUser, this);
   }
 }
 

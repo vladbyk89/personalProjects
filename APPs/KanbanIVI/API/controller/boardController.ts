@@ -66,6 +66,25 @@ export const getBoard = async (
   }
 };
 
+export const getAllUserBoards = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id: userId } = req.params;
+
+    const user = await User.findById(userId);
+
+    const boards = await Board.find({ userArray: user });
+
+    res.status(200).send({ boards });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const deleteBoard = async (
   req: Request,
   res: Response,

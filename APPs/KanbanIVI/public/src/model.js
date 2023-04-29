@@ -45,14 +45,15 @@ class Board {
         });
     }
     static deleteBoard(boardName) {
-        const boardIndex = currentUser.boardList.findIndex((board) => board.name === boardName);
-        currentUser.boardList.splice(boardIndex, 1);
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        const userList = userListFromStorage();
-        const findUser = userList.find((user) => user.id === currentUser.id);
-        if (findUser)
-            findUser.boardList.splice(boardIndex, 1);
-        localStorage.setItem("signedUpUsers", JSON.stringify(userList));
+        // const boardIndex = currentUser.boardList.findIndex(
+        //   (board) => board.name === boardName
+        // );
+        // currentUser.boardList.splice(boardIndex, 1);
+        // localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        // const userList = userListFromStorage();
+        // const findUser = userList.find((user) => user.id === currentUser.id);
+        // if (findUser) findUser.boardList.splice(boardIndex, 1);
+        // localStorage.setItem("signedUpUsers", JSON.stringify(userList));
     }
     update() {
         this.lists = [];
@@ -68,7 +69,7 @@ class Board {
             this.lists.push(newList);
         });
         localStorage.setItem("currentBoard", JSON.stringify(this));
-        updateUserBoardList(currentUser, this);
+        // updateUserBoardList(currentUser, this);
     }
     edit(newName, imageSrc) {
         this.name = newName;
@@ -76,7 +77,7 @@ class Board {
         localStorage.setItem("currentBoard", JSON.stringify(this));
         boardTitle.textContent = newName;
         boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
-        updateUserBoardList(currentUser, this);
+        // updateUserBoardList(currentUser, this);
     }
 }
 let currentBoard;

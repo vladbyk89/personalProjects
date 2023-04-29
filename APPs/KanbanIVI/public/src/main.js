@@ -34,8 +34,8 @@ if (window.location.pathname.endsWith("/main")) {
         if (!currentUser) {
             window.location.href = "/";
         }
+        renderBoardsToMain(currentUser._id);
     }));
-    // renderBoardsToMain(currentUser.boardList);
     createBoardWindowBtn.addEventListener("click", () => (newBoardWindow.style.display = "flex"));
     cancelCreateBoardBtn.addEventListener("click", () => (newBoardWindow.style.display = "none"));
     boardImageBtn.addEventListener("click", () => {
@@ -48,17 +48,17 @@ if (window.location.pathname.endsWith("/main")) {
             });
         });
     });
-    createBoardBtn.addEventListener("click", () => createBoard(newBoardName.value, imageDisplayedInCreate.src.toString()));
+    createBoardBtn.addEventListener("click", () => createBoard(newBoardName.value, imageDisplayedInCreate.src.toString(), currentUser._id));
     searchBar.addEventListener("keyup", () => {
         if (searchBar.value != "") {
             boardArea.innerHTML = "";
-            const listToDisplay = currentUser.boardList.filter((ele) => ele.name.toLowerCase().includes(searchBar.value));
+            const listToDisplay = currentUser.boardList.filter((ele) => ele.boardName.toLowerCase().includes(searchBar.value));
             if (listToDisplay) {
-                renderBoardsToMain(listToDisplay);
+                // renderBoardsToMain(listToDisplay);
             }
         }
         else {
-            renderBoardsToMain(currentUser.boardList);
+            // renderBoardsToMain(currentUser.boardList);
         }
     });
     boardArea.addEventListener("click", (e) => {
@@ -67,7 +67,7 @@ if (window.location.pathname.endsWith("/main")) {
             const check = confirm("Are you sure you want to delete?");
             if (check)
                 Board.deleteBoard(target.dataset.name);
-            renderBoardsToMain(currentUser.boardList);
+            // renderBoardsToMain(currentUser.boardList);
         }
         if (target.classList.contains("boardClick")) {
             // Board.setCurrentBoard(target.innerHTML);

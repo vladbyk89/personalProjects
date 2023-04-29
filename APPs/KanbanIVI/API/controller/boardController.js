@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBoard = exports.deleteBoard = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
+exports.updateBoard = exports.deleteBoard = exports.getAllUserBoards = exports.getBoard = exports.createBoard = exports.getAllBoards = void 0;
 const BoardModel_1 = __importDefault(require("../model/BoardModel"));
 const UserModel_1 = __importDefault(require("../model/UserModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
@@ -63,6 +63,19 @@ const getBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getBoard = getBoard;
+const getAllUserBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id: userId } = req.params;
+        const user = yield UserModel_1.default.findById(userId);
+        const boards = yield BoardModel_1.default.find({ userArray: user });
+        res.status(200).send({ boards });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.getAllUserBoards = getAllUserBoards;
 const deleteBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id: boardId } = req.params;
