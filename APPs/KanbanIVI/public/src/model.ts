@@ -76,13 +76,20 @@ class Board {
       .then(({ board }) => board)
       .catch((error) => console.error(error));
 
-    currentBoard = new Board(board.boardName, board.imageSrc, board._id);
+    const boardLists: ListTemplate[] = await fetch(`${listsAPI}/${board._id}`)
+      .then((res) => res.json())
+      .then(({ lists }) => lists)
+      .catch((error) => console.log(error));
 
-    const listArray = board.listArray.map(
+    const listArrayNew = boardLists.map(
       (list) => new List(list.listName, list.cardsArray, list._id)
     );
-
-    currentBoard.listArray = [...listArray];
+    currentBoard = new Board(
+      board.boardName,
+      board.imageSrc,
+      board._id,
+      listArrayNew
+    );
   }
 
   static async deleteBoard(boardId: string) {
@@ -107,17 +114,22 @@ class Board {
       list
         .querySelectorAll("p")
         .forEach((card) => cardsArray.push(card.innerHTML));
+
       const newList = new List(listName, cardsArray, _id);
+
       this.listArray.push(newList);
 
-      await fetch(`${listsAPI}/${this.id}`, {
+      const updateList: ListTemplate = await fetch(`${listsAPI}/${this.id}`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ listName, cardsArray }),
-      });
+      })
+        .then((res) => res.json())
+        .then(({ list }) => list)
+        .catch((error) => console.error(error));
     });
   }
 
@@ -162,7 +174,7 @@ class List {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ listName }),
+      body: JSON.stringify({ listName, boardId }),
     }).catch((error) => console.error(error));
 
     const newList = new List(listName);

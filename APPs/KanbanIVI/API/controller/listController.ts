@@ -1,5 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import List from "../model/ListModel";
+import Board from "../model/BoardModel";
 
 export const getAllLists = async (
   req: Request,
@@ -20,8 +21,9 @@ export const createList = async (
   next: NextFunction
 ) => {
   try {
-    const { listName } = req.body;
-    const list = await List.create({ listName });
+    const { listName, boardId } = req.body;
+    const board = await Board.findById(boardId);
+    const list = await List.create({ listName, board });
 
     res.status(200).json({ list });
   } catch (error: any) {
@@ -30,16 +32,16 @@ export const createList = async (
   }
 };
 
-export const getList = async (
+export const getBoardLists = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { id: listId } = req.params;
-    const list = await List.findById(listId);
-    // const courses = await Course.find({ lists: list });
-    res.status(200).json({ list });
+    const { id: boardId } = req.params;
+    const board = await Board.findById(boardId);
+    const lists = await List.find({ board });
+    res.status(200).json({ lists });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

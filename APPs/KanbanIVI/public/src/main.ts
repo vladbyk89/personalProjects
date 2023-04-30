@@ -109,7 +109,6 @@ if (window.location.pathname.endsWith("/board")) {
   window.addEventListener("load", async () => {
     await Board.assignCurrentBoard();
     renderBoardInBoardPage();
-    // console.log(currentBoard);
     if (!currentBoard) {
       window.location.href = "/";
     }

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { BoardSchema } from "./BoardModel";
 
 interface ListInterface {
   listName: string;
@@ -10,6 +11,10 @@ export const ListSchema: Schema = new Schema(
   {
     listName: {
       type: String,
+      required: true,
+    },
+    board: {
+      type: BoardSchema,
       required: true,
     },
     cardsArray: {

@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoardSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const UserModel_1 = require("./UserModel");
-const ListModel_1 = require("./ListModel");
 exports.BoardSchema = new mongoose_1.Schema({
     boardName: {
         type: String,
@@ -39,9 +38,6 @@ exports.BoardSchema = new mongoose_1.Schema({
     userArray: {
         type: [UserModel_1.UserSchema],
         required: true,
-    },
-    listArray: {
-        type: [ListModel_1.ListSchema],
     },
 }, {
     versionKey: false,

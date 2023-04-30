@@ -34,7 +34,7 @@ window.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, functi
     }
     if (target.classList.contains("editBoardIcon")) {
         editBoardWindow.style.display = "flex";
-        nameInputEle.value = currentBoard.boardName;
+        nameInputEle.value = currentBoard.name;
         imageDisplayedInEdit.src = currentBoard.imageSrc;
     }
 }));

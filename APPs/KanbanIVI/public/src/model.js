@@ -58,9 +58,12 @@ class Board {
                 .then((res) => res.json())
                 .then(({ board }) => board)
                 .catch((error) => console.error(error));
-            currentBoard = new Board(board.boardName, board.imageSrc, board._id);
-            const listArray = board.listArray.map((list) => new List(list.listName, list.cardsArray, list._id));
-            currentBoard.listArray = [...listArray];
+            const boardLists = yield fetch(`${listsAPI}/${board._id}`)
+                .then((res) => res.json())
+                .then(({ lists }) => lists)
+                .catch((error) => console.log(error));
+            const listArrayNew = boardLists.map((list) => new List(list.listName, list.cardsArray, list._id));
+            currentBoard = new Board(board.boardName, board.imageSrc, board._id, listArrayNew);
         });
     }
     static deleteBoard(boardId) {
@@ -87,14 +90,17 @@ class Board {
                     .forEach((card) => cardsArray.push(card.innerHTML));
                 const newList = new List(listName, cardsArray, _id);
                 this.listArray.push(newList);
-                yield fetch(`${listsAPI}/${this.id}`, {
+                const updateList = yield fetch(`${listsAPI}/${this.id}`, {
                     method: "PATCH",
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ listName, cardsArray }),
-                });
+                })
+                    .then((res) => res.json())
+                    .then(({ list }) => list)
+                    .catch((error) => console.error(error));
             }));
         });
     }
@@ -133,7 +139,7 @@ class List {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ listName }),
+                body: JSON.stringify({ listName, boardId }),
             }).catch((error) => console.error(error));
             const newList = new List(listName);
             boardContainer.insertBefore(newList.createListElement(), trashCanDiv);

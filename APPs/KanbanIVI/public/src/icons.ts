@@ -27,7 +27,7 @@ window.addEventListener("click", async (e) => {
   }
   if (target.classList.contains("editBoardIcon")) {
     editBoardWindow.style.display = "flex";
-    nameInputEle.value = currentBoard.boardName;
+    nameInputEle.value = currentBoard.name;
     imageDisplayedInEdit.src = currentBoard.imageSrc;
   }
 });

@@ -21,9 +21,6 @@ export const BoardSchema: Schema = new Schema(
       type: [UserSchema],
       required: true,
     },
-    listArray: {
-      type: [ListSchema],
-    },
   },
   {
     versionKey: false,
