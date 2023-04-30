@@ -74,7 +74,7 @@ async function handleRecovery(e: Event) {
   }
 }
 
-function displayProfile(user: UserTemplate) {
+function displayProfile(user: User) {
   try {
     profileWindow.style.display = "flex";
     if (user) {

@@ -12,11 +12,15 @@ import {
 
 import { userCookieAuthentication } from "../middleware/cookieJwtAuthintication";
 
+import { removeUserCookie } from "../middleware/removeCookie";
+
 userRouter.route("/").get(getAllUsers).post(createUser);
 
 userRouter.route("/login").post(login);
 
-userRouter.route("/userPassword").post(passwordRecovery)
+userRouter.route("/userPassword").post(passwordRecovery);
+
+userRouter.route("/removeCookie").delete(removeUserCookie);
 
 userRouter.route("/getUser").get(userCookieAuthentication, getUser);
 

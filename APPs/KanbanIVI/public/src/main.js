@@ -15,7 +15,7 @@ if (window.location.pathname.endsWith("/")) {
         if (user)
             currentUser = user;
         if (currentUser) {
-            // window.location.href = "/main";
+            window.location.href = "/main";
         }
     }));
     signUpPanelBtn.addEventListener("click", () => {

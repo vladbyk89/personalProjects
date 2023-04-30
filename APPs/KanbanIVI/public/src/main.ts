@@ -4,7 +4,7 @@ if (window.location.pathname.endsWith("/")) {
     const user = await User.getCurrentUser();
     if (user) currentUser = user;
     if (currentUser) {
-      // window.location.href = "/main";
+      window.location.href = "/main";
     }
   });
   signUpPanelBtn.addEventListener("click", () => {
