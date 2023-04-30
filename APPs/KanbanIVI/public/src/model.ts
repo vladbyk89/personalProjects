@@ -94,22 +94,31 @@ class Board {
       .catch((error) => console.error(error));
   }
 
-  update() {
+  async update() {
     this.listArray = [];
     const listElements = boardContainer.querySelectorAll(
       ".boardContainer__main__list"
     );
-    listElements.forEach((list) => {
+    listElements.forEach(async (list) => {
       const listName = list.querySelector("h2")?.innerHTML as string;
-      const cardsArr: string[] = [];
+      const cardsArray: string[] = [];
+      const _id = list.id;
+
       list
         .querySelectorAll("p")
-        .forEach((card) => cardsArr.push(card.innerHTML));
-      const newList = new List(listName, Array.from(cardsArr));
+        .forEach((card) => cardsArray.push(card.innerHTML));
+      const newList = new List(listName, cardsArray, _id);
       this.listArray.push(newList);
+
+      await fetch(`${listsAPI}/${this.id}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ listName, cardsArray }),
+      });
     });
-    localStorage.setItem("currentBoard", JSON.stringify(this));
-    // updateUserBoardList(currentUser, this);
   }
 
   async edit(boardName: string, imageSrc: string, boardId: string) {
@@ -125,7 +134,6 @@ class Board {
     });
     boardTitle.textContent = boardName;
     boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
-    // updateUserBoardList(currentUser, this);
   }
 }
 
@@ -141,7 +149,7 @@ class List {
   constructor(
     public name: string,
     public cards: string[] = [],
-    public uid = "",
+    public id = "",
     public backColor: string = `#${randomColor()}`
   ) {}
 
@@ -166,7 +174,7 @@ class List {
     const listContainer = document.createElement("div");
     listContainer.classList.add("boardContainer__main__list");
     listContainer.setAttribute("draggable", "true");
-    listContainer.setAttribute("id", `${this.uid}`);
+    listContainer.setAttribute("id", `${this.id}`);
     // listContainer.setAttribute("ondragstart", `drag(event)`);
 
     const header = document.createElement("div");

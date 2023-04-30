@@ -74,20 +74,29 @@ class Board {
         });
     }
     update() {
-        this.listArray = [];
-        const listElements = boardContainer.querySelectorAll(".boardContainer__main__list");
-        listElements.forEach((list) => {
-            var _a;
-            const listName = (_a = list.querySelector("h2")) === null || _a === void 0 ? void 0 : _a.innerHTML;
-            const cardsArr = [];
-            list
-                .querySelectorAll("p")
-                .forEach((card) => cardsArr.push(card.innerHTML));
-            const newList = new List(listName, Array.from(cardsArr));
-            this.listArray.push(newList);
+        return __awaiter(this, void 0, void 0, function* () {
+            this.listArray = [];
+            const listElements = boardContainer.querySelectorAll(".boardContainer__main__list");
+            listElements.forEach((list) => __awaiter(this, void 0, void 0, function* () {
+                var _a;
+                const listName = (_a = list.querySelector("h2")) === null || _a === void 0 ? void 0 : _a.innerHTML;
+                const cardsArray = [];
+                const _id = list.id;
+                list
+                    .querySelectorAll("p")
+                    .forEach((card) => cardsArray.push(card.innerHTML));
+                const newList = new List(listName, cardsArray, _id);
+                this.listArray.push(newList);
+                yield fetch(`${listsAPI}/${this.id}`, {
+                    method: "PATCH",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ listName, cardsArray }),
+                });
+            }));
         });
-        localStorage.setItem("currentBoard", JSON.stringify(this));
-        // updateUserBoardList(currentUser, this);
     }
     edit(boardName, imageSrc, boardId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -103,16 +112,15 @@ class Board {
             });
             boardTitle.textContent = boardName;
             boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
-            // updateUserBoardList(currentUser, this);
         });
     }
 }
 let currentBoard;
 class List {
-    constructor(name, cards = [], uid = "", backColor = `#${randomColor()}`) {
+    constructor(name, cards = [], id = "", backColor = `#${randomColor()}`) {
         this.name = name;
         this.cards = cards;
-        this.uid = uid;
+        this.id = id;
         this.backColor = backColor;
     }
     static createList(listName, boardId) {
@@ -136,7 +144,7 @@ class List {
         const listContainer = document.createElement("div");
         listContainer.classList.add("boardContainer__main__list");
         listContainer.setAttribute("draggable", "true");
-        listContainer.setAttribute("id", `${this.uid}`);
+        listContainer.setAttribute("id", `${this.id}`);
         // listContainer.setAttribute("ondragstart", `drag(event)`);
         const header = document.createElement("div");
         header.classList.add("boardContainer__main__list__header");

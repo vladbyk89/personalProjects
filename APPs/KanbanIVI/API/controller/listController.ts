@@ -70,11 +70,10 @@ export const updateList = async (
 ) => {
   try {
     const { id: listId } = req.params;
-    const data = req.body;
-    const lists = await List.find({});
-    const list = await List.findById({ _id: listId });
+    const { listName, cardsArray } = req.body;
+    const list = await List.findByIdAndUpdate(listId, { listName, cardsArray });
 
-    res.status(201).json({ lists });
+    res.status(201).json({ list });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

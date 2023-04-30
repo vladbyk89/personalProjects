@@ -61,31 +61,6 @@ function displayProfile(user) {
         console.log(error);
     }
 }
-// function updateUserBoardList(userToUpdate: User, boardToUpdate: Board) {
-//   try {
-//     const userList = userListFromStorage();
-//     if (userList) {
-//       const findUser = userList.find((user) => user.id === userToUpdate.id);
-//       if (findUser) {
-//         const findBoard = findUser.boardList.find(
-//           (board) => board.uid === boardToUpdate.uid
-//         );
-//         if (findBoard) {
-//           const boardIndex = findUser.boardList.indexOf(findBoard);
-//           findUser.boardList[boardIndex] = boardToUpdate;
-//           // currentUser.boardList[boardIndex] = boardToUpdate;
-//         } else {
-//           findUser.boardList.unshift(boardToUpdate);
-//           // currentUser.boardList.unshift(boardToUpdate);
-//         }
-//       }
-//       localStorage.setItem("signedUpUsers", JSON.stringify(userList));
-//       localStorage.setItem("currentUser", JSON.stringify(currentUser));
-//     }
-//   } catch (error) {
-//     throw error;
-//   }
-// }
 function renderBoardsToMain(boards) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -238,7 +213,7 @@ function createCardElement(cardName, list) {
             });
             cardTitle.replaceWith(editCardInput);
             editCardInput.focus();
-            // currentBoard.update();
+            currentBoard.update();
         });
         card.addEventListener("dragstart", (ev) => {
             card.classList.add("isDragging");
@@ -246,7 +221,7 @@ function createCardElement(cardName, list) {
         card.addEventListener("dragend", () => {
             card.classList.remove("isDragging");
         });
-        // currentBoard.update();
+        currentBoard.update();
         // Add new card to cards variable
         cards = document.querySelectorAll(".boardContainer__main__list__card");
     }
@@ -259,7 +234,7 @@ function renderBoardInBoardPage() {
         boardTitle.textContent = currentBoard.name;
         boardContainer.style.background = `url(${currentBoard.imageSrc}) no-repeat center / cover`;
         currentBoard.listArray.forEach((list) => {
-            const listObj = new List(list.name, list.cards, list.uid, list.backColor);
+            const listObj = new List(list.name, list.cards, list.id, list.backColor);
             const ListElement = listObj.createListElement();
             list.cards.forEach((card) => {
                 createCardElement(card, ListElement);
