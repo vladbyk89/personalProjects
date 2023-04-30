@@ -18,7 +18,7 @@ userRouter.route("/login").post(login);
 
 userRouter.route("/userPassword").post(passwordRecovery)
 
-userRouter.route("/user").get(userCookieAuthentication, getUser);
+userRouter.route("/getUser").get(userCookieAuthentication, getUser);
 
 userRouter.route("/:id").patch(updateUser).delete(deleteUser);
 

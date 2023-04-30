@@ -1,7 +1,8 @@
 // if user is in index.html run this
 if (window.location.pathname.endsWith("/")) {
   window.addEventListener("load", async () => {
-    currentUser = await User.setCurrentUser();
+    const user = await User.getCurrentUser();
+    if (user) currentUser = user;
     if (currentUser) {
       // window.location.href = "/main";
     }
@@ -23,11 +24,12 @@ if (window.location.pathname.endsWith("/passwordRecovery")) {
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
   window.addEventListener("load", async () => {
-    currentUser = await User.setCurrentUser();
+    const user = await User.getCurrentUser();
+    if (user) currentUser = user;
     if (!currentUser) {
       window.location.href = "/";
     }
-    const boards: BoardTemplate[] = await getUserBoards(currentUser._id);
+    const boards: BoardTemplate[] = await getUserBoards(currentUser.id);
     renderBoardsToMain(boards);
   });
 
@@ -60,12 +62,12 @@ if (window.location.pathname.endsWith("/main")) {
     createBoard(
       newBoardName.value,
       imageDisplayedInCreate.src.toString(),
-      currentUser._id
+      currentUser.id
     )
   );
 
   searchBar.addEventListener("keyup", async () => {
-    const boards: BoardTemplate[] = await getUserBoards(currentUser._id);
+    const boards: BoardTemplate[] = await getUserBoards(currentUser.id);
 
     if (searchBar.value != "") {
       boardArea.innerHTML = "";
@@ -87,7 +89,7 @@ if (window.location.pathname.endsWith("/main")) {
       const check = confirm("Are you sure you want to delete?");
       if (check) {
         await Board.deleteBoard(target.dataset.name);
-        const boards = await getUserBoards(currentUser._id);
+        const boards = await getUserBoards(currentUser.id);
         renderBoardsToMain(boards);
       }
     }

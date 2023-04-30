@@ -17,23 +17,35 @@ class User {
     public userName: string,
     public password: string,
     public email: string,
-    public boardList: Board[] = [],
-    public id: string = ""
+    public id: string = "",
+    public boardList: Board[] = []
   ) {}
 
-  static async setCurrentUser() {
+  static async getCurrentUser() {
     try {
-      return (currentUser = await fetch(`${usersAPI}/user`)
+      const user = await fetch(`${usersAPI}/getUser`)
         .then((res) => res.json())
-        .then(({ user }) => user)
-        .catch((error) => console.error(error)));
+        .then(
+          ({ user }) =>
+            new User(
+              user.firstName,
+              user.lastName,
+              user.gender,
+              user.userName,
+              user.password,
+              user.email,
+              user._id
+            )
+        )
+        .catch((error) => console.error(error));
+      if (user) return user
     } catch (error) {
       console.error(error);
     }
   }
 }
 
-let currentUser: UserTemplate;
+let currentUser: User;
 
 interface BoardTemplate {
   boardName: string;
@@ -42,6 +54,7 @@ interface BoardTemplate {
   listArray: [ListTemplate];
   _id: string;
 }
+
 class Board {
   constructor(
     public name: string,

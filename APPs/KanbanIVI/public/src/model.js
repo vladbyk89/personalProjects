@@ -9,23 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class User {
-    constructor(firstName, lastName, gender, userName, password, email, boardList = [], id = "") {
+    constructor(firstName, lastName, gender, userName, password, email, id = "", boardList = []) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.boardList = boardList;
         this.id = id;
+        this.boardList = boardList;
     }
-    static setCurrentUser() {
+    static getCurrentUser() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return (currentUser = yield fetch(`${usersAPI}/user`)
+                const user = yield fetch(`${usersAPI}/getUser`)
                     .then((res) => res.json())
-                    .then(({ user }) => user)
-                    .catch((error) => console.error(error)));
+                    .then(({ user }) => new User(user.firstName, user.lastName, user.gender, user.userName, user.password, user.email, user._id))
+                    .catch((error) => console.error(error));
+                if (user)
+                    return user;
             }
             catch (error) {
                 console.error(error);

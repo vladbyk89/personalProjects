@@ -11,7 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // if user is in index.html run this
 if (window.location.pathname.endsWith("/")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        currentUser = yield User.setCurrentUser();
+        const user = yield User.getCurrentUser();
+        if (user)
+            currentUser = user;
         if (currentUser) {
             // window.location.href = "/main";
         }
@@ -30,11 +32,13 @@ if (window.location.pathname.endsWith("/passwordRecovery")) {
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        currentUser = yield User.setCurrentUser();
+        const user = yield User.getCurrentUser();
+        if (user)
+            currentUser = user;
         if (!currentUser) {
             window.location.href = "/";
         }
-        const boards = yield getUserBoards(currentUser._id);
+        const boards = yield getUserBoards(currentUser.id);
         renderBoardsToMain(boards);
     }));
     createBoardWindowBtn.addEventListener("click", () => (newBoardWindow.style.display = "flex"));
@@ -49,9 +53,9 @@ if (window.location.pathname.endsWith("/main")) {
             });
         });
     });
-    createBoardBtn.addEventListener("click", () => createBoard(newBoardName.value, imageDisplayedInCreate.src.toString(), currentUser._id));
+    createBoardBtn.addEventListener("click", () => createBoard(newBoardName.value, imageDisplayedInCreate.src.toString(), currentUser.id));
     searchBar.addEventListener("keyup", () => __awaiter(void 0, void 0, void 0, function* () {
-        const boards = yield getUserBoards(currentUser._id);
+        const boards = yield getUserBoards(currentUser.id);
         if (searchBar.value != "") {
             boardArea.innerHTML = "";
             const listToDisplay = boards.filter((ele) => ele.boardName.toLowerCase().includes(searchBar.value));
@@ -69,7 +73,7 @@ if (window.location.pathname.endsWith("/main")) {
             const check = confirm("Are you sure you want to delete?");
             if (check) {
                 yield Board.deleteBoard(target.dataset.name);
-                const boards = yield getUserBoards(currentUser._id);
+                const boards = yield getUserBoards(currentUser.id);
                 renderBoardsToMain(boards);
             }
         }
