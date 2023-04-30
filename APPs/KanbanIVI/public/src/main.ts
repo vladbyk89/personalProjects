@@ -123,7 +123,8 @@ if (window.location.pathname.endsWith("/board")) {
     currentBoard.edit(
       nameInputEle.value,
       imageDisplayedInEdit.src,
-      currentBoard.id
+      currentBoard.id,
+      currentBoard.listArray
     );
     editBoardWindow.style.display = "none";
   });

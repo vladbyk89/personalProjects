@@ -96,7 +96,7 @@ if (window.location.pathname.endsWith("/board")) {
     }));
     addListBtn.addEventListener("click", () => List.createList(newListInput.value, currentBoard.id));
     editBoardBtn.addEventListener("click", () => {
-        currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src, currentBoard.id);
+        currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src, currentBoard.id, currentBoard.listArray);
         editBoardWindow.style.display = "none";
     });
     updatedBoardImageBtn.addEventListener("click", () => {

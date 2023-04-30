@@ -72,8 +72,13 @@ export const updateList = async (
 ) => {
   try {
     const { id: listId } = req.params;
-    const { listName, cardsArray } = req.body;
-    const list = await List.findByIdAndUpdate(listId, { listName, cardsArray });
+    const { listName, cardsArray, boardId } = req.body;
+    const board = await Board.findById(boardId);
+    const list = await List.findByIdAndUpdate(listId, {
+      listName,
+      cardsArray,
+      board,
+    });
 
     res.status(201).json({ list });
   } catch (error: any) {

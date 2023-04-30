@@ -133,9 +133,15 @@ class Board {
     });
   }
 
-  async edit(boardName: string, imageSrc: string, boardId: string) {
+  async edit(
+    boardName: string,
+    imageSrc: string,
+    boardId: string,
+    listArray: List[]
+  ) {
     this.name = boardName;
     this.imageSrc = imageSrc;
+    this.listArray = [...listArray];
     await fetch(`${boardsAPI}/${boardId}`, {
       method: "PATCH",
       headers: {
@@ -144,6 +150,22 @@ class Board {
       },
       body: JSON.stringify({ boardName, imageSrc, boardId }),
     });
+
+    this.listArray.forEach(async (list) => {
+      await fetch(`${listsAPI}/${list.id}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          listName: list.name,
+          cardsArray: list.cards,
+          boardId,
+        }),
+      });
+    });
+    
     boardTitle.textContent = boardName;
     boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
   }

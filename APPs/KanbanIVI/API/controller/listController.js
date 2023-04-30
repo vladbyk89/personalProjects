@@ -67,8 +67,13 @@ exports.deleteList = deleteList;
 const updateList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id: listId } = req.params;
-        const { listName, cardsArray } = req.body;
-        const list = yield ListModel_1.default.findByIdAndUpdate(listId, { listName, cardsArray });
+        const { listName, cardsArray, boardId } = req.body;
+        const board = yield BoardModel_1.default.findById(boardId);
+        const list = yield ListModel_1.default.findByIdAndUpdate(listId, {
+            listName,
+            cardsArray,
+            board,
+        });
         res.status(201).json({ list });
     }
     catch (error) {

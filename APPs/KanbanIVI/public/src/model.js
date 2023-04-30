@@ -104,10 +104,11 @@ class Board {
             }));
         });
     }
-    edit(boardName, imageSrc, boardId) {
+    edit(boardName, imageSrc, boardId, listArray) {
         return __awaiter(this, void 0, void 0, function* () {
             this.name = boardName;
             this.imageSrc = imageSrc;
+            this.listArray = [...listArray];
             yield fetch(`${boardsAPI}/${boardId}`, {
                 method: "PATCH",
                 headers: {
@@ -116,6 +117,20 @@ class Board {
                 },
                 body: JSON.stringify({ boardName, imageSrc, boardId }),
             });
+            this.listArray.forEach((list) => __awaiter(this, void 0, void 0, function* () {
+                yield fetch(`${listsAPI}/${list.id}`, {
+                    method: "PATCH",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        listName: list.name,
+                        cardsArray: list.cards,
+                        boardId,
+                    }),
+                });
+            }));
             boardTitle.textContent = boardName;
             boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
         });
