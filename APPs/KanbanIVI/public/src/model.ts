@@ -80,7 +80,7 @@ class Board {
       .then((res) => res.json())
       .then(({ lists }) => lists)
       .catch((error) => console.log(error));
-      
+
     const listArrayNew = boardLists.map(
       (list) => new List(list.listName, list.cardsArray, list._id)
     );
@@ -193,16 +193,19 @@ class List {
   static async createList(listName: string, boardId: string) {
     if (newListInput.value == "") return;
 
-    await fetch(`${listsAPI}`, {
+    const createdList: ListTemplate = await fetch(`${listsAPI}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ listName, boardId }),
-    }).catch((error) => console.error(error));
+    })
+      .then((res) => res.json())
+      .then(({ list }) => list)
+      .catch((error) => console.error(error));
 
-    const newList = new List(listName);
+    const newList = new List(listName, [], createdList._id);
     boardContainer.insertBefore(newList.createListElement(), trashCanDiv);
     newListInput.value = "";
   }

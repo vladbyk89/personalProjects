@@ -191,11 +191,15 @@ if (window.location.pathname.endsWith("/board")) {
     }
   });
 
-  trashCan.addEventListener("drop", () => {
+  trashCan.addEventListener("drop", async () => {
     const confirmDelete = confirm("Are you sure you want to delete?");
     if (confirmDelete) {
       const element = document.querySelector(".isDragging") as HTMLDivElement;
+      const listId = element.id;
       element.remove();
+      await fetch(`${listsAPI}/${listId}`, {
+        method: "DELETE",
+      }).catch((error) => console.log(error));
       currentBoard.update();
     }
   });

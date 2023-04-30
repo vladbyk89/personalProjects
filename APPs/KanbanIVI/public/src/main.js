@@ -150,14 +150,18 @@ if (window.location.pathname.endsWith("/board")) {
             List.createList(newListInput.value, currentBoard.id);
         }
     });
-    trashCan.addEventListener("drop", () => {
+    trashCan.addEventListener("drop", () => __awaiter(void 0, void 0, void 0, function* () {
         const confirmDelete = confirm("Are you sure you want to delete?");
         if (confirmDelete) {
             const element = document.querySelector(".isDragging");
+            const listId = element.id;
             element.remove();
+            yield fetch(`${listsAPI}/${listId}`, {
+                method: "DELETE",
+            }).catch((error) => console.log(error));
             currentBoard.update();
         }
-    });
+    }));
     document.addEventListener("dragover", (event) => {
         event.preventDefault();
     });

@@ -150,15 +150,18 @@ class List {
         return __awaiter(this, void 0, void 0, function* () {
             if (newListInput.value == "")
                 return;
-            yield fetch(`${listsAPI}`, {
+            const createdList = yield fetch(`${listsAPI}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ listName, boardId }),
-            }).catch((error) => console.error(error));
-            const newList = new List(listName);
+            })
+                .then((res) => res.json())
+                .then(({ list }) => list)
+                .catch((error) => console.error(error));
+            const newList = new List(listName, [], createdList._id);
             boardContainer.insertBefore(newList.createListElement(), trashCanDiv);
             newListInput.value = "";
         });
