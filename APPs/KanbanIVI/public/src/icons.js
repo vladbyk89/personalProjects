@@ -21,6 +21,9 @@ window.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, functi
         yield fetch(`${usersAPI}/removeCookie`, {
             method: "DELETE",
         });
+        yield fetch(`${boardsAPI}/removeCookie`, {
+            method: "DELETE",
+        });
         window.location.href = "/";
     }
     if (target.classList.contains("exitProfilePage")) {

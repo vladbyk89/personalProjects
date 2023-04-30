@@ -32,9 +32,7 @@ if (window.location.pathname.endsWith("/passwordRecovery")) {
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        const user = yield User.getCurrentUser();
-        if (user)
-            currentUser = user;
+        yield User.getCurrentUser();
         if (!currentUser) {
             window.location.href = "/";
         }
@@ -90,6 +88,7 @@ if (window.location.pathname.endsWith("/main")) {
 if (window.location.pathname.endsWith("/board")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
         yield Board.assignCurrentBoard();
+        yield User.getCurrentUser();
         renderBoardInBoardPage();
         if (!currentBoard) {
             window.location.href = "/";

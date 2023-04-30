@@ -24,8 +24,7 @@ if (window.location.pathname.endsWith("/passwordRecovery")) {
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
   window.addEventListener("load", async () => {
-    const user = await User.getCurrentUser();
-    if (user) currentUser = user;
+    await User.getCurrentUser();
     if (!currentUser) {
       window.location.href = "/";
     }
@@ -108,6 +107,8 @@ if (window.location.pathname.endsWith("/main")) {
 if (window.location.pathname.endsWith("/board")) {
   window.addEventListener("load", async () => {
     await Board.assignCurrentBoard();
+    await User.getCurrentUser();
+
     renderBoardInBoardPage();
     if (!currentBoard) {
       window.location.href = "/";
@@ -119,7 +120,11 @@ if (window.location.pathname.endsWith("/board")) {
   );
 
   editBoardBtn.addEventListener("click", () => {
-    currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src, currentBoard.id);
+    currentBoard.edit(
+      nameInputEle.value,
+      imageDisplayedInEdit.src,
+      currentBoard.id
+    );
     editBoardWindow.style.display = "none";
   });
 

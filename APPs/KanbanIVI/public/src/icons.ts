@@ -1,7 +1,7 @@
 // all windows event listener
 window.addEventListener("click", async (e) => {
   const target = e.target as HTMLElement;
-  
+
   if (target.classList.contains("profileIcon")) {
     displayProfile(currentUser);
   }
@@ -13,6 +13,11 @@ window.addEventListener("click", async (e) => {
     await fetch(`${usersAPI}/removeCookie`, {
       method: "DELETE",
     });
+
+    await fetch(`${boardsAPI}/removeCookie`, {
+      method: "DELETE",
+    });
+    
     window.location.href = "/";
   }
 

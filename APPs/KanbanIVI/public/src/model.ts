@@ -30,7 +30,7 @@ class User {
 
       if (!user) return false;
 
-      return new User(
+      currentUser = new User(
         user.firstName,
         user.lastName,
         user.gender,

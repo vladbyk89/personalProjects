@@ -28,7 +28,7 @@ class User {
                     .catch((error) => console.error(error));
                 if (!user)
                     return false;
-                return new User(user.firstName, user.lastName, user.gender, user.userName, user.password, user.email, user._id);
+                currentUser = new User(user.firstName, user.lastName, user.gender, user.userName, user.password, user.email, user._id);
             }
             catch (error) {
                 console.error(error);
