@@ -158,7 +158,7 @@ function dragginCard(this: HTMLElement, e: MouseEvent) {
     } else {
       this.insertBefore(curTask, bottomTask);
     }
-    // currentBoard.update();
+    currentBoard.update();
   } catch (error) {
     console.log(error);
   }
@@ -181,7 +181,7 @@ function editList(this: HTMLElement) {
       if (event.key === "Enter") {
         listTitle.replaceChild(listTitleText, editListInput);
         listTitleText.textContent = editListInput.value.trim();
-        // currentBoard.update();
+        currentBoard.update();
       }
     });
   } catch (error) {

@@ -79,7 +79,6 @@ export const updateList = async (
       cardsArray,
       board,
     });
-
     res.status(201).json({ list });
   } catch (error: any) {
     console.error(error);

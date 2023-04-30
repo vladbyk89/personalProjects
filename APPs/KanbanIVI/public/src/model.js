@@ -78,7 +78,9 @@ class Board {
     }
     update() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("update running...");
             this.listArray = [];
+            const boardId = this.id;
             const listElements = boardContainer.querySelectorAll(".boardContainer__main__list");
             listElements.forEach((list) => __awaiter(this, void 0, void 0, function* () {
                 var _a;
@@ -90,13 +92,13 @@ class Board {
                     .forEach((card) => cardsArray.push(card.innerHTML));
                 const newList = new List(listName, cardsArray, _id);
                 this.listArray.push(newList);
-                const updateList = yield fetch(`${listsAPI}/${this.id}`, {
+                const updateList = yield fetch(`${listsAPI}/${_id}`, {
                     method: "PATCH",
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ listName, cardsArray }),
+                    body: JSON.stringify({ listName, cardsArray, boardId }),
                 })
                     .then((res) => res.json())
                     .then(({ list }) => list)
@@ -184,7 +186,7 @@ class List {
         header.style.backgroundColor = this.backColor;
         makeListFunctional(listContainer);
         boardContainer.insertBefore(listContainer, trashCanDiv);
-        // currentBoard.update();
+        currentBoard.update();
         return listContainer;
     }
 }

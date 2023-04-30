@@ -126,7 +126,7 @@ if (window.location.pathname.endsWith("/board")) {
         else {
             boardContainer.insertBefore(curList, leftList);
         }
-        // currentBoard.update();
+        currentBoard.update();
     });
     window.addEventListener("click", (e) => {
         const target = e.target;
@@ -143,7 +143,7 @@ if (window.location.pathname.endsWith("/board")) {
         }
     });
     boardContainer.addEventListener("keyup", () => {
-        // currentBoard.update();
+        currentBoard.update();
     });
     newListInput.addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
@@ -155,7 +155,7 @@ if (window.location.pathname.endsWith("/board")) {
         if (confirmDelete) {
             const element = document.querySelector(".isDragging");
             element.remove();
-            // currentBoard.update();
+            currentBoard.update();
         }
     });
     document.addEventListener("dragover", (event) => {

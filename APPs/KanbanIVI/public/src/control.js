@@ -153,7 +153,7 @@ function dragginCard(e) {
         else {
             this.insertBefore(curTask, bottomTask);
         }
-        // currentBoard.update();
+        currentBoard.update();
     }
     catch (error) {
         console.log(error);
@@ -173,7 +173,7 @@ function editList() {
             if (event.key === "Enter") {
                 listTitle.replaceChild(listTitleText, editListInput);
                 listTitleText.textContent = editListInput.value.trim();
-                // currentBoard.update();
+                currentBoard.update();
             }
         });
     }

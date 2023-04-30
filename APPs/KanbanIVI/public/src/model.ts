@@ -80,7 +80,7 @@ class Board {
       .then((res) => res.json())
       .then(({ lists }) => lists)
       .catch((error) => console.log(error));
-
+      
     const listArrayNew = boardLists.map(
       (list) => new List(list.listName, list.cardsArray, list._id)
     );
@@ -102,7 +102,10 @@ class Board {
   }
 
   async update() {
+    console.log("update running...");
     this.listArray = [];
+    const boardId = this.id;
+
     const listElements = boardContainer.querySelectorAll(
       ".boardContainer__main__list"
     );
@@ -119,13 +122,13 @@ class Board {
 
       this.listArray.push(newList);
 
-      const updateList: ListTemplate = await fetch(`${listsAPI}/${this.id}`, {
+      const updateList: ListTemplate = await fetch(`${listsAPI}/${_id}`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ listName, cardsArray }),
+        body: JSON.stringify({ listName, cardsArray, boardId }),
       })
         .then((res) => res.json())
         .then(({ list }) => list)
@@ -165,7 +168,7 @@ class Board {
         }),
       });
     });
-    
+
     boardTitle.textContent = boardName;
     boardContainer.style.background = `url(${imageSrc}) no-repeat center / cover`;
   }
@@ -228,7 +231,7 @@ class List {
     header.style.backgroundColor = this.backColor;
     makeListFunctional(listContainer);
     boardContainer.insertBefore(listContainer, trashCanDiv);
-    // currentBoard.update();
+    currentBoard.update();
     return listContainer;
   }
 }
