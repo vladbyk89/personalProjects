@@ -24,10 +24,11 @@ class User {
             try {
                 const user = yield fetch(`${usersAPI}/getUser`)
                     .then((res) => res.json())
-                    .then(({ user }) => new User(user.firstName, user.lastName, user.gender, user.userName, user.password, user.email, user._id))
+                    .then(({ user }) => user)
                     .catch((error) => console.error(error));
-                if (user)
-                    return user;
+                if (!user)
+                    return false;
+                return new User(user.firstName, user.lastName, user.gender, user.userName, user.password, user.email, user._id);
             }
             catch (error) {
                 console.error(error);

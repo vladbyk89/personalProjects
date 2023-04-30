@@ -18,7 +18,6 @@ window.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, functi
         // nothing yet...
     }
     if (target.classList.contains("signOutbtn")) {
-        // localStorage.removeItem("currentUser");
         yield fetch(`${usersAPI}/removeCookie`, {
             method: "DELETE",
         });
@@ -28,7 +27,9 @@ window.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, functi
         profileWindow.style.display = "none";
     }
     if (target.classList.contains("backToMainIcon")) {
-        localStorage.removeItem("currentBoard");
+        yield fetch(`${boardsAPI}/removeCookie`, {
+            method: "DELETE",
+        });
         window.location.href = "/main";
     }
     if (target.classList.contains("editBoardIcon")) {

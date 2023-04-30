@@ -9,8 +9,22 @@ export const removeUserCookie = async (
   next: NextFunction
 ) => {
   try {
-    console.log("removeUserCookie ran...");
     res.clearCookie("user");
+    res.end();
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const removeBoardCookie = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    console.log("removeBoardCookie ran...");
+    res.clearCookie("board");
     res.end();
   } catch (error: any) {
     console.error(error);

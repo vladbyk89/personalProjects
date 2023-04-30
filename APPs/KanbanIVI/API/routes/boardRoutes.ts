@@ -13,9 +13,13 @@ import {
 
 import { boardCookieAuthentication } from "../middleware/cookieJwtAuthintication";
 
+import { removeBoardCookie } from "../middleware/removeCookie";
+
 import { setBoardCookie } from "../middleware/setCookieJWT";
 
 boardRouter.route("/").get(getAllBoards).post(createBoard, setBoardCookie);
+
+boardRouter.route("/removeCookie").delete(removeBoardCookie);
 
 boardRouter.route("/getBoard").get(boardCookieAuthentication, getBoard);
 

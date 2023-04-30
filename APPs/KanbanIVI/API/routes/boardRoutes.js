@@ -9,8 +9,10 @@ const boardRouter = express_1.default.Router();
 exports.boardRouter = boardRouter;
 const boardController_1 = require("../controller/boardController");
 const cookieJwtAuthintication_1 = require("../middleware/cookieJwtAuthintication");
+const removeCookie_1 = require("../middleware/removeCookie");
 const setCookieJWT_1 = require("../middleware/setCookieJWT");
 boardRouter.route("/").get(boardController_1.getAllBoards).post(boardController_1.createBoard, setCookieJWT_1.setBoardCookie);
+boardRouter.route("/removeCookie").delete(removeCookie_1.removeBoardCookie);
 boardRouter.route("/getBoard").get(cookieJwtAuthintication_1.boardCookieAuthentication, boardController_1.getBoard);
 boardRouter.route("/addList").patch(boardController_1.addListToBoard);
 boardRouter

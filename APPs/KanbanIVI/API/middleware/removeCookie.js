@@ -9,11 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeUserCookie = void 0;
+exports.removeBoardCookie = exports.removeUserCookie = void 0;
 const secret = process.env.JWT_SECRET;
 const removeUserCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("removeUserCookie ran...");
         res.clearCookie("user");
         res.end();
     }
@@ -23,3 +22,15 @@ const removeUserCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.removeUserCookie = removeUserCookie;
+const removeBoardCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log("removeBoardCookie ran...");
+        res.clearCookie("board");
+        res.end();
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.removeBoardCookie = removeBoardCookie;
