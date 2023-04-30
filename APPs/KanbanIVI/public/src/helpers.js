@@ -36,23 +36,8 @@ const insertAboveTask = (zone, mouseY) => {
     });
     return closestTask;
 };
-function userListFromStorage() {
-    const getLocalStorage = localStorage.getItem("signedUpUsers");
-    if (getLocalStorage) {
-        const userList = JSON.parse(getLocalStorage);
-        return userList;
-    }
-    return [];
-}
 function uid() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
-}
-function checkIfEmailExists(email) {
-    const userList = userListFromStorage();
-    const findEmail = userList.find((user) => user.email === email);
-    if (findEmail)
-        return true;
-    return false;
 }
 const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 function getUserBoards(userId) {

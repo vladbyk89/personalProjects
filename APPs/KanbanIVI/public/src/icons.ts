@@ -1,6 +1,7 @@
 // all windows event listener
 window.addEventListener("click", async (e) => {
   const target = e.target as HTMLElement;
+  
   if (target.classList.contains("profileIcon")) {
     displayProfile(currentUser);
   }

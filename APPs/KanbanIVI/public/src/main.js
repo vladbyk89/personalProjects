@@ -89,16 +89,16 @@ if (window.location.pathname.endsWith("/main")) {
 //---------------------- board.html ----------------------
 if (window.location.pathname.endsWith("/board")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield Board.getCurrentBoard();
+        yield Board.assignCurrentBoard();
         renderBoardInBoardPage();
-        console.log(currentBoard);
+        // console.log(currentBoard);
         if (!currentBoard) {
             window.location.href = "/";
         }
     }));
-    addListBtn.addEventListener("click", () => List.createList(newListInput.value, currentBoard._id));
+    addListBtn.addEventListener("click", () => List.createList(newListInput.value, currentBoard.id));
     editBoardBtn.addEventListener("click", () => {
-        Board.edit(nameInputEle.value, imageDisplayedInEdit.src, currentBoard._id);
+        currentBoard.edit(nameInputEle.value, imageDisplayedInEdit.src, currentBoard.id);
         editBoardWindow.style.display = "none";
     });
     updatedBoardImageBtn.addEventListener("click", () => {
@@ -149,7 +149,7 @@ if (window.location.pathname.endsWith("/board")) {
     });
     newListInput.addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
-            List.createList(newListInput.value, currentBoard._id);
+            List.createList(newListInput.value, currentBoard.id);
         }
     });
     trashCan.addEventListener("drop", () => {

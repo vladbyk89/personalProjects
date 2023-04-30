@@ -58,9 +58,9 @@ interface BoardTemplate {
 class Board {
   constructor(
     public name: string,
-    public backgroundImage: string,
-    public lists: List[] = [],
-    public uid: string = ""
+    public imageSrc: string,
+    public id: string = "",
+    public listArray: List[] = []
   ) {}
 
   static async setCurrentBoard(boardId: string) {
@@ -70,11 +70,19 @@ class Board {
     }).catch((error) => console.error(error));
   }
 
-  static async getCurrentBoard() {
-    currentBoard = await fetch(`${boardsAPI}/getBoard`)
+  static async assignCurrentBoard() {
+    const board: BoardTemplate = await fetch(`${boardsAPI}/getBoard`)
       .then((res) => res.json())
       .then(({ board }) => board)
       .catch((error) => console.error(error));
+
+    currentBoard = new Board(board.boardName, board.imageSrc, board._id);
+
+    const listArray = board.listArray.map(
+      (list) => new List(list.listName, list.cardsArray, list._id)
+    );
+
+    currentBoard.listArray = [...listArray];
   }
 
   static async deleteBoard(boardId: string) {
@@ -87,7 +95,7 @@ class Board {
   }
 
   update() {
-    this.lists = [];
+    this.listArray = [];
     const listElements = boardContainer.querySelectorAll(
       ".boardContainer__main__list"
     );
@@ -98,15 +106,15 @@ class Board {
         .querySelectorAll("p")
         .forEach((card) => cardsArr.push(card.innerHTML));
       const newList = new List(listName, Array.from(cardsArr));
-      this.lists.push(newList);
+      this.listArray.push(newList);
     });
     localStorage.setItem("currentBoard", JSON.stringify(this));
     // updateUserBoardList(currentUser, this);
   }
 
-  static async edit(boardName: string, imageSrc: string, boardId: string) {
-    // this.name = newName;
-    // this.backgroundImage = imageSrc;
+  async edit(boardName: string, imageSrc: string, boardId: string) {
+    this.name = boardName;
+    this.imageSrc = imageSrc;
     await fetch(`${boardsAPI}/${boardId}`, {
       method: "PATCH",
       headers: {
@@ -121,10 +129,10 @@ class Board {
   }
 }
 
-let currentBoard: BoardTemplate;
+let currentBoard: Board;
 
 interface ListTemplate {
-  name: string;
+  listName: string;
   cardsArray: [string];
   _id: string;
 }
@@ -133,7 +141,7 @@ class List {
   constructor(
     public name: string,
     public cards: string[] = [],
-    public uid = Math.random().toString(36).slice(2),
+    public uid = "",
     public backColor: string = `#${randomColor()}`
   ) {}
 
@@ -225,7 +233,7 @@ const preMadeListList = [
 ];
 
 if (!localStorage.getItem("signedUpUsers")) {
-  preMadeBoardList[0].lists.push(...preMadeListList);
+  preMadeBoardList[0].listArray.push(...preMadeListList);
   preMadeUserList[0].boardList.push(...preMadeBoardList);
   preMadeUserList[1].boardList.push(...preMadeBoardList);
   preMadeUserList[2].boardList.push(...preMadeBoardList);

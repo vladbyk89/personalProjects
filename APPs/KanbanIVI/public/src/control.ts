@@ -1,47 +1,3 @@
-// function handleSignUp(e: Event) {
-//   try {
-//     e.preventDefault();
-//     // e.stopPropagation();
-//     const gender = signUpForm.gender.value;
-//     const firstName = signUpForm.firstName.value;
-//     const lastName = signUpForm.lastName.value;
-//     const password = signUpForm.password.value;
-//     const confirmPassword = signUpForm.confirmPassword.value;
-//     const userName = signUpForm.userName.value;
-//     const email = signUpForm.email.value;
-//     const phone = signUpForm.phoneNumber.value;
-//     if (confirmPassword != password) return alert("Passwords don't match");
-//     if (!/^\d+$/.test(phone))
-//       return alert("Please use only digit for phone number field");
-//     const arr = [gender, firstName, lastName, password, userName, email, phone];
-//     const regex = /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/;
-//     if (arr.some((ele) => !regex.test(ele)))
-//       return alert("Please check your input(Only English characters allowed)");
-//     if (checkIfEmailExists(email))
-//       return alert("Email is alreay in the system");
-
-//     const newUser = new User(
-//       firstName,
-//       lastName,
-//       gender,
-//       userName,
-//       password,
-//       email,
-//       phone
-//     );
-//     const signedUpUsers = JSON.parse(
-//       localStorage.getItem("signedUpUsers") || "[]"
-//     ) as User[];
-//     signedUpUsers.push(newUser);
-//     localStorage.setItem("signedUpUsers", JSON.stringify(signedUpUsers));
-//     localStorage.setItem("currentUser", JSON.stringify(newUser));
-//     location.href = "main.html";
-//     signUpForm.reset();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 async function handleRecovery(e: Event) {
   try {
     e.preventDefault();
@@ -94,42 +50,32 @@ function displayProfile(user: User) {
   }
 }
 
-function updateUserBoardList(userToUpdate: User, boardToUpdate: Board) {
-  try {
-    const userList = userListFromStorage();
-    if (userList) {
-      const findUser = userList.find((user) => user.id === userToUpdate.id);
-      if (findUser) {
-        const findBoard = findUser.boardList.find(
-          (board) => board.uid === boardToUpdate.uid
-        );
-        if (findBoard) {
-          const boardIndex = findUser.boardList.indexOf(findBoard);
-          findUser.boardList[boardIndex] = boardToUpdate;
-          // currentUser.boardList[boardIndex] = boardToUpdate;
-        } else {
-          findUser.boardList.unshift(boardToUpdate);
-          // currentUser.boardList.unshift(boardToUpdate);
-        }
-      }
-      localStorage.setItem("signedUpUsers", JSON.stringify(userList));
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    }
-  } catch (error) {
-    throw error;
-  }
-}
+// function updateUserBoardList(userToUpdate: User, boardToUpdate: Board) {
+//   try {
+//     const userList = userListFromStorage();
+//     if (userList) {
+//       const findUser = userList.find((user) => user.id === userToUpdate.id);
+//       if (findUser) {
+//         const findBoard = findUser.boardList.find(
+//           (board) => board.uid === boardToUpdate.uid
+//         );
+//         if (findBoard) {
+//           const boardIndex = findUser.boardList.indexOf(findBoard);
+//           findUser.boardList[boardIndex] = boardToUpdate;
+//           // currentUser.boardList[boardIndex] = boardToUpdate;
+//         } else {
+//           findUser.boardList.unshift(boardToUpdate);
+//           // currentUser.boardList.unshift(boardToUpdate);
+//         }
+//       }
+//       localStorage.setItem("signedUpUsers", JSON.stringify(userList));
+//       localStorage.setItem("currentUser", JSON.stringify(currentUser));
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
-function checkIfUserExists(userName: string, password: string) {
-  try {
-    const userList = userListFromStorage();
-    return userList.find(
-      (user) => user.userName === userName && user.password === password
-    );
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 async function renderBoardsToMain(boards: BoardTemplate[]) {
   try {
@@ -331,16 +277,16 @@ function createCardElement(cardName: string, list: Element) {
 
 function renderBoardInBoardPage() {
   try {
-    boardTitle.textContent = currentBoard.boardName;
+    boardTitle.textContent = currentBoard.name;
     boardContainer.style.background = `url(${currentBoard.imageSrc}) no-repeat center / cover`;
-    // currentBoard.listArray.forEach((list) => {
-    //   const listObj = new List(list.name, list.cards, list.uid, list.backColor);
-    //   const ListElement = listObj.createListElement();
+    currentBoard.listArray.forEach((list) => {
+      const listObj = new List(list.name, list.cards, list.uid, list.backColor);
+      const ListElement = listObj.createListElement();
 
-    //   list.cards.forEach((card) => {
-    //     createCardElement(card, ListElement);
-    //   });
-    // });
+      list.cards.forEach((card) => {
+        createCardElement(card, ListElement);
+      });
+    });
   } catch (error) {
     console.log(error);
   }

@@ -38,11 +38,11 @@ class User {
 }
 let currentUser;
 class Board {
-    constructor(name, backgroundImage, lists = [], uid = "") {
+    constructor(name, imageSrc, id = "", listArray = []) {
         this.name = name;
-        this.backgroundImage = backgroundImage;
-        this.lists = lists;
-        this.uid = uid;
+        this.imageSrc = imageSrc;
+        this.id = id;
+        this.listArray = listArray;
     }
     static setCurrentBoard(boardId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -52,12 +52,15 @@ class Board {
             }).catch((error) => console.error(error));
         });
     }
-    static getCurrentBoard() {
+    static assignCurrentBoard() {
         return __awaiter(this, void 0, void 0, function* () {
-            currentBoard = yield fetch(`${boardsAPI}/getBoard`)
+            const board = yield fetch(`${boardsAPI}/getBoard`)
                 .then((res) => res.json())
                 .then(({ board }) => board)
                 .catch((error) => console.error(error));
+            currentBoard = new Board(board.boardName, board.imageSrc, board._id);
+            const listArray = board.listArray.map((list) => new List(list.listName, list.cardsArray, list._id));
+            currentBoard.listArray = [...listArray];
         });
     }
     static deleteBoard(boardId) {
@@ -71,7 +74,7 @@ class Board {
         });
     }
     update() {
-        this.lists = [];
+        this.listArray = [];
         const listElements = boardContainer.querySelectorAll(".boardContainer__main__list");
         listElements.forEach((list) => {
             var _a;
@@ -81,15 +84,15 @@ class Board {
                 .querySelectorAll("p")
                 .forEach((card) => cardsArr.push(card.innerHTML));
             const newList = new List(listName, Array.from(cardsArr));
-            this.lists.push(newList);
+            this.listArray.push(newList);
         });
         localStorage.setItem("currentBoard", JSON.stringify(this));
         // updateUserBoardList(currentUser, this);
     }
-    static edit(boardName, imageSrc, boardId) {
+    edit(boardName, imageSrc, boardId) {
         return __awaiter(this, void 0, void 0, function* () {
-            // this.name = newName;
-            // this.backgroundImage = imageSrc;
+            this.name = boardName;
+            this.imageSrc = imageSrc;
             yield fetch(`${boardsAPI}/${boardId}`, {
                 method: "PATCH",
                 headers: {
@@ -106,7 +109,7 @@ class Board {
 }
 let currentBoard;
 class List {
-    constructor(name, cards = [], uid = Math.random().toString(36).slice(2), backColor = `#${randomColor()}`) {
+    constructor(name, cards = [], uid = "", backColor = `#${randomColor()}`) {
         this.name = name;
         this.cards = cards;
         this.uid = uid;
@@ -181,7 +184,7 @@ const preMadeListList = [
     ]),
 ];
 if (!localStorage.getItem("signedUpUsers")) {
-    preMadeBoardList[0].lists.push(...preMadeListList);
+    preMadeBoardList[0].listArray.push(...preMadeListList);
     preMadeUserList[0].boardList.push(...preMadeBoardList);
     preMadeUserList[1].boardList.push(...preMadeBoardList);
     preMadeUserList[2].boardList.push(...preMadeBoardList);

@@ -1,25 +1,4 @@
 "use strict";
-// function handleSignUp(e: Event) {
-//   try {
-//     e.preventDefault();
-//     // e.stopPropagation();
-//     const gender = signUpForm.gender.value;
-//     const firstName = signUpForm.firstName.value;
-//     const lastName = signUpForm.lastName.value;
-//     const password = signUpForm.password.value;
-//     const confirmPassword = signUpForm.confirmPassword.value;
-//     const userName = signUpForm.userName.value;
-//     const email = signUpForm.email.value;
-//     const phone = signUpForm.phoneNumber.value;
-//     if (confirmPassword != password) return alert("Passwords don't match");
-//     if (!/^\d+$/.test(phone))
-//       return alert("Please use only digit for phone number field");
-//     const arr = [gender, firstName, lastName, password, userName, email, phone];
-//     const regex = /^[a-zA-Z0-9!@#$%\^&*)(+=._-]*$/;
-//     if (arr.some((ele) => !regex.test(ele)))
-//       return alert("Please check your input(Only English characters allowed)");
-//     if (checkIfEmailExists(email))
-//       return alert("Email is alreay in the system");
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -29,27 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-//     const newUser = new User(
-//       firstName,
-//       lastName,
-//       gender,
-//       userName,
-//       password,
-//       email,
-//       phone
-//     );
-//     const signedUpUsers = JSON.parse(
-//       localStorage.getItem("signedUpUsers") || "[]"
-//     ) as User[];
-//     signedUpUsers.push(newUser);
-//     localStorage.setItem("signedUpUsers", JSON.stringify(signedUpUsers));
-//     localStorage.setItem("currentUser", JSON.stringify(newUser));
-//     location.href = "main.html";
-//     signUpForm.reset();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 function handleRecovery(e) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -103,40 +61,31 @@ function displayProfile(user) {
         console.log(error);
     }
 }
-function updateUserBoardList(userToUpdate, boardToUpdate) {
-    try {
-        const userList = userListFromStorage();
-        if (userList) {
-            const findUser = userList.find((user) => user.id === userToUpdate.id);
-            if (findUser) {
-                const findBoard = findUser.boardList.find((board) => board.uid === boardToUpdate.uid);
-                if (findBoard) {
-                    const boardIndex = findUser.boardList.indexOf(findBoard);
-                    findUser.boardList[boardIndex] = boardToUpdate;
-                    // currentUser.boardList[boardIndex] = boardToUpdate;
-                }
-                else {
-                    findUser.boardList.unshift(boardToUpdate);
-                    // currentUser.boardList.unshift(boardToUpdate);
-                }
-            }
-            localStorage.setItem("signedUpUsers", JSON.stringify(userList));
-            localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        }
-    }
-    catch (error) {
-        throw error;
-    }
-}
-function checkIfUserExists(userName, password) {
-    try {
-        const userList = userListFromStorage();
-        return userList.find((user) => user.userName === userName && user.password === password);
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
+// function updateUserBoardList(userToUpdate: User, boardToUpdate: Board) {
+//   try {
+//     const userList = userListFromStorage();
+//     if (userList) {
+//       const findUser = userList.find((user) => user.id === userToUpdate.id);
+//       if (findUser) {
+//         const findBoard = findUser.boardList.find(
+//           (board) => board.uid === boardToUpdate.uid
+//         );
+//         if (findBoard) {
+//           const boardIndex = findUser.boardList.indexOf(findBoard);
+//           findUser.boardList[boardIndex] = boardToUpdate;
+//           // currentUser.boardList[boardIndex] = boardToUpdate;
+//         } else {
+//           findUser.boardList.unshift(boardToUpdate);
+//           // currentUser.boardList.unshift(boardToUpdate);
+//         }
+//       }
+//       localStorage.setItem("signedUpUsers", JSON.stringify(userList));
+//       localStorage.setItem("currentUser", JSON.stringify(currentUser));
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 function renderBoardsToMain(boards) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -307,15 +256,15 @@ function createCardElement(cardName, list) {
 }
 function renderBoardInBoardPage() {
     try {
-        boardTitle.textContent = currentBoard.boardName;
+        boardTitle.textContent = currentBoard.name;
         boardContainer.style.background = `url(${currentBoard.imageSrc}) no-repeat center / cover`;
-        // currentBoard.listArray.forEach((list) => {
-        //   const listObj = new List(list.name, list.cards, list.uid, list.backColor);
-        //   const ListElement = listObj.createListElement();
-        //   list.cards.forEach((card) => {
-        //     createCardElement(card, ListElement);
-        //   });
-        // });
+        currentBoard.listArray.forEach((list) => {
+            const listObj = new List(list.name, list.cards, list.uid, list.backColor);
+            const ListElement = listObj.createListElement();
+            list.cards.forEach((card) => {
+                createCardElement(card, ListElement);
+            });
+        });
     }
     catch (error) {
         console.log(error);
