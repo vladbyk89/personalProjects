@@ -18,21 +18,15 @@ window.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, functi
         // nothing yet...
     }
     if (target.classList.contains("signOutbtn")) {
-        yield fetch(`${usersAPI}/removeCookie`, {
-            method: "DELETE",
-        });
-        yield fetch(`${boardsAPI}/removeCookie`, {
-            method: "DELETE",
-        });
+        removeCookie(usersAPI);
+        removeCookie(boardsAPI);
         window.location.href = "/";
     }
     if (target.classList.contains("exitProfilePage")) {
         profileWindow.style.display = "none";
     }
     if (target.classList.contains("backToMainIcon")) {
-        yield fetch(`${boardsAPI}/removeCookie`, {
-            method: "DELETE",
-        });
+        removeCookie(boardsAPI);
         window.location.href = "/main";
     }
     if (target.classList.contains("editBoardIcon")) {

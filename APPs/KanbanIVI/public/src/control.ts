@@ -149,8 +149,8 @@ function dragginCard(this: HTMLElement, e: MouseEvent) {
         cardIsDragged = true;
       }
     });
+
     if (!cardIsDragged) return;
-    // e.preventDefault();
 
     const bottomTask = insertAboveTask(this, e.clientY);
     const curTask = document.querySelector(".isDragging") as HTMLElement;
@@ -197,10 +197,12 @@ function createCardElement(cardName: string, list: Element) {
     card.classList.add("boardContainer__main__list__card");
     card.setAttribute("draggable", "true");
     card.setAttribute("id", `${uid()}`);
+
     card.innerHTML = `
     <p>${cardName}</p>
     <i class="fa-regular fa-pen-to-square editCardBtn"></i>
     `;
+
     const cardTitle = list.querySelector(
       ".boardContainer__main__list__header"
     ) as HTMLDivElement;
@@ -213,6 +215,7 @@ function createCardElement(cardName: string, list: Element) {
       const cardTitle = card.querySelector(
         ".boardContainer__main__list__card > p"
       ) as HTMLElement;
+
       if (!cardTitle) {
         console.error("Card title element not found!");
         return;

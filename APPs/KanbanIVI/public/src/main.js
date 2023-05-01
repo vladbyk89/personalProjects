@@ -25,10 +25,6 @@ if (window.location.pathname.endsWith("/")) {
         entryPageMainContainer.classList.remove("active");
     });
 }
-// ---------------------- forgotPassword.html ----------------------
-if (window.location.pathname.endsWith("/passwordRecovery")) {
-    // recoveryForm.addEventListener("submit", handleRecovery);
-}
 // ---------------------- main.html ----------------------
 if (window.location.pathname.endsWith("/main")) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {

@@ -9,32 +9,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const insertLeftOfLisk = (zone, mouseX) => {
-    const staticLists = zone.querySelectorAll(".boardContainer__main__list:not(.isDragging)");
-    let closestTask = null;
-    let closestOffset = Number.NEGATIVE_INFINITY;
-    staticLists.forEach((list) => {
-        const cardBoundaries = list.getBoundingClientRect();
-        const offset = mouseX - cardBoundaries.left - cardBoundaries.width / 2;
-        if (offset < 0 && offset > closestOffset) {
-            closestOffset = offset;
-            closestTask = list;
-        }
-    });
-    return closestTask;
+    try {
+        const staticLists = zone.querySelectorAll(".boardContainer__main__list:not(.isDragging)");
+        let closestTask = null;
+        let closestOffset = Number.NEGATIVE_INFINITY;
+        staticLists.forEach((list) => {
+            const cardBoundaries = list.getBoundingClientRect();
+            const offset = mouseX - cardBoundaries.left - cardBoundaries.width / 2;
+            if (offset < 0 && offset > closestOffset) {
+                closestOffset = offset;
+                closestTask = list;
+            }
+        });
+        return closestTask;
+    }
+    catch (error) {
+        console.error(error);
+    }
 };
 const insertAboveTask = (zone, mouseY) => {
-    const staticCards = zone.querySelectorAll(".boardContainer__main__list__card:not(.isDragging)");
-    let closestTask = null;
-    let closestOffset = Number.NEGATIVE_INFINITY;
-    staticCards.forEach((card) => {
-        const cardBoundaries = card.getBoundingClientRect();
-        const offset = mouseY - cardBoundaries.top - cardBoundaries.height / 2;
-        if (offset < 0 && offset > closestOffset) {
-            closestOffset = offset;
-            closestTask = card;
-        }
-    });
-    return closestTask;
+    try {
+        const staticCards = zone.querySelectorAll(".boardContainer__main__list__card:not(.isDragging)");
+        let closestTask = null;
+        let closestOffset = Number.NEGATIVE_INFINITY;
+        staticCards.forEach((card) => {
+            const cardBoundaries = card.getBoundingClientRect();
+            const offset = mouseY - cardBoundaries.top - cardBoundaries.height / 2;
+            if (offset < 0 && offset > closestOffset) {
+                closestOffset = offset;
+                closestTask = card;
+            }
+        });
+        return closestTask;
+    }
+    catch (error) {
+        console.error(error);
+    }
 };
 function uid() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
@@ -42,9 +52,26 @@ function uid() {
 const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 function getUserBoards(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield fetch(`${boardsAPI}/${userId}`)
-            .then((res) => res.json())
-            .then(({ boards }) => boards)
-            .catch((error) => console.error(error));
+        try {
+            return yield fetch(`${boardsAPI}/${userId}`)
+                .then((res) => res.json())
+                .then(({ boards }) => boards)
+                .catch((error) => console.error(error));
+        }
+        catch (error) {
+            console.error(error);
+        }
+    });
+}
+function removeCookie(api) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield fetch(`${boardsAPI}/removeCookie`, {
+                method: "DELETE",
+            }).catch((error) => console.error(error));
+        }
+        catch (error) {
+            console.error(error);
+        }
     });
 }

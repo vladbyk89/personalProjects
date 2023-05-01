@@ -24,7 +24,7 @@ const setBoardCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         if (!token)
             throw new Error("Missing token...");
         res.cookie("board", token, {
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 60 * 60 * 1000,
             httpOnly: true,
         });
         res.end();

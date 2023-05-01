@@ -78,7 +78,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             throw new Error("Missing jwt secret");
         const token = jwt_simple_1.default.encode({ userId: findUser._id, role: "public" }, secret);
         res.cookie("user", token, {
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 60 * 60 * 1000,
             httpOnly: true,
         });
         res.redirect("/main");

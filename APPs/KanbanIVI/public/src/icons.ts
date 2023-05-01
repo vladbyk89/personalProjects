@@ -10,14 +10,10 @@ window.addEventListener("click", async (e) => {
   }
 
   if (target.classList.contains("signOutbtn")) {
-    await fetch(`${usersAPI}/removeCookie`, {
-      method: "DELETE",
-    });
+    removeCookie(usersAPI);
 
-    await fetch(`${boardsAPI}/removeCookie`, {
-      method: "DELETE",
-    });
-    
+    removeCookie(boardsAPI);
+
     window.location.href = "/";
   }
 
@@ -25,9 +21,7 @@ window.addEventListener("click", async (e) => {
     profileWindow.style.display = "none";
   }
   if (target.classList.contains("backToMainIcon")) {
-    await fetch(`${boardsAPI}/removeCookie`, {
-      method: "DELETE",
-    });
+    removeCookie(boardsAPI);
     window.location.href = "/main";
   }
   if (target.classList.contains("editBoardIcon")) {

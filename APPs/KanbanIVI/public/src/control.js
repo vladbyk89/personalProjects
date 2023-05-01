@@ -145,7 +145,6 @@ function dragginCard(e) {
         });
         if (!cardIsDragged)
             return;
-        // e.preventDefault();
         const bottomTask = insertAboveTask(this, e.clientY);
         const curTask = document.querySelector(".isDragging");
         if (!bottomTask) {

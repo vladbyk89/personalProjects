@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import Board, { BoardSchema } from "../model/BoardModel";
+import Board from "../model/BoardModel";
 import User from "../model/UserModel";
 import List from "../model/ListModel";
 import jwt from "jwt-simple";

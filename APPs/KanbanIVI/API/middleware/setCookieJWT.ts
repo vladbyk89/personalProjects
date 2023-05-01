@@ -16,7 +16,7 @@ export const setBoardCookie = async (
     if (!token) throw new Error("Missing token...");
 
     res.cookie("board", token, {
-      maxAge: 24 * 60 * 60 * 1000, //24 hours
+      maxAge: 60 * 60 * 1000, //1 hour
       httpOnly: true,
     });
 

@@ -87,7 +87,7 @@ export const login = async (
     const token = jwt.encode({ userId: findUser._id, role: "public" }, secret);
 
     res.cookie("user", token, {
-      maxAge: 24 * 60 * 60 * 1000, //24 hours
+      maxAge: 60 * 60 * 1000, //1 hours
       httpOnly: true,
     });
     res.redirect("/main");
