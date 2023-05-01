@@ -79,7 +79,7 @@ class Board {
     const boardLists: ListTemplate[] = await fetch(`${listsAPI}/${board._id}`)
       .then((res) => res.json())
       .then(({ lists }) => lists)
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
 
     const listArrayNew = boardLists.map(
       (list) => new List(list.listName, list.cardsArray, list._id)
@@ -102,7 +102,6 @@ class Board {
   }
 
   async update() {
-    console.log("update running...");
     this.listArray = [];
     const boardId = this.id;
 

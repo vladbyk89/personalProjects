@@ -23,7 +23,6 @@ export const removeBoardCookie = async (
   next: NextFunction
 ) => {
   try {
-    console.log("removeBoardCookie ran...");
     res.clearCookie("board");
     res.end();
   } catch (error: any) {

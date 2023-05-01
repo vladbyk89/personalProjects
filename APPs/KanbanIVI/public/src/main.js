@@ -158,7 +158,7 @@ if (window.location.pathname.endsWith("/board")) {
             element.remove();
             yield fetch(`${listsAPI}/${listId}`, {
                 method: "DELETE",
-            }).catch((error) => console.log(error));
+            }).catch((error) => console.error(error));
             currentBoard.update();
         }
     }));

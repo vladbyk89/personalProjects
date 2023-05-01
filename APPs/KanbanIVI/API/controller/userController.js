@@ -92,7 +92,6 @@ exports.login = login;
 const passwordRecovery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, userName, email } = req.body;
-        console.log(req.body);
         const user = yield UserModel_1.default.findOne({
             firstName,
             lastName,

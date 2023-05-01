@@ -24,7 +24,6 @@ const removeUserCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 exports.removeUserCookie = removeUserCookie;
 const removeBoardCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("removeBoardCookie ran...");
         res.clearCookie("board");
         res.end();
     }

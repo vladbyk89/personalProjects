@@ -104,7 +104,6 @@ export const passwordRecovery = async (
 ) => {
   try {
     const { firstName, lastName, userName, email } = req.body;
-    console.log(req.body);
     const user = await User.findOne({
       firstName,
       lastName,

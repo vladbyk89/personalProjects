@@ -21,12 +21,16 @@ async function handleRecovery(e: Event) {
       }),
     })
       .then((res) => res.json())
-      .then(({ user }) => user);
+      .then(({ user }) => user)
+      .catch((error) => console.error(error));
+
     if (!findUser) return alert("No such user exists");
+
     recoveredPassword.textContent = findUser.password;
+
     passwordDisplayDiv.style.display = "flex";
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -46,11 +50,9 @@ function displayProfile(user: User) {
         `);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
-
-
 
 async function renderBoardsToMain(boards: BoardTemplate[]) {
   try {
@@ -65,7 +67,7 @@ async function renderBoardsToMain(boards: BoardTemplate[]) {
       })
       .join("");
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -135,7 +137,7 @@ function makeListFunctional(listContainer: HTMLElement) {
       }
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -160,7 +162,7 @@ function dragginCard(this: HTMLElement, e: MouseEvent) {
     }
     currentBoard.update();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -185,7 +187,7 @@ function editList(this: HTMLElement) {
       }
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -247,7 +249,7 @@ function createCardElement(cardName: string, list: Element) {
       ".boardContainer__main__list__card"
     ) as NodeListOf<HTMLDivElement>;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -264,6 +266,6 @@ function renderBoardInBoardPage() {
       });
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

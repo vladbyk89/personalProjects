@@ -61,7 +61,7 @@ class Board {
             const boardLists = yield fetch(`${listsAPI}/${board._id}`)
                 .then((res) => res.json())
                 .then(({ lists }) => lists)
-                .catch((error) => console.log(error));
+                .catch((error) => console.error(error));
             const listArrayNew = boardLists.map((list) => new List(list.listName, list.cardsArray, list._id));
             currentBoard = new Board(board.boardName, board.imageSrc, board._id, listArrayNew);
         });
@@ -78,7 +78,6 @@ class Board {
     }
     update() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("update running...");
             this.listArray = [];
             const boardId = this.id;
             const listElements = boardContainer.querySelectorAll(".boardContainer__main__list");

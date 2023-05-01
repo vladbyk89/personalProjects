@@ -30,14 +30,15 @@ function handleRecovery(e) {
                 }),
             })
                 .then((res) => res.json())
-                .then(({ user }) => user);
+                .then(({ user }) => user)
+                .catch((error) => console.error(error));
             if (!findUser)
                 return alert("No such user exists");
             recoveredPassword.textContent = findUser.password;
             passwordDisplayDiv.style.display = "flex";
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     });
 }
@@ -58,7 +59,7 @@ function displayProfile(user) {
         }
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 function renderBoardsToMain(boards) {
@@ -76,7 +77,7 @@ function renderBoardsToMain(boards) {
                 .join("");
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     });
 }
@@ -131,7 +132,7 @@ function makeListFunctional(listContainer) {
         });
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 function dragginCard(e) {
@@ -156,7 +157,7 @@ function dragginCard(e) {
         currentBoard.update();
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 function editList() {
@@ -178,7 +179,7 @@ function editList() {
         });
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 function createCardElement(cardName, list) {
@@ -226,7 +227,7 @@ function createCardElement(cardName, list) {
         cards = document.querySelectorAll(".boardContainer__main__list__card");
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 function renderBoardInBoardPage() {
@@ -242,6 +243,6 @@ function renderBoardInBoardPage() {
         });
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
