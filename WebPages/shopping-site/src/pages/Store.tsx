@@ -1,9 +1,13 @@
-import React from 'react'
+import "../styles/Store.scss";
+import ShortTrackBlades from "../components/Store/ShortTrackBlades";
 
 const Store = () => {
   return (
-    <div>Store</div>
-  )
-}
+    <div className="storePage">
+      <h1>Products</h1>
+      <ShortTrackBlades />
+    </div>
+  );
+};
 
-export default Store
+export default Store;
