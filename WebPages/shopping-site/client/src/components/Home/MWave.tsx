@@ -11,7 +11,7 @@ const MWave = () => {
           <p>Improve control</p>
           <p>Higher speeds</p>
         </div>
-        <button className="button-6">Check the M-Wave out!</button>
+        <button className="button-6">Order M-Wave now</button>
       </div>
     </div>
   );

@@ -6,18 +6,17 @@
     width: 100%;
     height: 80vh;
     display: flex;
-    background-color: #FF721D;
+    background-color: #ff721d;
     display: flex;
     justify-content: space-between;
+    padding: 3rem;
     .img {
-        // border: 1px solid black;
-      height: 100%;
+      // border: 1px solid black;
       width: 70%;
       background: url("https://www.skate-tec.com/webp/flex-home-block-1024.webp")
-        no-repeat top 50px left 200% / cover;
+        no-repeat center / contain;
     }
     .content {
-      padding: 3rem;
       height: 100%;
       display: flex;
       flex-direction: column;
