@@ -1,20 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 import { CartProductInterface } from "../CartProduct/CartProductModel";
+import { UserSchema } from "../User/UserModel";
 
 export interface CartInterface {
-  products: CartProductInterface[];
-  buyer: string;
+  cartProducts: CartProductInterface[];
+  user: string;
   _id: string;
 }
 
 export const CartSchema: Schema = new Schema(
   {
-    products: {
+    cartProducts: {
       type: [{ type: Schema.Types.ObjectId, ref: "CartProduct" }],
       required: true,
     },
-    buyer: {
-      type: String,
+    user: {
+      type: UserSchema,
       required: true,
     },
   },

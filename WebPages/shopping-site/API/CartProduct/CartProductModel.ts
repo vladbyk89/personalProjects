@@ -7,10 +7,10 @@ export interface CartProductInterface {
   _id: string;
 }
 
-export const CartSchema: Schema = new Schema(
+export const CartProductSchema: Schema = new Schema(
   {
     product: {
-      type: { type: Schema.Types.ObjectId, ref: "Product" },
+      type: [{ type: Schema.Types.ObjectId, ref: "Product" }],
       required: true,
     },
     amount: {
@@ -23,4 +23,7 @@ export const CartSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.model<CartProductInterface>("CartProduct", CartSchema);
+export default mongoose.model<CartProductInterface>(
+  "CartProduct",
+  CartProductSchema
+);

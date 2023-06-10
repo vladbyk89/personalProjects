@@ -17,6 +17,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const config_1 = require("./API/config/config");
 const productRoutes_1 = __importDefault(require("./API/Product/productRoutes"));
+const CartProductRoutes_1 = __importDefault(require("./API/CartProduct/CartProductRoutes"));
+const CartRoutes_1 = __importDefault(require("./API/Cart/CartRoutes"));
+const UserRoutes_1 = __importDefault(require("./API/User/UserRoutes"));
 //routers
 const app = (0, express_1.default)();
 StartServer();
@@ -37,6 +40,9 @@ function StartServer() {
         app.use((0, cookie_parser_1.default)());
         //routes
         app.use("/api/v1/products", productRoutes_1.default);
+        app.use("/api/v1/cartProducts", CartProductRoutes_1.default);
+        app.use("/api/v1/carts", CartRoutes_1.default);
+        app.use("/api/v1/users", UserRoutes_1.default);
         app.listen(config_1.config.server.port, () => {
             console.log(`Server is listening on port ${config_1.config.server.port}...`);
         });
