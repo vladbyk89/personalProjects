@@ -6,9 +6,9 @@
   "scripts": {
     "build": "npx tsc",
     "prestart": "npm run build",
-    "start": "node ./API/server/server.js",
+    "start": "node server.js",
     "predev": "npm run build",
-    "dev": "concurrently \"npx tsc -w\"  \"nodemon ./API/server/server.ts\""
+    "dev": "concurrently \"npx tsc -w\"  \"nodemon server.ts\""
   },
   "keywords": [],
   "author": "",

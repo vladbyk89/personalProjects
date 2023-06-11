@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import Cart from "./CartModel";
 import CartProduct from "../CartProduct/CartProductModel";
+import Product from "../Product/ProductModel";
 import User from "../User/UserModel";
 
 export const getAllCarts = async (
@@ -9,7 +10,7 @@ export const getAllCarts = async (
   next: NextFunction
 ) => {
   try {
-    const carts = await Cart.find({}).populate("cartProducts user");
+    const carts = await Cart.find({});
 
     res.status(200).json({ ok: true, carts });
   } catch (error: any) {
@@ -24,16 +25,39 @@ export const createCart = async (
   next: NextFunction
 ) => {
   try {
-    const { cartProducts, userId } = req.body;
+    const { cartProductsIds, userId } = req.body;
+
+    const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
 
     const user = await User.findById(userId);
 
     const cart = await Cart.create({
-      cartProducts: [...cartProducts],
+      cartProducts: [...arr],
       user,
     });
 
     res.status(200).json({ ok: true, cart });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const updateCart = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { cartProductsIds, cartId, userId } = req.body;
+
+    const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
+
+    const cart = await Cart.findByIdAndUpdate(cartId, { cartProducts: arr });
+
+    const user = await User.findByIdAndUpdate(userId, { cart });
+
+    res.status(200).json({ ok: true, cart, user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

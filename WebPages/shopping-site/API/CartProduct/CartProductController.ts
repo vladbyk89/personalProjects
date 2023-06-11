@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import CartProduct from "./CartProductModel";
-import { ProductInterface } from "../Product/ProductModel";
+import Product from "../Product/ProductModel";
 
 export const getAllCartProducts = async (
   req: Request,
@@ -25,12 +25,14 @@ export const createCartProduct = async (
   try {
     const { productId, amount } = req.body;
 
-    const product = await CartProduct.create({
-      product: [productId],
+    const product = await Product.findById(productId);
+
+    const cartProduct = await CartProduct.create({
+      product,
       amount,
     });
 
-    res.status(200).json({ ok: true, product });
+    res.status(200).json({ ok: true, cartProduct });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const UserModel_1 = __importDefault(require("./UserModel"));
+const CartModel_1 = __importDefault(require("../Cart/CartModel"));
 const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield UserModel_1.default.find({});
@@ -28,7 +29,8 @@ exports.getAllUsers = getAllUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userName, password } = req.body;
-        const user = yield UserModel_1.default.create({ userName, password });
+        const cart = yield CartModel_1.default.create({});
+        const user = yield UserModel_1.default.create({ userName, password, cart });
         res.status(200).json({ ok: true, user });
     }
     catch (error) {

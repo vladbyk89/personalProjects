@@ -8,4 +8,5 @@ const cartRouter = express_1.default.Router();
 const CartController_1 = require("./CartController");
 cartRouter.route("/").get(CartController_1.getAllCarts).post(CartController_1.createCart);
 cartRouter.route("/:id").get(CartController_1.getUserCart);
+cartRouter.route("/:updateCart").patch(CartController_1.updateCart);
 exports.default = cartRouter;

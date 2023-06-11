@@ -25,7 +25,9 @@ export const createUser = async (
   try {
     const { userName, password } = req.body;
 
-    const user = await User.create({ userName, password });
+    const cart = await Cart.create({});
+
+    const user = await User.create({ userName, password, cart });
 
     res.status(200).json({ ok: true, user });
   } catch (error: any) {

@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const CartModel_1 = require("../Cart/CartModel");
 exports.UserSchema = new mongoose_1.Schema({
     userName: {
         type: String,
@@ -32,6 +33,10 @@ exports.UserSchema = new mongoose_1.Schema({
     },
     password: {
         type: String,
+        required: true,
+    },
+    cart: {
+        type: CartModel_1.CartSchema,
         required: true,
     },
 }, {

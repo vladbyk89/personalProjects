@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { CartSchema } from "../Cart/CartModel";
 
 export interface UserInterface {
   _id: string;
@@ -12,6 +13,10 @@ export const UserSchema: Schema = new Schema(
     },
     password: {
       type: String,
+      required: true,
+    },
+    cart: {
+      type: CartSchema,
       required: true,
     },
   },

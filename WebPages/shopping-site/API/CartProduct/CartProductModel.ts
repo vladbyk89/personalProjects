@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { ProductInterface } from "../Product/ProductModel";
+import { ProductSchema, ProductInterface } from "../Product/ProductModel";
 
 export interface CartProductInterface {
   product: ProductInterface;
@@ -10,7 +10,7 @@ export interface CartProductInterface {
 export const CartProductSchema: Schema = new Schema(
   {
     product: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+      type: ProductSchema,
       required: true,
     },
     amount: {
