@@ -1,7 +1,10 @@
 import mongoose, { Schema } from "mongoose";
-import { CartSchema } from "../Cart/CartModel";
+import { CartInterface } from "../Cart/CartModel";
 
 export interface UserInterface {
+  userName: string;
+  password: string;
+  cart: CartInterface[];
   _id: string;
 }
 
@@ -16,7 +19,7 @@ export const UserSchema: Schema = new Schema(
       required: true,
     },
     cart: {
-      type: CartSchema,
+      type: [{ type: Schema.Types.ObjectId, ref: "Cart" }],
       required: true,
     },
   },

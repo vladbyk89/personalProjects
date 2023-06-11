@@ -4,14 +4,14 @@ const cartRouter = express.Router();
 import {
   getAllCarts,
   createCart,
-  getUserCart,
-  updateCart,
+  getCart,
+//   updateCart,
 } from "./CartController";
 
 cartRouter.route("/").get(getAllCarts).post(createCart);
 
-cartRouter.route("/:id").get(getUserCart);
+cartRouter.route("/:id").get(getCart);
 
-cartRouter.route("/:updateCart").patch(updateCart);
+// cartRouter.route("/:updateCart").patch(updateCart);
 
 export default cartRouter;

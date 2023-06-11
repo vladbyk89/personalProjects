@@ -25,16 +25,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const CartProductModel_1 = require("../CartProduct/CartProductModel");
 exports.CartSchema = new mongoose_1.Schema({
-    // cartProducts: {
-    //   type: [{ type: Schema.Types.ObjectId, ref: "CartProduct" }],
-    //   required: true,
-    // },
     cartProducts: {
-        type: [CartProductModel_1.CartProductSchema],
+        type: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "CartProduct" }],
         required: true,
     },
+    // cartProducts: {
+    //   type: [CartProductSchema],
+    //   required: true,
+    // },
 }, {
     versionKey: false,
 });

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCartProduct = exports.createCartProduct = exports.getAllCartProducts = void 0;
+exports.getCartProduct = exports.updateCartProduct = exports.createCartProduct = exports.getAllCartProducts = void 0;
 const CartProductModel_1 = __importDefault(require("./CartProductModel"));
 const ProductModel_1 = __importDefault(require("../Product/ProductModel"));
 const getAllCartProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,6 +42,21 @@ const createCartProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.createCartProduct = createCartProduct;
+const updateCartProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { cartProductId, amount } = req.body;
+        yield CartProductModel_1.default.findByIdAndUpdate(cartProductId, {
+            amount,
+        });
+        const cartProduct = yield CartProductModel_1.default.findById(cartProductId);
+        res.status(200).json({ ok: true, cartProduct });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.updateCartProduct = updateCartProduct;
 const getCartProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;

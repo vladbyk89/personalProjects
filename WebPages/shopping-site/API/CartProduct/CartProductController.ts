@@ -39,6 +39,27 @@ export const createCartProduct = async (
   }
 };
 
+export const updateCartProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { cartProductId, amount } = req.body;
+
+    await CartProduct.findByIdAndUpdate(cartProductId, {
+      amount,
+    });
+
+    const cartProduct = await CartProduct.findById(cartProductId);
+
+    res.status(200).json({ ok: true, cartProduct });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
 export const getCartProduct = async (
   req: Request,
   res: Response,

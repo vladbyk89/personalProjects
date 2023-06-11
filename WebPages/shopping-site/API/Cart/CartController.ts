@@ -25,16 +25,13 @@ export const createCart = async (
   next: NextFunction
 ) => {
   try {
-    const { cartProductsIds, userId } = req.body;
+    const { cartProductsIds } = req.body;
 
-    const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
+    // const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
 
-    const user = await User.findById(userId);
-
-    const cart = await Cart.create({
-      cartProducts: [...arr],
-      user,
-    });
+    const cart = await (
+      await Cart.create({ cartProducts: [...cartProductsIds] })
+    ).populate("cartProducts");
 
     res.status(200).json({ ok: true, cart });
   } catch (error: any) {
@@ -43,38 +40,45 @@ export const createCart = async (
   }
 };
 
-export const updateCart = async (
+// export const updateCart = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { cartProductsIds, cartId, userId } = req.body;
+
+//     const updatedCartProducts = await CartProduct.find({
+//       _id: { $in: cartProductsIds },
+//     });
+
+//     const arr = await CartProduct.findByIdAndUpdate(
+//       { _id: { $in: cartProductsIds } },
+//       { cartProducts: updatedCartProducts }
+//     );
+
+//     const cart = await Cart.findByIdAndUpdate(cartId, {
+//       cartProducts: updatedCartProducts,
+//     });
+
+//     const user = await User.findByIdAndUpdate(userId, { cart });
+
+//     res.status(200).json({ ok: true, cart, user });
+//   } catch (error: any) {
+//     console.error(error);
+//     res.status(500).send({ error: error.message });
+//   }
+// };
+
+export const getCart = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { cartProductsIds, cartId, userId } = req.body;
+    const { cartId } = req.params;
 
-    const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
-
-    const cart = await Cart.findByIdAndUpdate(cartId, { cartProducts: arr });
-
-    const user = await User.findByIdAndUpdate(userId, { cart });
-
-    res.status(200).json({ ok: true, cart, user });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
-
-export const getUserCart = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { id } = req.params;
-
-    const user = await User.findById(id);
-
-    const cart = await Cart.find({ user }).populate("cartProducts user");
+    const cart = await Cart.findById(cartId).populate("cartProducts");
 
     res.status(200).json({ ok: true, cart });
   } catch (error: any) {

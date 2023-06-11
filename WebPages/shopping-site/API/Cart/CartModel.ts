@@ -12,14 +12,14 @@ export interface CartInterface {
 
 export const CartSchema: Schema = new Schema(
   {
-    // cartProducts: {
-    //   type: [{ type: Schema.Types.ObjectId, ref: "CartProduct" }],
-    //   required: true,
-    // },
     cartProducts: {
-      type: [CartProductSchema],
+      type: [{ type: Schema.Types.ObjectId, ref: "CartProduct" }],
       required: true,
     },
+    // cartProducts: {
+    //   type: [CartProductSchema],
+    //   required: true,
+    // },
   },
   {
     versionKey: false,

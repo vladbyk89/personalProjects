@@ -30,7 +30,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const { userName, password } = req.body;
         const cart = yield CartModel_1.default.create({});
-        const user = yield UserModel_1.default.create({ userName, password, cart });
+        const user = yield (yield UserModel_1.default.create({ userName, password, cart: [cart._id] })).populate("cart");
         res.status(200).json({ ok: true, user });
     }
     catch (error) {
@@ -42,7 +42,11 @@ exports.createUser = createUser;
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const user = yield UserModel_1.default.findById(id);
+        const user = yield UserModel_1.default.findById(id).populate("cart");
+        if (!user)
+            return;
+        const uid = user.cart[0]._id;
+        console.log(uid);
         res.status(200).json({ ok: true, user });
     }
     catch (error) {

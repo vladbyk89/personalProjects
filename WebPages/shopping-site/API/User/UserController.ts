@@ -27,7 +27,9 @@ export const createUser = async (
 
     const cart = await Cart.create({});
 
-    const user = await User.create({ userName, password, cart });
+    const user = await (
+      await User.create({ userName, password, cart: [cart._id] })
+    ).populate("cart");
 
     res.status(200).json({ ok: true, user });
   } catch (error: any) {
@@ -44,7 +46,13 @@ export const getUser = async (
   try {
     const { id } = req.params;
 
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("cart");
+
+    if (!user) return;
+
+    const uid = user.cart[0]._id;
+
+    console.log(uid);
 
     res.status(200).json({ ok: true, user });
   } catch (error: any) {
