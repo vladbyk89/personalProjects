@@ -1,13 +1,20 @@
+import Cart from "../components/Store/Cart";
+import ProductList from "../components/Store/ProductList";
 import "../styles/Store.scss";
 import "../styles/Button-5.scss";
-import ShortTrackBlades from "../components/Store/ShortTrackBlades";
 
-const Store = () => {
-  return (
-    <div className="storePage">
+interface StoreProps {
+  viewCart: boolean;
+  setViewCart: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Store = ({ viewCart, setViewCart }: StoreProps) => {
+  return viewCart ? (
+    <Cart />
+  ) : (
+    <div className="productsPage">
       <h1>Products</h1>
-      <ShortTrackBlades />
-      <button className="button-5">Add to cart</button>
+      <ProductList />
     </div>
   );
 };
