@@ -6,7 +6,7 @@ import FounderBio from "../components/About/FounderBio";
 const About = () => {
   return (
     <div className="aboutPage">
-      <h1>Three Generations</h1>
+      <h1>Three Generations of blade making</h1>
       <Maple />
       <Evo />
       <SkateTech />

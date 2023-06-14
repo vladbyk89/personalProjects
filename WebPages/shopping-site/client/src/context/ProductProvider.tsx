@@ -34,7 +34,6 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
       try {
         const { data } = await axios.get("api/v1/products");
         if (!data.ok) throw Error("did not recieve data");
-        console.log(data.products);
         setProducts(data.products);
         setFetchError(null);
       } catch (error: any) {

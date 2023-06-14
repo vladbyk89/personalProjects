@@ -17,31 +17,34 @@ const Product = ({
   const [count, setCount] = useState(0);
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
 
-  const onAddToCart = () =>
-    dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, qty: 1 } });
+  const onAddToCart = () => {
+    dispatch({
+      type: REDUCER_ACTIONS.ADD,
+      payload: { ...product, qty: count },
+    });
+    setCount(0);
+  };
 
-
-  const handleIconClick = (e: MouseEvent, sign:string) => {
+  const handleIconClick = (e: MouseEvent, sign: string) => {
     e.preventDefault();
-    if(sign === "-"){
-      setCount((prev) => prev - 1)
+    if (sign === "-") {
+      setCount((prev) => prev - 1);
+    } else {
+      setCount((prev) => prev + 1);
     }
-    else {
-      setCount((prev) => prev + 1)
-    }
-  }
+  };
 
   const content = (
     <article className="product">
       <h3>{product.name}</h3>
       <img src={img} alt={product.name} className="product_img" />
       <div className="action">
-      <p>
-        {new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(product.price)}
-      </p>
+        <p>
+          {new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(product.price)}
+        </p>
         <AiOutlinePlus
           className="icon"
           onClick={(e: MouseEvent) => handleIconClick(e, "+")}
@@ -51,6 +54,9 @@ const Product = ({
           className="icon"
           onClick={(e: MouseEvent) => handleIconClick(e, "-")}
         />
+        <button className="button-5" onClick={onAddToCart}>
+          Add to cart
+        </button>
       </div>
     </article>
   );

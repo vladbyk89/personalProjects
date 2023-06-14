@@ -5,6 +5,7 @@ export interface CartItemType {
   name: string;
   price: number;
   qty: number;
+  imgUrl: string;
 }
 
 interface CartStateType {
@@ -16,7 +17,7 @@ const initCartState: CartStateType = { cart: [] };
 const REDUCER_ACTION_TYPE = {
   ADD: "ADD",
   REMOVE: "REMOVE",
-  QUANTITY: "QUANTITY",
+  // QUANTITY: "QUANTITY",
   SUBMIT: "SUBMIT",
 };
 
@@ -37,7 +38,7 @@ const reducer = (
         throw new Error("action.payload missing in ADD action");
       }
 
-      const { _id, name, price } = action.payload;
+      const { _id, name, price, imgUrl, qty } = action.payload;
 
       const filteredCart: CartItemType[] = state.cart.filter(
         (item) => item._id !== _id
@@ -47,9 +48,12 @@ const reducer = (
         (item) => item._id === _id
       );
 
-      const qty: number = itemExists ? itemExists.qty + 1 : 1;
+      const newQty: number = itemExists ? itemExists.qty + qty : qty;
 
-      return { ...state, cart: [...filteredCart, { _id, name, price, qty }] };
+      return {
+        ...state,
+        cart: [...filteredCart, { _id, name, price, qty: newQty, imgUrl }],
+      };
     }
 
     case REDUCER_ACTION_TYPE.REMOVE: {
@@ -66,29 +70,29 @@ const reducer = (
       return { ...state, cart: [...filteredCart] };
     }
 
-    case REDUCER_ACTION_TYPE.QUANTITY: {
-      if (!action.payload) {
-        throw new Error("action.payload missing in QUANTITY action");
-      }
+    // case REDUCER_ACTION_TYPE.QUANTITY: {
+    //   if (!action.payload) {
+    //     throw new Error("action.payload missing in QUANTITY action");
+    //   }
 
-      const { _id, qty } = action.payload;
+    //   const { _id, qty } = action.payload;
 
-      const itemExists: CartItemType | undefined = state.cart.find(
-        (item) => item._id === _id
-      );
+    //   const itemExists: CartItemType | undefined = state.cart.find(
+    //     (item) => item._id === _id
+    //   );
 
-      if (!itemExists) {
-        throw new Error("Item must exist in order to update quantity");
-      }
+    //   if (!itemExists) {
+    //     throw new Error("Item must exist in order to update quantity");
+    //   }
 
-      const updatedItem: CartItemType = { ...itemExists, qty };
+    //   const updatedItem: CartItemType = { ...itemExists, qty };
 
-      const filteredCart: CartItemType[] = state.cart.filter(
-        (item) => item._id !== _id
-      );
+    //   const filteredCart: CartItemType[] = state.cart.filter(
+    //     (item) => item._id !== _id
+    //   );
 
-      return { ...state, cart: [...filteredCart, updatedItem] };
-    }
+    //   return { ...state, cart: [...filteredCart, updatedItem] };
+    // }
 
     case REDUCER_ACTION_TYPE.SUBMIT: {
       return { ...state, cart: [] };
@@ -138,7 +142,8 @@ const initCartContextState: UseCartContextType = {
   cart: [],
 };
 
-export const CartContext = createContext<UseCartContextType>(initCartContextState);
+export const CartContext =
+  createContext<UseCartContextType>(initCartContextState);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 

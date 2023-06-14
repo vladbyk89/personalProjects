@@ -26,7 +26,6 @@ const ProductList = () => {
   const content = (
     <main className="products">
       {pageContent}
-      <button className="button-5">Add to cart</button>
     </main>
   );
 
