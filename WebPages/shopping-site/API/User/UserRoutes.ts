@@ -6,6 +6,6 @@ import { setUserCookie } from "../middleware/userCookie";
 
 userRouter.route("/").get(getAllUsers).post(createUser, setUserCookie);
 
-userRouter.route("/:id").get(getUser);
+userRouter.route("/getUser").get(getUser);
 
 export default userRouter;

@@ -1,5 +1,9 @@
-import { ReactElement, useReducer, useMemo, createContext } from "react";
-import axios from "axios";
+import {
+  ReactElement,
+  useReducer,
+  useMemo,
+  createContext,
+} from "react";
 
 export interface CartItemType {
   _id: string;
@@ -18,8 +22,9 @@ const initCartState: CartStateType = { cart: [] };
 const REDUCER_ACTION_TYPE = {
   ADD: "ADD",
   REMOVE: "REMOVE",
-  // QUANTITY: "QUANTITY",
+  QUANTITY: "QUANTITY",
   SUBMIT: "SUBMIT",
+  LOAD: "LOAD",
 };
 
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE;
@@ -71,33 +76,42 @@ const reducer = (
       return { ...state, cart: [...filteredCart] };
     }
 
-    // case REDUCER_ACTION_TYPE.QUANTITY: {
-    //   if (!action.payload) {
-    //     throw new Error("action.payload missing in QUANTITY action");
-    //   }
+    case REDUCER_ACTION_TYPE.QUANTITY: {
+      if (!action.payload) {
+        throw new Error("action.payload missing in QUANTITY action");
+      }
 
-    //   const { _id, qty } = action.payload;
+      const { _id, qty } = action.payload;
 
-    //   const itemExists: CartItemType | undefined = state.cart.find(
-    //     (item) => item._id === _id
-    //   );
+      const itemExists: CartItemType | undefined = state.cart.find(
+        (item) => item._id === _id
+      );
 
-    //   if (!itemExists) {
-    //     throw new Error("Item must exist in order to update quantity");
-    //   }
+      if (!itemExists) {
+        throw new Error("Item must exist in order to update quantity");
+      }
 
-    //   const updatedItem: CartItemType = { ...itemExists, qty };
+      const updatedItem: CartItemType = { ...itemExists, qty };
 
-    //   const filteredCart: CartItemType[] = state.cart.filter(
-    //     (item) => item._id !== _id
-    //   );
+      const filteredCart: CartItemType[] = state.cart.filter(
+        (item) => item._id !== _id
+      );
 
-    //   return { ...state, cart: [...filteredCart, updatedItem] };
-    // }
+      return { ...state, cart: [...filteredCart, updatedItem] };
+    }
 
     case REDUCER_ACTION_TYPE.SUBMIT: {
-
       return { ...state, cart: [] };
+    }
+
+    case REDUCER_ACTION_TYPE.LOAD: {
+      if (!action.payload) {
+        throw new Error("action.payload missing in QUANTITY action");
+      }
+
+      const { _id, name, price, imgUrl, qty } = action.payload;
+
+      return { ...state, cart: [{ _id, name, price, qty, imgUrl }] };
     }
 
     default:
@@ -150,6 +164,8 @@ export const CartContext =
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
+
+
   return (
     <CartContext.Provider value={useCartContext(initCartState)}>
       {children}

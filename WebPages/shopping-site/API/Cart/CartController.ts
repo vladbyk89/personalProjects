@@ -61,9 +61,9 @@ export const getCart = async (
   next: NextFunction
 ) => {
   try {
-    const { cartId } = req.params;
-
-    const cart = await Cart.findById(cartId).populate("cartProducts");
+    const { id } = req.params;
+    
+    const cart = await Cart.findById(id);
 
     res.status(200).json({ ok: true, cart });
   } catch (error: any) {

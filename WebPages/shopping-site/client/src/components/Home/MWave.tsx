@@ -1,9 +1,7 @@
-
-
 const MWave = () => {
   return (
     <div className="MWave">
-        <div className="img"></div>
+      <div className="img"></div>
       <div className="content">
         <h3>The M-Wave</h3>
         <div>
@@ -11,7 +9,7 @@ const MWave = () => {
           <p>Improve control</p>
           <p>Higher speeds</p>
         </div>
-        <button className="button-6">Order M-Wave now</button>
+        <button className="button-6">Read more</button>
       </div>
     </div>
   );

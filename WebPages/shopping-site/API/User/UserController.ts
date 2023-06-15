@@ -33,9 +33,9 @@ export const createUser = async (
       await User.create({ userName, email, password, cart: [cart._id] })
     ).populate("cart");
 
-    const userId = user._id
+    const userId = user._id;
 
-    req.body = user;
+    req.body = userId;
 
     next();
     // res.status(200).json({ ok: true, user });
@@ -51,16 +51,14 @@ export const getUser = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    if (!secret) throw new Error("Missing jwt secret");
+    const token = req.cookies;
+    if (!token) throw new Error("Missing token from cookise");
 
-    const user = await User.findById(id).populate("cart");
+    const decodedToken = jwt.decode(token.userId, secret);
 
-    if (!user) return;
-
-    const uid = user.cart[0]._id;
-
-    console.log(uid);
-
+    const user = await User.findById(decodedToken.userId);
+    
     res.status(200).json({ ok: true, user });
   } catch (error: any) {
     console.error(error);

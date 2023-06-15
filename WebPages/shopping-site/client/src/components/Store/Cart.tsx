@@ -1,22 +1,46 @@
 import useCart from "../../hooks/useCart";
 import EmptyCart from "./EmptyCart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
 import axios from "axios";
+import { CartItemType } from "../../context/CartProvider";
 
 const Cart = () => {
   const [confirm, setConfirm] = useState(false);
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
+
   const onSubmitOrder = async () => {
-    const user = 
-    const cartId = "648afbf46049fa487b604fa9"
+    const { data } = await axios.get("/api/v1/users/getUser");
+
+    const cartId = data.user.cart;
+
     await axios.patch("/api/v1/carts", { cart, cartId });
 
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
     setConfirm(true);
   };
+
+  const fetchCart = async () => {
+    const fetchUser = await axios("api/v1/users/getUser");
+
+    const cartId = fetchUser.data.user.cart[0];
+
+    const { data } = await axios.get(`/api/v1/carts/${cartId}`);
+    const cart = data.cart.cart;
+    cart.forEach((product: CartItemType) => {
+      const { _id, name, price, qty, imgUrl } = product;
+      dispatch({
+        type: REDUCER_ACTIONS.ADD,
+        payload: { _id, name, price, qty, imgUrl },
+      });
+    });
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   const pageContent = confirm ? (
     <h2>Thank you for your order.</h2>

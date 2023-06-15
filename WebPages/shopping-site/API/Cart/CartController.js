@@ -52,8 +52,8 @@ const updateCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.updateCart = updateCart;
 const getCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { cartId } = req.params;
-        const cart = yield CartModel_1.default.findById(cartId).populate("cartProducts");
+        const { id } = req.params;
+        const cart = yield CartModel_1.default.findById(id);
         res.status(200).json({ ok: true, cart });
     }
     catch (error) {
