@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+exports.confirmUser = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
 const UserModel_1 = __importDefault(require("./UserModel"));
@@ -61,3 +61,27 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getUser = getUser;
+const confirmUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, password } = req.body;
+        const user = yield UserModel_1.default.find({ email, password });
+        if (!user)
+            throw new Error("user not found");
+        const userId = user[0]._id;
+        if (!secret)
+            throw new Error("Missing jwt secret");
+        const token = jwt_simple_1.default.encode({ userId, role: "public" }, secret);
+        if (!token)
+            throw new Error("Missing token...");
+        res.cookie("userId", token, {
+            httpOnly: true,
+            maxAge: 0,
+        });
+        res.status(200).json({ ok: true, user });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.confirmUser = confirmUser;

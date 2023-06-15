@@ -19,7 +19,7 @@ const Icons = ({ viewCart, setViewCart }: IconsProps) => {
 
   return (
     <div className="iconsDiv">
-      <NavLink to="/login">
+      <NavLink to="/profile">
         <CiUser className="icon" />
       </NavLink>
       <AiOutlineHeart className="icon" />

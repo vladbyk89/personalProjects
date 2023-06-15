@@ -9,4 +9,5 @@ const UserController_1 = require("./UserController");
 const userCookie_1 = require("../middleware/userCookie");
 userRouter.route("/").get(UserController_1.getAllUsers).post(UserController_1.createUser, userCookie_1.setUserCookie);
 userRouter.route("/getUser").get(UserController_1.getUser);
+userRouter.route("/confirmUser").post(UserController_1.confirmUser, userCookie_1.setUserCookie);
 exports.default = userRouter;

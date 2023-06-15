@@ -1,9 +1,22 @@
-import React from 'react'
+import { useState, useEffect } from "react";
+import Login from "./Login";
+import axios from "axios";
 
 const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
-}
+  const [isLogged, setIsLogged] = useState(false);
 
-export default Profile
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await axios.get("api/v1/users/getUser");
+      if (data) setIsLogged(true);
+      console.log(data);
+      console.log(isLogged
+    };
+
+    fetchUser();
+  }, []);
+
+  return <div>Profile</div>;
+};
+
+export default Profile;

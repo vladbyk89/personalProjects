@@ -16,7 +16,6 @@ export const setUserCookie = async (
     if (!token) throw new Error("Missing token...");
 
     res.cookie("userId", token, {
-      maxAge: 24 * 60 * 60 * 1000, //24 hours
       httpOnly: true,
     });
 

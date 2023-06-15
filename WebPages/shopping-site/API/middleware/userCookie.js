@@ -24,7 +24,6 @@ const setUserCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         if (!token)
             throw new Error("Missing token...");
         res.cookie("userId", token, {
-            maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
         });
         res.status(200).json({ ok: true, userId });
