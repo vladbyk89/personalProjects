@@ -28,10 +28,13 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllUsers = getAllUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userName, password } = req.body;
+        const { userName, email, password } = req.body;
         const cart = yield CartModel_1.default.create({});
-        const user = yield (yield UserModel_1.default.create({ userName, password, cart: [cart._id] })).populate("cart");
-        res.status(200).json({ ok: true, user });
+        const user = yield (yield UserModel_1.default.create({ userName, email, password, cart: [cart._id] })).populate("cart");
+        const userId = user._id;
+        req.body = user;
+        next();
+        // res.status(200).json({ ok: true, user });
     }
     catch (error) {
         console.error(error);

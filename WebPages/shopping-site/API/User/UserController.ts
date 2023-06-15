@@ -23,15 +23,20 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userName, password } = req.body;
+    const { userName, email, password } = req.body;
 
     const cart = await Cart.create({});
 
     const user = await (
-      await User.create({ userName, password, cart: [cart._id] })
+      await User.create({ userName, email, password, cart: [cart._id] })
     ).populate("cart");
 
-    res.status(200).json({ ok: true, user });
+    const userId = user._id
+
+    req.body = user;
+
+    next();
+    // res.status(200).json({ ok: true, user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

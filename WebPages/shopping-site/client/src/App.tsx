@@ -2,10 +2,13 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import About from "./pages/About";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
 import Missing from "./pages/Missing";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Register from "./pages/Register";
 
 function App() {
   const [viewCart, setViewCart] = useState(false);
@@ -30,6 +33,9 @@ function App() {
           element={<Store viewCart={viewCart} setViewCart={setViewCart} />}
         />
         <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<Missing />} />
       </Routes>
     </div>

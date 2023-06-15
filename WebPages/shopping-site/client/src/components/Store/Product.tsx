@@ -37,7 +37,7 @@ const Product = ({
   const content = (
     <article className="product">
       <h3>{product.name}</h3>
-      <img src={img} alt={product.name} className="product_img" />
+      <img src={img} alt={product.name} className="img" />
       <div className="action">
         <p>
           {new Intl.NumberFormat("en-US", {
