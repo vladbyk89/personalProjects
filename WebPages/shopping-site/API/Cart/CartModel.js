@@ -26,9 +26,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 exports.CartSchema = new mongoose_1.Schema({
-    cartProducts: {
-        type: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "CartProduct" }],
-        required: true,
+    cart: {
+        type: [{}],
+        // required: true,
     },
     // cartProducts: {
     //   type: [CartProductSchema],

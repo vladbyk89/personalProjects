@@ -3,12 +3,17 @@ import EmptyCart from "./EmptyCart";
 import { useState } from "react";
 import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
+import axios from "axios";
 
 const Cart = () => {
   const [confirm, setConfirm] = useState(false);
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
-  const onSubmitOrder = () => {
+  const onSubmitOrder = async () => {
+    const user = 
+    const cartId = "648afbf46049fa487b604fa9"
+    await axios.patch("/api/v1/carts", { cart, cartId });
+
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
     setConfirm(true);
   };

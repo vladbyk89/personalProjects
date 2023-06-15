@@ -20,7 +20,6 @@ const setUserCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         if (!secret)
             throw new Error("Missing jwt secret");
         const { userId } = req.body;
-        console.log("setting cookie...");
         const token = jwt_simple_1.default.encode({ userId, role: "public" }, secret);
         if (!token)
             throw new Error("Missing token...");

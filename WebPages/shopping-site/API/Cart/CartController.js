@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCart = exports.createCart = exports.getAllCarts = void 0;
+exports.getCart = exports.updateCart = exports.createCart = exports.getAllCarts = void 0;
 const CartModel_1 = __importDefault(require("./CartModel"));
 const getAllCarts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -27,9 +27,8 @@ const getAllCarts = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllCarts = getAllCarts;
 const createCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { cartProductsIds } = req.body;
-        // const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
-        const cart = yield (yield CartModel_1.default.create({ cartProducts: [...cartProductsIds] })).populate("cartProducts");
+        // const { cart } = req.body;
+        const cart = yield CartModel_1.default.create({});
         res.status(200).json({ ok: true, cart });
     }
     catch (error) {
@@ -38,30 +37,19 @@ const createCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.createCart = createCart;
-// export const updateCart = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { cartProductsIds, cartId, userId } = req.body;
-//     const updatedCartProducts = await CartProduct.find({
-//       _id: { $in: cartProductsIds },
-//     });
-//     const arr = await CartProduct.findByIdAndUpdate(
-//       { _id: { $in: cartProductsIds } },
-//       { cartProducts: updatedCartProducts }
-//     );
-//     const cart = await Cart.findByIdAndUpdate(cartId, {
-//       cartProducts: updatedCartProducts,
-//     });
-//     const user = await User.findByIdAndUpdate(userId, { cart });
-//     res.status(200).json({ ok: true, cart, user });
-//   } catch (error: any) {
-//     console.error(error);
-//     res.status(500).send({ error: error.message });
-//   }
-// };
+const updateCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { cart, cartId } = req.body;
+        yield CartModel_1.default.findByIdAndUpdate(cartId, { cart });
+        const updatedCart = yield CartModel_1.default.findById(cartId);
+        res.status(200).json({ ok: true, cart: updatedCart });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.updateCart = updateCart;
 const getCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { cartId } = req.params;

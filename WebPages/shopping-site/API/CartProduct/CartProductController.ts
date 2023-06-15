@@ -23,13 +23,13 @@ export const createCartProduct = async (
   next: NextFunction
 ) => {
   try {
-    const { productId, amount } = req.body;
+    const { productId, qty } = req.body;
 
     const product = await Product.findById(productId);
 
     const cartProduct = await CartProduct.create({
       product,
-      amount,
+      qty,
     });
 
     res.status(200).json({ ok: true, cartProduct });

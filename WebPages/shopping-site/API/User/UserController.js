@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+const secret = process.env.JWT_SECRET;
 const UserModel_1 = __importDefault(require("./UserModel"));
 const CartModel_1 = __importDefault(require("../Cart/CartModel"));
 const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

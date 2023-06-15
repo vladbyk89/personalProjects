@@ -28,11 +28,11 @@ const getAllCartProducts = (req, res, next) => __awaiter(void 0, void 0, void 0,
 exports.getAllCartProducts = getAllCartProducts;
 const createCartProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { productId, amount } = req.body;
+        const { productId, qty } = req.body;
         const product = yield ProductModel_1.default.findById(productId);
         const cartProduct = yield CartProductModel_1.default.create({
             product,
-            amount,
+            qty,
         });
         res.status(200).json({ ok: true, cartProduct });
     }

@@ -1,19 +1,28 @@
 import mongoose, { Schema } from "mongoose";
-import { ProductSchema, ProductInterface } from "../Product/ProductModel";
 
 export interface CartProductInterface {
-  product: ProductInterface;
-  amount: number;
+  name: string;
+  imgUrl:string;
+  price: number;
+  qty: number;
   _id: string;
 }
 
 export const CartProductSchema: Schema = new Schema(
   {
-    product: {
-      type: ProductSchema,
+    name: {
+      type: String,
       required: true,
     },
-    amount: {
+    imgUrl: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    qty: {
       type: Number,
       required: true,
     },

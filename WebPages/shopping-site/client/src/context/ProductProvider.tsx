@@ -12,9 +12,13 @@ const initState: ProductType[] = [];
 
 export interface UseProductsContextType {
   products: ProductType[];
+  isLoading: boolean;
 }
 
-const initContextState: UseProductsContextType = { products: [] };
+const initContextState: UseProductsContextType = {
+  products: [],
+  isLoading: true,
+};
 
 const ProductsContext = createContext<UseProductsContextType>(initContextState);
 
@@ -47,7 +51,7 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
   }, []);
 
   return (
-    <ProductsContext.Provider value={{ products }}>
+    <ProductsContext.Provider value={{ products, isLoading }}>
       {children}
     </ProductsContext.Provider>
   );

@@ -1,4 +1,5 @@
 import { ReactElement, useReducer, useMemo, createContext } from "react";
+import axios from "axios";
 
 export interface CartItemType {
   _id: string;
@@ -95,6 +96,7 @@ const reducer = (
     // }
 
     case REDUCER_ACTION_TYPE.SUBMIT: {
+
       return { ...state, cart: [] };
     }
 

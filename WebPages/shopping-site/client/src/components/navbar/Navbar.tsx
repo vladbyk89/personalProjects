@@ -1,7 +1,6 @@
 import Links from "./Links";
 import Icons from "./Icons";
 import Search from "./Search";
-import { useState } from "react";
 
 interface NavbarProps {
   isStore: boolean;

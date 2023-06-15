@@ -25,13 +25,9 @@ export const createCart = async (
   next: NextFunction
 ) => {
   try {
-    const { cartProductsIds } = req.body;
+    // const { cart } = req.body;
 
-    // const arr = await CartProduct.find({ _id: { $in: cartProductsIds } });
-
-    const cart = await (
-      await Cart.create({ cartProducts: [...cartProductsIds] })
-    ).populate("cartProducts");
+    const cart = await Cart.create({});
 
     res.status(200).json({ ok: true, cart });
   } catch (error: any) {
@@ -40,35 +36,24 @@ export const createCart = async (
   }
 };
 
-// export const updateCart = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { cartProductsIds, cartId, userId } = req.body;
+export const updateCart = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { cart, cartId } = req.body;
 
-//     const updatedCartProducts = await CartProduct.find({
-//       _id: { $in: cartProductsIds },
-//     });
+    await Cart.findByIdAndUpdate(cartId, { cart });
 
-//     const arr = await CartProduct.findByIdAndUpdate(
-//       { _id: { $in: cartProductsIds } },
-//       { cartProducts: updatedCartProducts }
-//     );
+    const updatedCart = await Cart.findById(cartId);
 
-//     const cart = await Cart.findByIdAndUpdate(cartId, {
-//       cartProducts: updatedCartProducts,
-//     });
-
-//     const user = await User.findByIdAndUpdate(userId, { cart });
-
-//     res.status(200).json({ ok: true, cart, user });
-//   } catch (error: any) {
-//     console.error(error);
-//     res.status(500).send({ error: error.message });
-//   }
-// };
+    res.status(200).json({ ok: true, cart: updatedCart });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
 
 export const getCart = async (
   req: Request,

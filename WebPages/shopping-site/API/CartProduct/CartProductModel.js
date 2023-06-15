@@ -25,13 +25,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartProductSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const ProductModel_1 = require("../Product/ProductModel");
 exports.CartProductSchema = new mongoose_1.Schema({
-    product: {
-        type: ProductModel_1.ProductSchema,
+    name: {
+        type: String,
         required: true,
     },
-    amount: {
+    imgUrl: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    qty: {
         type: Number,
         required: true,
     },

@@ -11,7 +11,6 @@ export const setUserCookie = async (
     if (!secret) throw new Error("Missing jwt secret");
 
     const { userId } = req.body;
-    console.log("setting cookie...");
 
     const token = jwt.encode({ userId, role: "public" }, secret);
 

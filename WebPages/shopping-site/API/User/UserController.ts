@@ -1,4 +1,6 @@
 import { NextFunction, Response, Request } from "express";
+import jwt from "jwt-simple";
+const secret = process.env.JWT_SECRET;
 import User from "./UserModel";
 import Cart from "../Cart/CartModel";
 
