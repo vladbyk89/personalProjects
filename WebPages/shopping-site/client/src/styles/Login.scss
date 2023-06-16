@@ -4,7 +4,7 @@
   height: 100%;
   form {
     margin: auto;
-    border: 1px solid black;
+    // border: 1px solid black;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -20,6 +20,8 @@
       input {
         padding: 0.5rem;
         outline: none;
+        border: 1px solid rgba(255, 140, 0, 0.4);
+        border-radius: 5px;
       }
     }
   }

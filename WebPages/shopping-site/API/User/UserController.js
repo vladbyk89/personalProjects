@@ -48,15 +48,14 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     try {
         if (!secret)
             throw new Error("Missing jwt secret");
-        const token = req.cookies;
-        if (!token)
+        const { userId } = req.cookies;
+        if (!userId)
             throw new Error("Missing token from cookise");
-        const decodedToken = jwt_simple_1.default.decode(token.userId, secret);
+        const decodedToken = jwt_simple_1.default.decode(userId, secret);
         const user = yield UserModel_1.default.findById(decodedToken.userId);
         res.status(200).json({ ok: true, user });
     }
     catch (error) {
-        console.error(error);
         res.status(500).send({ error: error.message });
     }
 });
@@ -75,7 +74,7 @@ const confirmUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             throw new Error("Missing token...");
         res.cookie("userId", token, {
             httpOnly: true,
-            maxAge: 0,
+            maxAge: 1000 * 60 * 30, // 30 minute
         });
         res.status(200).json({ ok: true, user });
     }

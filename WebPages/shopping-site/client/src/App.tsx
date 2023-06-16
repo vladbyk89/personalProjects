@@ -7,17 +7,14 @@ import Login from "./pages/Login";
 import Missing from "./pages/Missing";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Register from "./pages/Register";
-import axios from "axios";
 
 function App() {
   const [viewCart, setViewCart] = useState(false);
   const [isStore, setIsStore] = useState(false);
+  
   const location = useLocation();
-
-  const navigate = useNavigate();
-
 
   useEffect(() => {
     if (location.pathname === "/store") {
@@ -25,12 +22,15 @@ function App() {
     } else {
       setIsStore(false);
     }
-
   }, [location]);
 
   return (
     <div className="App">
-      <Navbar isStore={isStore} viewCart={viewCart} setViewCart={setViewCart} />
+      <Navbar
+        isStore={isStore}
+        viewCart={viewCart}
+        setViewCart={setViewCart}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -38,7 +38,7 @@ function App() {
           element={<Store viewCart={viewCart} setViewCart={setViewCart} />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={ <Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Missing />} />

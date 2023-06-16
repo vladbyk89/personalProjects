@@ -3,7 +3,8 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { GiShoppingCart } from "react-icons/gi";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface IconsProps {
   viewCart: boolean;
@@ -11,17 +12,33 @@ interface IconsProps {
 }
 
 const Icons = ({ viewCart, setViewCart }: IconsProps) => {
+  const navigate = useNavigate();
+
   const handleCartClick = () => {
     setViewCart((prev) => (prev = !prev));
+  };
+
+  const handleProfileClick = async () => {
+    try {
+      const fetch = () => axios.get("api/v1/users/getUser");
+
+      const data = await fetch();
+
+      console.log(data.data.user);
+
+      if (!data) return navigate("/login");
+
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const location = useLocation();
 
   return (
     <div className="iconsDiv">
-      <NavLink to="/profile">
-        <CiUser className="icon" />
-      </NavLink>
+      <CiUser className="icon" onClick={handleProfileClick} />
       <AiOutlineHeart className="icon" />
       {viewCart && location.pathname === "/store" ? (
         <MdOutlineAddShoppingCart className="icon" onClick={handleCartClick} />

@@ -1,20 +1,6 @@
-import { useState, useEffect } from "react";
-import Login from "./Login";
-import axios from "axios";
+// set use state for user in App.tsx and bring it here. Set it on Icons.tsx
 
 const Profile = () => {
-  const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await axios.get("api/v1/users/getUser");
-      if (data) setIsLogged(true);
-      console.log(data);
-      console.log(isLogged
-    };
-
-    fetchUser();
-  }, []);
 
   return <div>Profile</div>;
 };

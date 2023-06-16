@@ -52,16 +52,17 @@ export const getUser = async (
 ) => {
   try {
     if (!secret) throw new Error("Missing jwt secret");
-    const token = req.cookies;
-    if (!token) throw new Error("Missing token from cookise");
 
-    const decodedToken = jwt.decode(token.userId, secret);
+    const { userId } = req.cookies;
+
+    if (!userId) throw new Error("Missing token from cookise");
+
+    const decodedToken = jwt.decode(userId, secret);
 
     const user = await User.findById(decodedToken.userId);
 
     res.status(200).json({ ok: true, user });
   } catch (error: any) {
-    console.error(error);
     res.status(500).send({ error: error.message });
   }
 };
@@ -88,7 +89,7 @@ export const confirmUser = async (
 
     res.cookie("userId", token, {
       httpOnly: true,
-      maxAge: 0,
+      maxAge: 1000 * 60 * 30, // 30 minute
     });
 
     res.status(200).json({ ok: true, user });
