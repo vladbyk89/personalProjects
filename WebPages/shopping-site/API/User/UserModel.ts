@@ -26,6 +26,9 @@ export const UserSchema: Schema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: "Cart" }],
       required: true,
     },
+    purchases: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Cart" }],
+    },
   },
   {
     versionKey: false,

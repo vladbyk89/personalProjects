@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const MWave = () => {
   return (
     <div className="MWave">
@@ -9,7 +11,9 @@ const MWave = () => {
           <p>Improve control</p>
           <p>Higher speeds</p>
         </div>
-        <button className="button-6">Read more</button>
+        <NavLink className="navLink" to="/products">
+          <button className="button-6">Read more</button>
+        </NavLink>
       </div>
     </div>
   );

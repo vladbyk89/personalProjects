@@ -6,9 +6,13 @@ import Product from "./Product";
 
 const ProductList = () => {
   const { dispatch, REDUCER_ACTIONS } = useCart();
-  const { products } = useProducts();
+  const { products, isLoading } = useProducts();
 
-  let pageContent: ReactElement | ReactElement[] = <p>Loading...</p>;
+  let pageContent: ReactElement | ReactElement[] = isLoading ? (
+    <p>Loading...</p>
+  ) : (
+    <p>Failed to load products</p>
+  );
 
   if (products?.length) {
     pageContent = products.map((product, i) => {
@@ -23,11 +27,7 @@ const ProductList = () => {
     });
   }
 
-  const content = (
-    <main className="products">
-      {pageContent}
-    </main>
-  );
+  const content = <main className="products">{pageContent}</main>;
 
   return content;
 };

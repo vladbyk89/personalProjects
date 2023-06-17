@@ -5,9 +5,22 @@ interface ProfileProps {
 }
 
 const Profile = ({ currentUser }: ProfileProps) => {
+  const content = (
+    <div className="userDetails">
+      <p>User Name: {currentUser?.userName}</p>
+      <ul>
+        <h3>Address</h3>
+        <li>{currentUser?.address.country}</li>
+        <li>{currentUser?.address.city}</li>
+        <li>{currentUser?.address.street}</li>
+        <li>{currentUser?.address.postCode}</li>
+      </ul>
+    </div>
+  );
+
   return (
     <div className="profilePage">
-      {currentUser ? <p>{currentUser.userName}</p> : <p>no user found</p>}
+      {currentUser ? content : <p>no user found</p>}
       <button className="button-6">View order history</button>
     </div>
   );

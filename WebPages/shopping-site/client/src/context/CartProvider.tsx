@@ -24,7 +24,6 @@ const REDUCER_ACTION_TYPE = {
   REMOVE: "REMOVE",
   QUANTITY: "QUANTITY",
   SUBMIT: "SUBMIT",
-  LOAD: "LOAD",
 };
 
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE;
@@ -102,16 +101,6 @@ const reducer = (
 
     case REDUCER_ACTION_TYPE.SUBMIT: {
       return { ...state, cart: [] };
-    }
-
-    case REDUCER_ACTION_TYPE.LOAD: {
-      if (!action.payload) {
-        throw new Error("action.payload missing in QUANTITY action");
-      }
-
-      const { _id, name, price, imgUrl, qty } = action.payload;
-
-      return { ...state, cart: [{ _id, name, price, qty, imgUrl }] };
     }
 
     default:

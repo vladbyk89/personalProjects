@@ -1,5 +1,5 @@
 import { ReactElement, createContext, useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export interface ProductType {
   imgUrl: string;
@@ -13,11 +13,13 @@ const initState: ProductType[] = [];
 export interface UseProductsContextType {
   products: ProductType[];
   isLoading: boolean;
+  fetchError: AxiosError | null;
 }
 
 const initContextState: UseProductsContextType = {
   products: [],
   isLoading: true,
+  fetchError: null
 };
 
 const ProductsContext = createContext<UseProductsContextType>(initContextState);
@@ -37,8 +39,13 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
     const fetchItems = async () => {
       try {
         const { data } = await axios.get("api/v1/products");
-        if (!data.ok) throw Error("did not recieve data");
-        setProducts(data.products);
+
+        const products = await data.products;
+
+        if (!products) throw Error("did not recieve data");
+
+        setProducts(products);
+
         setFetchError(null);
       } catch (error: any) {
         setFetchError(error.message);
@@ -51,7 +58,7 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
   }, []);
 
   return (
-    <ProductsContext.Provider value={{ products, isLoading }}>
+    <ProductsContext.Provider value={{ products, isLoading, fetchError }}>
       {children}
     </ProductsContext.Provider>
   );

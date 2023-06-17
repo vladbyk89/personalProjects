@@ -6,6 +6,9 @@ const Links = () => {
       <NavLink className="navLink" to="/">
         Home
       </NavLink>
+      <NavLink className="navLink" to="/products">
+        Products
+      </NavLink>
       <NavLink className="navLink" to="/store">
         Store
       </NavLink>

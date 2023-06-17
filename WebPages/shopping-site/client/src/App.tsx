@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Products from "./pages/Products";
 import Store from "./pages/Store";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
@@ -11,19 +12,41 @@ import { useLocation } from "react-router-dom";
 import Register from "./pages/Register";
 import axios from "axios";
 
+interface Address {
+  country: string;
+  city: string;
+  street: string;
+  postCode: string;
+}
+
 export interface User {
   cardId: string;
   email: string;
   password: string;
   userName: string;
   _id: string;
+  address: Address;
 }
+
+const initUser: User = {
+  cardId: "12233",
+  email: "vladb89@gmail.com",
+  password: "12345678",
+  userName: "vladb89",
+  _id: "87654321",
+  address: {
+    country: "The Netherlands",
+    city: "Herenveen",
+    street: "Valeriaan 2",
+    postCode: "8446BD",
+  },
+};
 
 function App() {
   const [viewCart, setViewCart] = useState(false);
   const [isStore, setIsStore] = useState(false);
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(initUser);
 
   useEffect(() => {
     if (location.pathname === "/store") {
@@ -53,6 +76,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
         <Route
           path="/store"
           element={<Store viewCart={viewCart} setViewCart={setViewCart} />}
