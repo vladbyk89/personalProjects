@@ -59,7 +59,7 @@ export const getUser = async (
 
     const decodedToken = jwt.decode(userId, secret);
 
-    const user = await User.findById(decodedToken.userId);
+    const user = await User.findById(decodedToken.userId).populate("Cart");
 
     res.status(200).json({ ok: true, user });
   } catch (error: any) {
@@ -93,6 +93,33 @@ export const confirmUser = async (
     });
 
     res.status(200).json({ ok: true, user });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const userPurchase = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!secret) throw new Error("Missing jwt secret");
+
+    const { userId } = req.cookies;
+
+    if (!userId) throw new Error("Missing token from cookise");
+
+    const decodedToken = jwt.decode(userId, secret);
+
+    const user = await User.findById(decodedToken.userId).populate("Cart");
+
+    const cart = user?.carts.find((cart) => cart.isActive === true);
+
+    
+
+    res.status(200).json({ ok: true, user, cart });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

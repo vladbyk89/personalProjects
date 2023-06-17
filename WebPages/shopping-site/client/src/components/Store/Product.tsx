@@ -2,26 +2,36 @@ import { ProductType } from "../../context/ProductProvider";
 import { ReducerActionType, ReducerAction } from "../../context/CartProvider";
 import { ReactElement, useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-
+import { CartItemType } from "../../context/CartProvider";
+import axios from "axios";
 interface ProductProps {
   product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
   REDUCER_ACTIONS: ReducerActionType;
+  cart: CartItemType[];
 }
 
 const Product = ({
   product,
   dispatch,
   REDUCER_ACTIONS,
+  cart,
 }: ProductProps): ReactElement => {
   const [count, setCount] = useState(0);
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
 
-  const onAddToCart = () => {
+  const onAddToCart = async () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
       payload: { ...product, qty: count },
     });
+
+    const { data } = await axios.get("/api/v1/users/getUser");
+
+    const cartId = data.user.cart;
+
+    await axios.patch("/api/v1/carts", { cart, cartId });
+
     setCount(0);
   };
 

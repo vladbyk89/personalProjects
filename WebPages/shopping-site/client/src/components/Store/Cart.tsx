@@ -12,11 +12,11 @@ const Cart = () => {
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
   const onSubmitOrder = async () => {
-    const { data } = await axios.get("/api/v1/users/getUser");
+    // const { data } = await axios.get("/api/v1/users/getUser");
 
-    const cartId = data.user.cart;
+    // const cartId = data.user.cart;
 
-    await axios.patch("/api/v1/carts", { cart, cartId });
+    // await axios.patch("/api/v1/carts", { cart, cartId });
 
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
     setConfirm(true);

@@ -5,7 +5,7 @@ import { ReactElement } from "react";
 import Product from "./Product";
 
 const ProductList = () => {
-  const { dispatch, REDUCER_ACTIONS } = useCart();
+  const { dispatch, REDUCER_ACTIONS, cart } = useCart();
   const { products, isLoading } = useProducts();
 
   let pageContent: ReactElement | ReactElement[] = isLoading ? (
@@ -22,6 +22,7 @@ const ProductList = () => {
           product={product}
           dispatch={dispatch}
           REDUCER_ACTIONS={REDUCER_ACTIONS}
+          cart={cart}
         />
       );
     });

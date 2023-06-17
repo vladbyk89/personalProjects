@@ -62,7 +62,7 @@ export const getCart = async (
 ) => {
   try {
     const { id } = req.params;
-    
+
     const cart = await Cart.findById(id);
 
     res.status(200).json({ ok: true, cart });
@@ -71,3 +71,4 @@ export const getCart = async (
     res.status(500).send({ error: error.message });
   }
 };
+

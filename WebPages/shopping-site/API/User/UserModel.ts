@@ -4,7 +4,8 @@ import { CartInterface } from "../Cart/CartModel";
 export interface UserInterface {
   userName: string;
   password: string;
-  cart: CartInterface[];
+  email: string;
+  carts: CartInterface[];
   _id: string;
 }
 
@@ -22,12 +23,9 @@ export const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    cart: {
+    carts: {
       type: [{ type: Schema.Types.ObjectId, ref: "Cart" }],
       required: true,
-    },
-    purchases: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Cart" }],
     },
   },
   {
