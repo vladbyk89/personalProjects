@@ -6,12 +6,20 @@ import { NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { User } from "../../App";
+
 interface IconsProps {
   viewCart: boolean;
   setViewCart: React.Dispatch<React.SetStateAction<boolean>>;
+  currentUser: User | null;
+  
 }
 
-const Icons = ({ viewCart, setViewCart }: IconsProps) => {
+const Icons = ({
+  viewCart,
+  setViewCart,
+  currentUser,
+}: IconsProps) => {
   const navigate = useNavigate();
 
   const handleCartClick = () => {
@@ -20,15 +28,9 @@ const Icons = ({ viewCart, setViewCart }: IconsProps) => {
 
   const handleProfileClick = async () => {
     try {
-      const fetch = () => axios.get("api/v1/users/getUser");
-
-      const data = await fetch();
-
-      console.log(data.data.user);
-
-      if (!data) return navigate("/login");
-
-      navigate("/profile");
+      if (currentUser) return navigate("/profile");
+      
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

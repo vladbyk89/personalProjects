@@ -2,14 +2,19 @@ import { FormEvent, useState } from "react";
 import "../styles/Login.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { User } from "../App";
 
 type UserInfo = {
   email: string;
   password: string;
 };
 
+interface LoginProps {
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+}
+
 const initUserInfo: UserInfo = { email: "", password: "" };
-const Login = () => {
+const Login = ({ setCurrentUser }: LoginProps) => {
   const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
 
   const navigate = useNavigate();
@@ -17,6 +22,10 @@ const Login = () => {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     const { data } = await axios.post("api/v1/users/confirmUser", userInfo);
+
+    const user = await data.user;
+
+    setCurrentUser((prev) => (prev = user));
 
     if (data) navigate(`/profile`);
   };
