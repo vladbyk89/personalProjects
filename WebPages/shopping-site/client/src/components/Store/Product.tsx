@@ -4,7 +4,6 @@ import { ReactElement, useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { CartItemType, CartStateType } from "../../context/CartProvider";
 import axios from "axios";
-import useUser from "../../hooks/useUser";
 interface ProductProps {
   product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
@@ -20,13 +19,16 @@ const Product = ({
 }: ProductProps): ReactElement => {
   const [count, setCount] = useState(0);
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
-  const { user } = useUser();
 
   const onAddToCart = async () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
       payload: { ...product, qty: count },
     });
+    const { data } = await axios.get("api/v1/users/getUser");
+
+    const user = await data.user;
+
     if (!user) return;
 
     const carts: CartStateType[] = user.carts;

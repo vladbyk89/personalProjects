@@ -1,9 +1,22 @@
-import useUser from "../hooks/useUser";
+import { useEffect, useState } from "react";
 import "../styles/Profile.scss";
+import axios from "axios";
+import { UserType } from "../App";
 
 const Profile = () => {
-  const { user } = useUser();
-  
+  const [user, setUser] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await axios.get("api/v1/users/getUser");
+      const user = await data.user;
+      console.log(user);
+      setUser((prev) => (prev = user));
+    };
+
+    fetch();
+  }, []);
+
   const content = (
     <div className="userDetails">
       <p>User Name: {user?.userName}</p>

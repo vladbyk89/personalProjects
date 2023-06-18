@@ -5,11 +5,9 @@ import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
 import axios from "axios";
 import { CartItemType, CartStateType } from "../../context/CartProvider";
-import useUser from "../../hooks/useUser";
 
 const Cart = () => {
   const [confirm, setConfirm] = useState(false);
-  const { user } = useUser();
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
@@ -27,8 +25,14 @@ const Cart = () => {
 
   useEffect(() => {
     const fetchCart = async () => {
+      const { data } = await axios.get("api/v1/users/getUser");
+  
+      const user = await data.user;
+
       if (!user) return;
+
       const carts: CartStateType[] = user.carts;
+      
       console.log(user);
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);

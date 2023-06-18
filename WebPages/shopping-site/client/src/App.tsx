@@ -12,14 +12,12 @@ import { useLocation } from "react-router-dom";
 import Register from "./pages/Register";
 import axios from "axios";
 
-interface Address {
-  country: string;
-  city: string;
-  street: string;
-  postCode: string;
+export interface UserType {
+  userName: string;
+  email: string;
+  password: string;
+  _id: string;
 }
-
-
 
 function App() {
   const [viewCart, setViewCart] = useState(false);
@@ -36,11 +34,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar
-        isStore={isStore}
-        viewCart={viewCart}
-        setViewCart={setViewCart}
-      />
+      <Navbar isStore={isStore} viewCart={viewCart} setViewCart={setViewCart} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
@@ -49,14 +43,8 @@ function App() {
           element={<Store viewCart={viewCart} setViewCart={setViewCart} />}
         />
         <Route path="/about" element={<About />} />
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Missing />} />
       </Routes>

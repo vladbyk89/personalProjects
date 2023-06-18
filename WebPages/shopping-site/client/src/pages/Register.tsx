@@ -2,20 +2,12 @@ import "../styles/Register.scss";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useUser from "../hooks/useUser";
+import { UserType } from "../App";
 
-type NewUser = {
-  userName: string;
-  email: string;
-  password: string;
-};
-
-const initNewUser: NewUser = { userName: "", email: "", password: "" };
+// const initNewUser: UserType = { userName: "", email: "", password: "", _id: "" };
 
 const Register = () => {
-  const [newUser, setNewUser] = useState<NewUser>(initNewUser);
-
-  const { setUser } = useUser();
+  const [newUser, setNewUser] = useState<UserType | null>(null);
 
   const navigate = useNavigate();
 
@@ -24,7 +16,7 @@ const Register = () => {
 
     const user = await data.user;
 
-    if (setUser) setUser(user);
+    if(!user) return 
 
     setTimeout(() => {
       navigate(`/profile`);
@@ -56,6 +48,7 @@ const Register = () => {
                 pattern="[^\s]+"
                 onChange={(e) =>
                   setNewUser((prev) => {
+                    if(!prev) return null
                     prev.userName = e.target.value;
                     return prev;
                   })
@@ -82,6 +75,7 @@ const Register = () => {
                 // pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
                 onChange={(e) =>
                   setNewUser((prev) => {
+                    if(!prev) return null
                     prev.email = e.target.value;
                     return prev;
                   })
@@ -107,6 +101,7 @@ const Register = () => {
                 placeholder=" "
                 onChange={(e) =>
                   setNewUser((prev) => {
+                    if(!prev) return null
                     prev.password = e.target.value;
                     return prev;
                   })

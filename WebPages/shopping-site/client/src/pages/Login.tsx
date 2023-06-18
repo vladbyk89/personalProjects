@@ -2,7 +2,6 @@ import { FormEvent, useState } from "react";
 import "../styles/Login.scss";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-import useUser from "../hooks/useUser";
 
 type UserInfo = {
   email: string;
@@ -13,7 +12,6 @@ const initUserInfo: UserInfo = { email: "", password: "" };
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
-  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -23,9 +21,10 @@ const Login = () => {
 
     const user = await data.user;
 
-    if (setUser) setUser(user);
-
-    if (data) navigate(`/profile`);
+    if (user) navigate(`/profile`);
+    else {
+      alert("user info not correct")
+    }
   };
 
   return (
