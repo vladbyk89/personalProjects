@@ -1,21 +1,19 @@
 import { FormEvent, useState } from "react";
 import "../styles/Login.scss";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { User } from "../App";
+import { useNavigate, NavLink } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 type UserInfo = {
   email: string;
   password: string;
 };
 
-interface LoginProps {
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
-}
-
 const initUserInfo: UserInfo = { email: "", password: "" };
-const Login = ({ setCurrentUser }: LoginProps) => {
+
+const Login = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -25,7 +23,7 @@ const Login = ({ setCurrentUser }: LoginProps) => {
 
     const user = await data.user;
 
-    setCurrentUser((prev) => (prev = user));
+    if (setUser) setUser(user);
 
     if (data) navigate(`/profile`);
   };
@@ -65,6 +63,7 @@ const Login = ({ setCurrentUser }: LoginProps) => {
         <button type="submit" className="button-5">
           Login
         </button>
+        <NavLink to="/register">no account yet?</NavLink>
       </form>
     </div>
   );

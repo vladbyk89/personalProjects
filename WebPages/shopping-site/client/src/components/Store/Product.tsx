@@ -2,8 +2,9 @@ import { ProductType } from "../../context/ProductProvider";
 import { ReducerActionType, ReducerAction } from "../../context/CartProvider";
 import { ReactElement, useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { CartItemType } from "../../context/CartProvider";
+import { CartItemType, CartStateType } from "../../context/CartProvider";
 import axios from "axios";
+import useUser from "../../hooks/useUser";
 interface ProductProps {
   product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
@@ -19,17 +20,21 @@ const Product = ({
 }: ProductProps): ReactElement => {
   const [count, setCount] = useState(0);
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
+  const { user } = useUser();
 
   const onAddToCart = async () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
       payload: { ...product, qty: count },
     });
+    if (!user) return;
 
-    const { data } = await axios.get("/api/v1/users/getUser");
+    const carts: CartStateType[] = user.carts;
 
-    const cartId = data.user.cart;
+    const findActiveCart = carts.filter((cart) => cart.isActive === true);
 
+    const cartId = findActiveCart[0]._id;
+    console.log(cart);
     await axios.patch("/api/v1/carts", { cart, cartId });
 
     setCount(0);

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.confirmUser = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+exports.userPurchase = exports.confirmUser = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
 const UserModel_1 = __importDefault(require("./UserModel"));
@@ -32,9 +32,13 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const { userName, email, password } = req.body;
         const cart = yield CartModel_1.default.create({});
-        const user = yield (yield UserModel_1.default.create({ userName, email, password, cart: [cart._id] })).populate("cart");
-        const userId = user._id;
-        req.body = userId;
+        const user = yield yield UserModel_1.default.create({
+            userName,
+            email,
+            password,
+            carts: [cart._id],
+        });
+        req.body = user.populate("carts");
         next();
         // res.status(200).json({ ok: true, user });
     }
@@ -52,7 +56,7 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         if (!userId)
             throw new Error("Missing token from cookise");
         const decodedToken = jwt_simple_1.default.decode(userId, secret);
-        const user = yield UserModel_1.default.findById(decodedToken.userId);
+        const user = yield UserModel_1.default.findById(decodedToken.userId).populate("carts");
         res.status(200).json({ ok: true, user });
     }
     catch (error) {
@@ -84,3 +88,21 @@ const confirmUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.confirmUser = confirmUser;
+const userPurchase = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!secret)
+            throw new Error("Missing jwt secret");
+        const { userId } = req.cookies;
+        if (!userId)
+            throw new Error("Missing token from cookise");
+        const decodedToken = jwt_simple_1.default.decode(userId, secret);
+        const user = yield UserModel_1.default.findById(decodedToken.userId).populate("carts");
+        const cart = user === null || user === void 0 ? void 0 : user.carts.find((cart) => cart.isActive === true);
+        res.status(200).json({ ok: true, user, cart });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.userPurchase = userPurchase;

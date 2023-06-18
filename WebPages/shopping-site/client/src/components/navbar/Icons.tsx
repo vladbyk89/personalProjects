@@ -4,23 +4,16 @@ import { GiShoppingCart } from "react-icons/gi";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import { User } from "../../App";
+import useUser from "../../hooks/useUser";
 
 interface IconsProps {
   viewCart: boolean;
   setViewCart: React.Dispatch<React.SetStateAction<boolean>>;
-  currentUser: User | null;
-  
 }
 
-const Icons = ({
-  viewCart,
-  setViewCart,
-  currentUser,
-}: IconsProps) => {
+const Icons = ({ viewCart, setViewCart }: IconsProps) => {
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const handleCartClick = () => {
     setViewCart((prev) => (prev = !prev));
@@ -28,8 +21,8 @@ const Icons = ({
 
   const handleProfileClick = async () => {
     try {
-      if (currentUser) return navigate("/profile");
-      
+      if (user) return navigate("/profile");
+
       navigate("/login");
     } catch (error) {
       console.log(error);

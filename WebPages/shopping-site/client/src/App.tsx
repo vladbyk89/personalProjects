@@ -19,34 +19,12 @@ interface Address {
   postCode: string;
 }
 
-export interface User {
-  cardId: string;
-  email: string;
-  password: string;
-  userName: string;
-  _id: string;
-  address: Address;
-}
 
-const initUser: User = {
-  cardId: "12233",
-  email: "vladb89@gmail.com",
-  password: "12345678",
-  userName: "vladb89",
-  _id: "87654321",
-  address: {
-    country: "The Netherlands",
-    city: "Herenveen",
-    street: "Valeriaan 2",
-    postCode: "8446BD",
-  },
-};
 
 function App() {
   const [viewCart, setViewCart] = useState(false);
   const [isStore, setIsStore] = useState(false);
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState<User | null>(initUser);
 
   useEffect(() => {
     if (location.pathname === "/store") {
@@ -56,23 +34,12 @@ function App() {
     }
   }, [location]);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const { data } = await axios.get("api/v1/users/getUser");
-      const user = await data.user;
-      setCurrentUser((prev) => (prev = user));
-    };
-
-    fetch();
-  }, []);
-
   return (
     <div className="App">
       <Navbar
         isStore={isStore}
         viewCart={viewCart}
         setViewCart={setViewCart}
-        currentUser={currentUser}
       />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -84,11 +51,11 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route
           path="/profile"
-          element={<Profile currentUser={currentUser} />}
+          element={<Profile />}
         />
         <Route
           path="/login"
-          element={<Login setCurrentUser={setCurrentUser} />}
+          element={<Login />}
         />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Missing />} />

@@ -4,16 +4,19 @@ import { useState, useEffect } from "react";
 import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
 import axios from "axios";
-import { CartItemType } from "../../context/CartProvider";
+import { CartItemType, CartStateType } from "../../context/CartProvider";
+import useUser from "../../hooks/useUser";
 
 const Cart = () => {
   const [confirm, setConfirm] = useState(false);
+  const { user } = useUser();
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
   const onSubmitOrder = async () => {
-    // const { data } = await axios.get("/api/v1/users/getUser");
+    const { data } = await axios.post("/api/v1/users/userPurchase");
 
+    console.log(data);
     // const cartId = data.user.cart;
 
     // await axios.patch("/api/v1/carts", { cart, cartId });
@@ -22,23 +25,21 @@ const Cart = () => {
     setConfirm(true);
   };
 
-  const fetchCart = async () => {
-    const fetchUser = await axios("api/v1/users/getUser");
-
-    const cartId = fetchUser.data.user.cart[0];
-
-    const { data } = await axios.get(`/api/v1/carts/${cartId}`);
-    const cart = data.cart.cart;
-    cart.forEach((product: CartItemType) => {
-      const { _id, name, price, qty, imgUrl } = product;
-      dispatch({
-        type: REDUCER_ACTIONS.ADD,
-        payload: { _id, name, price, qty, imgUrl },
-      });
-    });
-  };
-
   useEffect(() => {
+    const fetchCart = async () => {
+      if (!user) return;
+      const carts: CartStateType[] = user.carts;
+
+      const findActiveCart = carts.filter((cart) => cart.isActive === true);
+
+      findActiveCart[0].cart.forEach((product: CartItemType) => {
+        const { _id, name, price, qty, imgUrl } = product;
+        dispatch({
+          type: REDUCER_ACTIONS.ADD,
+          payload: { _id, name, price, qty, imgUrl },
+        });
+      });
+    };
     fetchCart();
   }, []);
 

@@ -30,6 +30,10 @@ exports.CartSchema = new mongoose_1.Schema({
         type: [{}],
         // required: true,
     },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
     // cartProducts: {
     //   type: [CartProductSchema],
     //   required: true,

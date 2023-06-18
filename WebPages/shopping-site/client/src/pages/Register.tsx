@@ -2,6 +2,7 @@ import "../styles/Register.scss";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 type NewUser = {
   userName: string;
@@ -14,10 +15,17 @@ const initNewUser: NewUser = { userName: "", email: "", password: "" };
 const Register = () => {
   const [newUser, setNewUser] = useState<NewUser>(initNewUser);
 
+  const { setUser } = useUser();
+
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    await axios.post("api/v1/users", newUser);
+    const { data } = await axios.post("api/v1/users", newUser);
+
+    const user = await data.user;
+
+    if (setUser) setUser(user);
+
     setTimeout(() => {
       navigate(`/profile`);
     }, 2000);

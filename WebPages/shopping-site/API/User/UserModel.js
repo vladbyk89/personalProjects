@@ -38,7 +38,7 @@ exports.UserSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    cart: {
+    carts: {
         type: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Cart" }],
         required: true,
     },

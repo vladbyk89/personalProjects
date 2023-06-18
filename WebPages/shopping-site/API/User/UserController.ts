@@ -29,13 +29,14 @@ export const createUser = async (
 
     const cart = await Cart.create({});
 
-    const user = await (
-      await User.create({ userName, email, password, cart: [cart._id] })
-    ).populate("cart");
+    const user = await await User.create({
+      userName,
+      email,
+      password,
+      carts: [cart._id],
+    });
 
-    const userId = user._id;
-
-    req.body = userId;
+    req.body = user.populate("carts");
 
     next();
     // res.status(200).json({ ok: true, user });
@@ -59,7 +60,7 @@ export const getUser = async (
 
     const decodedToken = jwt.decode(userId, secret);
 
-    const user = await User.findById(decodedToken.userId).populate("Cart");
+    const user = await User.findById(decodedToken.userId).populate("carts");
 
     res.status(200).json({ ok: true, user });
   } catch (error: any) {
@@ -113,11 +114,9 @@ export const userPurchase = async (
 
     const decodedToken = jwt.decode(userId, secret);
 
-    const user = await User.findById(decodedToken.userId).populate("Cart");
+    const user = await User.findById(decodedToken.userId).populate("carts");
 
     const cart = user?.carts.find((cart) => cart.isActive === true);
-
-    
 
     res.status(200).json({ ok: true, user, cart });
   } catch (error: any) {

@@ -1,26 +1,25 @@
-import { User } from "../App";
+import useUser from "../hooks/useUser";
 import "../styles/Profile.scss";
-interface ProfileProps {
-  currentUser: User | null;
-}
 
-const Profile = ({ currentUser }: ProfileProps) => {
+const Profile = () => {
+  const { user } = useUser();
+
   const content = (
     <div className="userDetails">
-      <p>User Name: {currentUser?.userName}</p>
-      <ul>
+      <p>User Name: {user?.userName}</p>
+      {/* <ul>
         <h3>Address</h3>
         <li>{currentUser?.address.country}</li>
         <li>{currentUser?.address.city}</li>
         <li>{currentUser?.address.street}</li>
         <li>{currentUser?.address.postCode}</li>
-      </ul>
+      </ul> */}
     </div>
   );
 
   return (
     <div className="profilePage">
-      {currentUser ? content : <p>no user found</p>}
+      {user ? content : <p>no user found</p>}
       <button className="button-6">View order history</button>
     </div>
   );

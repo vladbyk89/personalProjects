@@ -10,8 +10,9 @@ export const setUserCookie = async (
   try {
     if (!secret) throw new Error("Missing jwt secret");
 
-    const userId = req.body;
-    const token = jwt.encode({ userId, role: "public" }, secret);
+    const user = req.body;
+
+    const token = jwt.encode({ userId: user._id, role: "public" }, secret);
 
     if (!token) throw new Error("Missing token...");
 
@@ -19,7 +20,7 @@ export const setUserCookie = async (
       httpOnly: true,
     });
 
-    res.status(200).json({ ok: true, userId });
+    res.status(200).json({ ok: true, user });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: error.message });

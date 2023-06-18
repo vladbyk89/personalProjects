@@ -1,9 +1,4 @@
-import {
-  ReactElement,
-  useReducer,
-  useMemo,
-  createContext,
-} from "react";
+import { ReactElement, useReducer, useMemo, createContext } from "react";
 
 export interface CartItemType {
   _id: string;
@@ -13,11 +8,13 @@ export interface CartItemType {
   imgUrl: string;
 }
 
-interface CartStateType {
+export interface CartStateType {
   cart: CartItemType[];
+  isActive: boolean;
+  _id: string;
 }
 
-const initCartState: CartStateType = { cart: [] };
+const initCartState: CartStateType = { cart: [], isActive: true, _id: "" };
 
 const REDUCER_ACTION_TYPE = {
   ADD: "ADD",
@@ -153,8 +150,6 @@ export const CartContext =
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
-
-
   return (
     <CartContext.Provider value={useCartContext(initCartState)}>
       {children}
