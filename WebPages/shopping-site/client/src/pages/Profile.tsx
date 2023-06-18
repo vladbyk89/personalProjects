@@ -3,7 +3,7 @@ import "../styles/Profile.scss";
 
 const Profile = () => {
   const { user } = useUser();
-
+  
   const content = (
     <div className="userDetails">
       <p>User Name: {user?.userName}</p>

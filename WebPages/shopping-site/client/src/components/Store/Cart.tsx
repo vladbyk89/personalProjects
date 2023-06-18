@@ -29,13 +29,14 @@ const Cart = () => {
     const fetchCart = async () => {
       if (!user) return;
       const carts: CartStateType[] = user.carts;
+      console.log(user);
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);
 
       findActiveCart[0].cart.forEach((product: CartItemType) => {
         const { _id, name, price, qty, imgUrl } = product;
         dispatch({
-          type: REDUCER_ACTIONS.ADD,
+          type: REDUCER_ACTIONS.LOAD,
           payload: { _id, name, price, qty, imgUrl },
         });
       });

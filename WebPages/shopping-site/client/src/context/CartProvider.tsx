@@ -21,6 +21,7 @@ const REDUCER_ACTION_TYPE = {
   REMOVE: "REMOVE",
   QUANTITY: "QUANTITY",
   SUBMIT: "SUBMIT",
+  LOAD: "LOAD",
 };
 
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE;
@@ -52,9 +53,15 @@ const reducer = (
 
       const newQty: number = itemExists ? itemExists.qty + qty : qty;
 
+      const updatedCart = [
+        ...filteredCart,
+        { _id, name, price, qty: newQty, imgUrl },
+      ];
+
+      console.log(updatedCart);
       return {
         ...state,
-        cart: [...filteredCart, { _id, name, price, qty: newQty, imgUrl }],
+        cart: updatedCart,
       };
     }
 
@@ -98,6 +105,23 @@ const reducer = (
 
     case REDUCER_ACTION_TYPE.SUBMIT: {
       return { ...state, cart: [] };
+    }
+
+    case REDUCER_ACTION_TYPE.LOAD: {
+      if (!action.payload)
+        throw new Error("action.payload missing in REMOVE action");
+
+      const { _id, name, price, imgUrl, qty } = action.payload;
+
+      const itemExists: CartItemType | undefined = state.cart.find(
+        (item) => item._id === _id
+      );
+
+      const updatedCart = itemExists
+        ? [...state.cart]
+        : [...state.cart, { _id, name, price, imgUrl, qty }];
+
+      return { ...state, cart: updatedCart };
     }
 
     default:
