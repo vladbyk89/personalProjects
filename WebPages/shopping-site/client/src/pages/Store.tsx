@@ -6,10 +6,9 @@ import useProducts from "../hooks/useProducts";
 
 interface StoreProps {
   viewCart: boolean;
-  setViewCart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Store = ({ viewCart, setViewCart }: StoreProps) => {
+const Store = ({ viewCart }: StoreProps) => {
   const { isLoading } = useProducts();
 
   return viewCart ? (

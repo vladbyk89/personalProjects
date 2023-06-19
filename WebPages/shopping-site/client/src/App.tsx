@@ -10,7 +10,6 @@ import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Register from "./pages/Register";
-import axios from "axios";
 
 export interface UserType {
   userName: string;
@@ -40,7 +39,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route
           path="/store"
-          element={<Store viewCart={viewCart} setViewCart={setViewCart} />}
+          element={<Store viewCart={viewCart} />}
         />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />

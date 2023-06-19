@@ -97,8 +97,17 @@ const userPurchase = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             throw new Error("Missing token from cookise");
         const decodedToken = jwt_simple_1.default.decode(userId, secret);
         const user = yield UserModel_1.default.findById(decodedToken.userId).populate("carts");
-        const cart = user === null || user === void 0 ? void 0 : user.carts.find((cart) => cart.isActive === true);
-        res.status(200).json({ ok: true, user, cart });
+        if (!user)
+            return;
+        const cart = user.carts.find((cart) => cart.isActive === true);
+        if (!cart)
+            return;
+        const cartId = cart._id;
+        yield CartModel_1.default.findByIdAndUpdate(cartId, { isActive: false });
+        const newCart = yield CartModel_1.default.create({});
+        user.carts.push(newCart);
+        user.save();
+        res.status(200).json({ ok: true });
     }
     catch (error) {
         console.error(error);

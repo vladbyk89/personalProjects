@@ -26,7 +26,7 @@ const Icons = ({ viewCart, setViewCart }: IconsProps) => {
 
       navigate("/profile");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       navigate("/login");
     }
   };

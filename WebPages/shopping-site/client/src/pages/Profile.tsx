@@ -9,8 +9,9 @@ const Profile = () => {
   useEffect(() => {
     const fetch = async () => {
       const { data } = await axios.get("api/v1/users/getUser");
+      
       const user = await data.user;
-      console.log(user);
+
       setUser((prev) => (prev = user));
     };
 

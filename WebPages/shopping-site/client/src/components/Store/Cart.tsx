@@ -25,7 +25,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       const { data } = await axios.get("api/v1/users/getUser");
-  
+
       const user = await data.user;
 
       if (!user) return;
@@ -34,13 +34,15 @@ const Cart = () => {
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);
 
-      findActiveCart[0].cart.forEach((product: CartItemType) => {
-        const { _id, name, price, qty, imgUrl } = product;
-        dispatch({
-          type: REDUCER_ACTIONS.LOAD,
-          payload: { _id, name, price, qty, imgUrl },
+      if (findActiveCart.length) {
+        findActiveCart[0].cart.forEach((product: CartItemType) => {
+          const { _id, name, price, qty, imgUrl } = product;
+          dispatch({
+            type: REDUCER_ACTIONS.LOAD,
+            payload: { _id, name, price, qty, imgUrl },
+          });
         });
-      });
+      }
     };
     fetchCart();
   }, []);

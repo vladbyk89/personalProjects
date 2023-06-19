@@ -15,7 +15,6 @@ const Product = ({
   product,
   dispatch,
   REDUCER_ACTIONS,
-  cart,
 }: ProductProps): ReactElement => {
   const [count, setCount] = useState(0);
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
@@ -28,24 +27,22 @@ const Product = ({
     const { data } = await axios.get("api/v1/users/getUser");
 
     const user = await data.user;
-
     if (!user) return;
 
     const carts: CartStateType[] = user.carts;
 
     const findActiveCart = carts.filter((cart) => cart.isActive === true);
 
+    
+
     const cartId = findActiveCart[0]._id;
 
-    console.log(cart);
-
-    const fetchCart = await axios.patch("/api/v1/carts", {
+    // update cart in DB
+    await axios.patch("/api/v1/carts", {
       product,
       cartId,
       qty: count,
     });
-
-    console.log(fetchCart.data.cart.cart);
 
     setCount(0);
   };
