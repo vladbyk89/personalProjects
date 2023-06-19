@@ -1,9 +1,10 @@
 import { ProductType } from "../../context/ProductProvider";
 import { ReducerActionType, ReducerAction } from "../../context/CartProvider";
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { CartItemType, CartStateType } from "../../context/CartProvider";
 import axios from "axios";
+import { UserType } from "../../App";
 interface ProductProps {
   product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
@@ -17,23 +18,33 @@ const Product = ({
   REDUCER_ACTIONS,
 }: ProductProps): ReactElement => {
   const [count, setCount] = useState(0);
+
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await axios.get("api/v1/users/getUser");
+
+      const user = await data.user;
+
+      if (user) setCurrentUser(user);
+    };
+
+    fetchUser();
+  }, []);
 
   const onAddToCart = async () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
       payload: { ...product, qty: count },
     });
-    const { data } = await axios.get("api/v1/users/getUser");
+    if (!currentUser) return;
 
-    const user = await data.user;
-    if (!user) return;
-
-    const carts: CartStateType[] = user.carts;
+    const carts: CartStateType[] = currentUser.carts;
 
     const findActiveCart = carts.filter((cart) => cart.isActive === true);
-
-    
 
     const cartId = findActiveCart[0]._id;
 

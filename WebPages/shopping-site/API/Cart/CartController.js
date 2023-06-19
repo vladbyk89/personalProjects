@@ -27,7 +27,6 @@ const getAllCarts = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllCarts = getAllCarts;
 const createCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const { cart } = req.body;
         const cart = yield CartModel_1.default.create({});
         res.status(200).json({ ok: true, cart });
     }
@@ -44,30 +43,17 @@ const updateCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (!cart)
             return;
         const filterCart = cart.cart.filter((productItem) => productItem._id !== product._id);
-        console.log("filer", filterCart);
         const productExists = cart === null || cart === void 0 ? void 0 : cart.cart.find((productItem) => productItem._id === product._id);
         if (productExists)
             yield CartModel_1.default.updateOne({
+                _id: cartId,
                 cart: { $elemMatch: { _id: product._id } },
             }, {
-                $set: { "cart.$.qty": qty },
+                $inc: { "cart.$.qty": qty },
             });
         else {
             cart.cart.push(Object.assign(Object.assign({}, product), { qty }));
         }
-        const find = yield CartModel_1.default.findOne({
-            cart: { $elemMatch: { _id: product._id } },
-        });
-        console.log("cart:", cart);
-        console.log(find);
-        // productExists
-        //   ? (cart.cart = [...filterCart, { ...productExists }])
-        //   : cart.cart.push({ ...product, qty });
-        // const updatedCart = [...filterCart, { ...productExists }];
-        // if (productExists) productExists.qty += qty;
-        // else {
-        //   cart.cart = [...filterCart];
-        // }
         yield cart.save();
         // console.log(cart);
         res.status(200).json({ ok: true, cart });

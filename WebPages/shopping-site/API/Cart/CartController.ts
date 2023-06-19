@@ -26,8 +26,6 @@ export const createCart = async (
   next: NextFunction
 ) => {
   try {
-    // const { cart } = req.body;
-
     const cart = await Cart.create({});
 
     res.status(200).json({ ok: true, cart });
@@ -52,8 +50,6 @@ export const updateCart = async (
       (productItem) => productItem._id !== product._id
     );
 
-    console.log("filer", filterCart);
-
     const productExists = cart?.cart.find(
       (productItem) => productItem._id === product._id
     );
@@ -61,34 +57,16 @@ export const updateCart = async (
     if (productExists)
       await Cart.updateOne(
         {
+          _id: cartId,
           cart: { $elemMatch: { _id: product._id } },
         },
         {
-          $set: { "cart.$.qty": qty },
+          $inc: { "cart.$.qty": qty },
         }
       );
-      else{
-        cart.cart.push({ ...product, qty });
-      }
-
-    const find = await Cart.findOne({
-      cart: { $elemMatch: { _id: product._id } },
-    });
-
-    console.log("cart:", cart);
-
-    console.log(find);
-
-    // productExists
-    //   ? (cart.cart = [...filterCart, { ...productExists }])
-    //   : cart.cart.push({ ...product, qty });
-
-    // const updatedCart = [...filterCart, { ...productExists }];
-
-    // if (productExists) productExists.qty += qty;
-    // else {
-    //   cart.cart = [...filterCart];
-    // }
+    else {
+      cart.cart.push({ ...product, qty });
+    }
 
     await cart.save();
 

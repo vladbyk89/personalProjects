@@ -10,11 +10,13 @@ import Navbar from "./components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Register from "./pages/Register";
+import { CartStateType } from "./context/CartProvider";
 
 export interface UserType {
   userName: string;
   email: string;
   password: string;
+  carts: CartStateType[];
   _id: string;
 }
 
@@ -37,10 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        <Route
-          path="/store"
-          element={<Store viewCart={viewCart} />}
-        />
+        <Route path="/store" element={<Store viewCart={viewCart} />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />

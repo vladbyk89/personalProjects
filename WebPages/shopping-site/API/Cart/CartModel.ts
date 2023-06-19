@@ -24,10 +24,6 @@ export const CartSchema: Schema = new Schema(
       type: Boolean,
       default: true,
     },
-    // cartProducts: {
-    //   type: [CartProductSchema],
-    //   required: true,
-    // },
   },
   {
     versionKey: false,
