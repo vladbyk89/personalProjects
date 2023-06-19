@@ -36,8 +36,16 @@ const Product = ({
     const findActiveCart = carts.filter((cart) => cart.isActive === true);
 
     const cartId = findActiveCart[0]._id;
+
     console.log(cart);
-    await axios.patch("/api/v1/carts", { cart, cartId });
+
+    const fetchCart = await axios.patch("/api/v1/carts", {
+      product,
+      cartId,
+      qty: count,
+    });
+
+    console.log(fetchCart.data.cart.cart);
 
     setCount(0);
   };

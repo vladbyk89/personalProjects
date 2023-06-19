@@ -78,7 +78,7 @@ const confirmUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             throw new Error("Missing token...");
         res.cookie("userId", token, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 30, // 30 minute
+            maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
         });
         res.status(200).json({ ok: true, user });
     }

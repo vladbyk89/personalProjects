@@ -3,6 +3,7 @@ import Cart from "./CartModel";
 import CartProduct from "../CartProduct/CartProductModel";
 import Product from "../Product/ProductModel";
 import User from "../User/UserModel";
+import { count } from "console";
 
 export const getAllCarts = async (
   req: Request,
@@ -42,13 +43,35 @@ export const updateCart = async (
   next: NextFunction
 ) => {
   try {
-    const { cart, cartId } = req.body;
+    const { product, cartId, qty } = req.body;
 
-    await Cart.findByIdAndUpdate(cartId, { cart });
+    const cart = await Cart.findById(cartId);
+    if (!cart) return;
 
-    const updatedCart = await Cart.findById(cartId);
+    const productExists = cart?.cart.find(
+      (productItem) => productItem._id === product._id
+    );
 
-    res.status(200).json({ ok: true, cart: updatedCart });
+    if (productExists)
+      await Cart.updateOne(
+        {
+          cart: { $elemMatch: { _id: product._id } },
+        },
+        {
+          $set: { "cart.$.qty": qty },
+        }
+      );
+    else {
+      cart.cart.push({ ...product, qty });
+    }
+
+    // const find = await Cart.findOne({
+    //   cart: { $elemMatch: { _id: product._id } },
+    // });
+
+    await cart.save();
+
+    res.status(200).json({ ok: true });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

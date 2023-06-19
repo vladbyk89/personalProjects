@@ -58,7 +58,7 @@ const reducer = (
         { _id, name, price, qty: newQty, imgUrl },
       ];
 
-      console.log(updatedCart);
+      console.log("ADD action:", updatedCart);
       return {
         ...state,
         cart: updatedCart,

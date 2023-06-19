@@ -24,11 +24,10 @@ const Icons = ({ viewCart, setViewCart }: IconsProps) => {
 
       const user = await data.user;
 
-      if (!user) return navigate("/login");
-
       navigate("/profile");
     } catch (error) {
       console.log(error);
+      navigate("/login");
     }
   };
 

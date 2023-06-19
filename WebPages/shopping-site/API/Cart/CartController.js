@@ -39,10 +39,25 @@ const createCart = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.createCart = createCart;
 const updateCart = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { cart, cartId } = req.body;
-        yield CartModel_1.default.findByIdAndUpdate(cartId, { cart });
-        const updatedCart = yield CartModel_1.default.findById(cartId);
-        res.status(200).json({ ok: true, cart: updatedCart });
+        const { product, cartId, qty } = req.body;
+        const cart = yield CartModel_1.default.findById(cartId);
+        if (!cart)
+            return;
+        const productExists = cart === null || cart === void 0 ? void 0 : cart.cart.find((productItem) => productItem._id === product._id);
+        if (productExists)
+            yield CartModel_1.default.updateOne({
+                cart: { $elemMatch: { _id: product._id } },
+            }, {
+                $set: { "cart.$.qty": qty },
+            });
+        else {
+            cart.cart.push(Object.assign(Object.assign({}, product), { qty }));
+        }
+        // const find = await Cart.findOne({
+        //   cart: { $elemMatch: { _id: product._id } },
+        // });
+        yield cart.save();
+        res.status(200).json({ ok: true });
     }
     catch (error) {
         console.error(error);

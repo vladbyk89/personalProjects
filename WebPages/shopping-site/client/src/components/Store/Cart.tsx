@@ -14,7 +14,6 @@ const Cart = () => {
   const onSubmitOrder = async () => {
     const { data } = await axios.post("/api/v1/users/userPurchase");
 
-    console.log(data);
     // const cartId = data.user.cart;
 
     // await axios.patch("/api/v1/carts", { cart, cartId });
@@ -32,8 +31,6 @@ const Cart = () => {
       if (!user) return;
 
       const carts: CartStateType[] = user.carts;
-      
-      console.log(user);
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);
 
