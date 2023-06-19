@@ -5,18 +5,17 @@ import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
 import axios from "axios";
 import { CartItemType, CartStateType } from "../../context/CartProvider";
+import { UserType } from "../../App";
 
 const Cart = () => {
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [confirm, setConfirm] = useState(false);
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
   const onSubmitOrder = async () => {
-    const { data } = await axios.post("/api/v1/users/userPurchase");
-
-    // const cartId = data.user.cart;
-
-    // await axios.patch("/api/v1/carts", { cart, cartId });
+    if (!currentUser) return;
+    await axios.post("/api/v1/users/userPurchase", { userId: currentUser._id });
 
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
     setConfirm(true);
@@ -30,9 +29,12 @@ const Cart = () => {
 
       if (!user) return;
 
+      setCurrentUser(user);
+
       const carts: CartStateType[] = user.carts;
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);
+
 
       if (findActiveCart.length) {
         findActiveCart[0].cart.forEach((product: CartItemType) => {

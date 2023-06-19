@@ -1,9 +1,8 @@
 import { NextFunction, Response, Request } from "express";
 import Cart from "./CartModel";
-import CartProduct from "../CartProduct/CartProductModel";
-import Product from "../Product/ProductModel";
 import User from "../User/UserModel";
-import { count } from "console";
+import jwt from "jwt-simple";
+const secret = process.env.JWT_SECRET;
 
 export const getAllCarts = async (
   req: Request,
@@ -46,10 +45,6 @@ export const updateCart = async (
     const cart = await Cart.findById(cartId);
     if (!cart) return;
 
-    const filterCart = cart.cart.filter(
-      (productItem) => productItem._id !== product._id
-    );
-
     const productExists = cart?.cart.find(
       (productItem) => productItem._id === product._id
     );
@@ -70,7 +65,45 @@ export const updateCart = async (
 
     await cart.save();
 
-    // console.log(cart);
+    res.status(200).json({ ok: true, cart });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const deleteProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { productId } = req.params;
+
+    if (!secret) throw new Error("Missing jwt secret");
+
+    const { userId } = req.cookies;
+
+    if (!userId) throw new Error("Missing token from cookise");
+
+    const decodedToken = jwt.decode(userId, secret);
+
+    const user = await User.findById(decodedToken.userId).populate("carts");
+
+    const findActiveCart = user?.carts.find((cart) => cart.isActive === true);
+
+    if (!findActiveCart) return;
+
+    const cartId = findActiveCart._id;
+
+    const cart = await Cart.findById(cartId);
+    if (!cart) return;
+
+    const filterCart = cart.cart.filter((product) => product._id !== productId);
+
+    cart.cart = [...filterCart];
+
+    await cart.save();
 
     res.status(200).json({ ok: true, cart });
   } catch (error: any) {

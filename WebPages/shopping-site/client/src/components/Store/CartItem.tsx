@@ -1,6 +1,7 @@
 import { CartItemType } from "../../context/CartProvider";
 import { ReducerAction } from "../../context/CartProvider";
 import { ReducerActionType } from "../../context/CartProvider";
+import axios from "axios";
 
 interface CartItemProps {
   item: CartItemType;
@@ -8,33 +9,20 @@ interface CartItemProps {
   REDUCER_ACTIONS: ReducerActionType;
 }
 
-const CartItem = ({ item, dispatch, REDUCER_ACTIONS }: CartItemProps) => {
-  const img: string = new URL(`${item.imgUrl}`, import.meta.url)
-    .href;
+const CartItem = ({
+  item,
+  dispatch,
+  REDUCER_ACTIONS,
+}: CartItemProps) => {
+  const img: string = new URL(`${item.imgUrl}`, import.meta.url).href;
 
   const lineTotal: number = item.qty * item.price;
 
-//   const highestQty: number = 20 > item.qty ? 20 : item.qty;
-
-//   const optionValues: number[] = [...Array(highestQty).keys()].map(
-//     (i) => i + 1
-//   );
-
-//   const options: ReactElement[] = optionValues.map((val) => (
-//     <option key={`opt${val}`} value={val}>
-//       {val}
-//     </option>
-//   ));
-
-//   const onChangeQty = (e: ChangeEvent<HTMLSelectElement>) => {
-//     dispatch({
-//       type: REDUCER_ACTIONS.QUANTITY,
-//       payload: { ...item, qty: Number(e.target.value) },
-//     });
-//   };
-
-  const onRemoveFromCart = () =>
+  const onRemoveFromCart = async () => {
     dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: item });
+
+    await axios.delete(`/api/v1/carts/${item._id}`);
+  };
 
   const content = (
     <li className="cartItem">
@@ -61,7 +49,7 @@ const CartItem = ({ item, dispatch, REDUCER_ACTIONS }: CartItemProps) => {
         {options}
       </select> */}
       <div className="cart__item-subtotal" aria-label="Line item subtotal">
-        total: {" "}
+        total:{" "}
         {new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
@@ -73,7 +61,7 @@ const CartItem = ({ item, dispatch, REDUCER_ACTIONS }: CartItemProps) => {
         title="Remove item from cart"
         onClick={onRemoveFromCart}
       >
-        Remove 
+        Remove
       </button>
     </li>
   );
