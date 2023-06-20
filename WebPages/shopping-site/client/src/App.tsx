@@ -7,8 +7,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Missing from "./pages/Missing";
 import Navbar from "./components/navbar/Navbar";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import Register from "./pages/Register";
 import { CartStateType } from "./context/CartProvider";
 
@@ -22,20 +21,11 @@ export interface UserType {
 
 function App() {
   const [viewCart, setViewCart] = useState(false);
-  const [isStore, setIsStore] = useState(false);
-  const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname === "/store") {
-      setIsStore(true);
-    } else {
-      setIsStore(false);
-    }
-  }, [location]);
 
   return (
     <div className="App">
-      <Navbar isStore={isStore} viewCart={viewCart} setViewCart={setViewCart} />
+      <Navbar viewCart={viewCart} setViewCart={setViewCart} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />

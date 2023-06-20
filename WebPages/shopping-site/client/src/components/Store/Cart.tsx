@@ -14,7 +14,7 @@ const Cart = () => {
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
   const onSubmitOrder = async () => {
-    if (!currentUser) return;
+    if (!currentUser) return alert("please login first");
     await axios.post("/api/v1/users/userPurchase", { userId: currentUser._id });
 
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
@@ -34,7 +34,6 @@ const Cart = () => {
       const carts: CartStateType[] = user.carts;
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);
-
 
       if (findActiveCart.length) {
         findActiveCart[0].cart.forEach((product: CartItemType) => {

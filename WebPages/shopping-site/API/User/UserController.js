@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userPurchase = exports.confirmUser = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+exports.userPurchase = exports.clearUserCookie = exports.confirmUser = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
 const UserModel_1 = __importDefault(require("./UserModel"));
@@ -88,6 +88,17 @@ const confirmUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.confirmUser = confirmUser;
+const clearUserCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.clearCookie("userId");
+        res.status(200).json({ ok: true });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.clearUserCookie = clearUserCookie;
 const userPurchase = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!secret)

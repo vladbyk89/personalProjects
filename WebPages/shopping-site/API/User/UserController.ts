@@ -100,6 +100,21 @@ export const confirmUser = async (
   }
 };
 
+export const clearUserCookie = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.clearCookie("userId");
+
+    res.status(200).json({ ok: true });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
 export const userPurchase = async (
   req: Request,
   res: Response,

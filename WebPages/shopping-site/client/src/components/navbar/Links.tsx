@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 
-const Links = () => {
+interface LinkProps {
+  setViewCart: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Links = ({ setViewCart }: LinkProps) => {
   return (
     <div className="linksDiv">
       <NavLink className="navLink" to="/">
@@ -9,7 +13,11 @@ const Links = () => {
       <NavLink className="navLink" to="/products">
         Products
       </NavLink>
-      <NavLink className="navLink" to="/store">
+      <NavLink
+        onClick={() => setViewCart(false)}
+        className="navLink"
+        to="/store"
+      >
         Store
       </NavLink>
       <NavLink className="navLink" to="/about">

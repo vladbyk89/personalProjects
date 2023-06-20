@@ -11,4 +11,5 @@ userRouter.route("/").get(UserController_1.getAllUsers).post(UserController_1.cr
 userRouter.route("/getUser").get(UserController_1.getUser);
 userRouter.route("/confirmUser").post(UserController_1.confirmUser, userCookie_1.setUserCookie);
 userRouter.route("/userPurchase").post(UserController_1.userPurchase);
+userRouter.route("/clearUserCookie").delete(UserController_1.clearUserCookie);
 exports.default = userRouter;

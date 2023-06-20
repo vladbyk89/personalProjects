@@ -7,6 +7,7 @@ import {
   getUser,
   userPurchase,
   confirmUser,
+  clearUserCookie
 } from "./UserController";
 import { setUserCookie } from "../middleware/userCookie";
 
@@ -17,5 +18,7 @@ userRouter.route("/getUser").get(getUser);
 userRouter.route("/confirmUser").post(confirmUser, setUserCookie);
 
 userRouter.route("/userPurchase").post(userPurchase)
+
+userRouter.route("/clearUserCookie").delete(clearUserCookie)
 
 export default userRouter;

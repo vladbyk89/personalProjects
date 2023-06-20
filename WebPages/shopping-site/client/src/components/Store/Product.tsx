@@ -10,37 +10,27 @@ interface ProductProps {
   dispatch: React.Dispatch<ReducerAction>;
   REDUCER_ACTIONS: ReducerActionType;
   cart: CartItemType[];
+  currentUser: UserType | null
 }
 
 const Product = ({
   product,
   dispatch,
   REDUCER_ACTIONS,
+  currentUser
 }: ProductProps): ReactElement => {
   const [count, setCount] = useState(0);
 
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
   const img: string = new URL(`${product.imgUrl}`, import.meta.url).href;
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await axios.get("api/v1/users/getUser");
-
-      const user = await data.user;
-
-      if (user) setCurrentUser(user);
-    };
-
-    fetchUser();
-  }, []);
 
   const onAddToCart = async () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
       payload: { ...product, qty: count },
     });
-    if (!currentUser) return;
+    if (!currentUser) return setCount(0);
 
     const carts: CartStateType[] = currentUser.carts;
 
