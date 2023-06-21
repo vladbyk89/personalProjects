@@ -9,7 +9,7 @@ import Missing from "./pages/Missing";
 import Navbar from "./components/navbar/Navbar";
 import { useState } from "react";
 import Register from "./pages/Register";
-import { CartStateType } from "./context/CartProvider";
+import { CartStateType } from "./app/cartSlice";
 
 export interface UserType {
   userName: string;

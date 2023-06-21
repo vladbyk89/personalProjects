@@ -1,7 +1,7 @@
 import { CartItemType } from "../../app/cartSlice";
-import axios from "axios";
 import { useAppDispatch } from "../../hooks/reduxHook";
 import { removeItem } from "../../app/cartSlice";
+import axios from "axios";
 
 interface CartItemProps {
   item: CartItemType;

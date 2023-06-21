@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
 import axios from "axios";
-import { CartItemType, CartStateType } from "../../context/CartProvider";
+import { CartItemType, CartStateType } from "../../app/cartSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks/reduxHook";
 import { submitCart, loadItems, selectCart } from "../../app/cartSlice";
 import { selectUser } from "../../app/userSlice";

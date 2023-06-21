@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CartStateType } from "../context/CartProvider";
+import { CartStateType } from "../app/cartSlice";
 import type { RootState } from "./store";
 import axios from "axios";
 
