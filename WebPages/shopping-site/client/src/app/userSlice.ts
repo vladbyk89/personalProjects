@@ -18,7 +18,7 @@ interface UserType {
   _id: string;
 }
 
-const initUser: UserType = {
+const initUserState: UserType = {
   userName: "",
   email: "",
   password: "",
@@ -28,13 +28,13 @@ const initUser: UserType = {
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: { value: initUser },
+  initialState: { value: initUserState },
   reducers: {
     login: (state, action) => {
       state.value = action.payload;
     },
     logout: (state) => {
-      state.value = initUser;
+      state.value = initUserState;
     },
   },
   extraReducers(builder) {

@@ -3,10 +3,12 @@ import { ReactElement } from "react";
 import Product from "./Product";
 import { useAppSelector } from "../../hooks/reduxHook";
 import { selectUser } from "../../app/userSlice";
+import { selectproducts } from "../../app/productsSlice";
 
 const ProductList = () => {
-  const { products, isLoading } = useProducts();
+  // const { products, isLoading } = useProducts();
   const user = useAppSelector(selectUser);
+  const {products, isLoading} = useAppSelector(selectproducts)
 
   let pageContent: ReactElement | ReactElement[] = isLoading ? (
     <p>Loading...</p>
