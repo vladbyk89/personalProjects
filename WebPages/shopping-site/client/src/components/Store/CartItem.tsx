@@ -1,26 +1,26 @@
-import { CartItemType } from "../../context/CartProvider";
-import { ReducerAction } from "../../context/CartProvider";
-import { ReducerActionType } from "../../context/CartProvider";
+import { CartItemType } from "../../app/cartSlice";
 import axios from "axios";
+import { useAppDispatch } from "../../hooks/reduxHook";
+
+import { removeItem } from "../../app/cartSlice";
 
 interface CartItemProps {
   item: CartItemType;
-  dispatch: React.Dispatch<ReducerAction>;
-  REDUCER_ACTIONS: ReducerActionType;
 }
 
 const CartItem = ({
   item,
-  dispatch,
-  REDUCER_ACTIONS,
 }: CartItemProps) => {
+  const dispatch = useAppDispatch();
+
   const img: string = new URL(`${item.imgUrl}`, import.meta.url).href;
 
   const lineTotal: number = item.qty * item.price;
 
   const onRemoveFromCart = async () => {
-    dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: item });
+    // dispatch({ type: REDUCER_ACTIONS.REMOVE, payload: item });
 
+    dispatch(removeItem(item))
     await axios.delete(`/api/v1/carts/${item._id}`);
   };
 
