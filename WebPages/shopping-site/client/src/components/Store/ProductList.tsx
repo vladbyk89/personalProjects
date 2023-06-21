@@ -1,27 +1,12 @@
 import useProducts from "../../hooks/useProducts";
-import { UserType } from "../../App";
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement } from "react";
 import Product from "./Product";
-import axios from "axios";
+import { useAppSelector } from "../../hooks/reduxHook";
+import { selectUser } from "../../app/userSlice";
 
 const ProductList = () => {
   const { products, isLoading } = useProducts();
-  
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
-
-  
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await axios.get("api/v1/users/getUser");
-
-      const user = await data.user;
-
-      if (user) setCurrentUser(user);
-    };
-
-    fetchUser();
-  }, []);
-
+  const user = useAppSelector(selectUser);
 
   let pageContent: ReactElement | ReactElement[] = isLoading ? (
     <p>Loading...</p>
@@ -31,13 +16,7 @@ const ProductList = () => {
 
   if (products?.length) {
     pageContent = products.map((product, i) => {
-      return (
-        <Product
-          key={i}
-          product={product}
-          currentUser={currentUser}
-        />
-      );
+      return <Product key={i} product={product} currentUser={user} />;
     });
   }
 

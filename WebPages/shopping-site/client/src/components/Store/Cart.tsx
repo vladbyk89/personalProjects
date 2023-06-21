@@ -4,16 +4,16 @@ import CartItem from "./CartItem";
 import "../../styles/Cart.scss";
 import axios from "axios";
 import { CartItemType, CartStateType } from "../../context/CartProvider";
-import { UserType } from "../../App";
 import { useAppSelector, useAppDispatch } from "../../hooks/reduxHook";
-
 import { submitCart, loadItems, selectCart } from "../../app/cartSlice";
+import { selectUser } from "../../app/userSlice";
 
 const Cart = () => {
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [confirm, setConfirm] = useState(false);
 
   const cart = useAppSelector(selectCart);
+  const user = useAppSelector(selectUser);
+
   const dispatch = useAppDispatch();
 
   const totalItems: number = cart.cart.reduce((previousValue, cartItem) => {
@@ -30,8 +30,8 @@ const Cart = () => {
   );
 
   const onSubmitOrder = async () => {
-    if (!currentUser) return alert("please login first");
-    await axios.post("/api/v1/users/userPurchase", { userId: currentUser._id });
+    if (!user) return alert("please login first");
+    await axios.post("/api/v1/users/userPurchase", { userId: user._id });
 
     dispatch(submitCart());
     setConfirm(true);
@@ -39,14 +39,6 @@ const Cart = () => {
 
   useEffect(() => {
     const fetchCart = async () => {
-      const { data } = await axios.get("api/v1/users/getUser");
-
-      const user = await data.user;
-
-      if (!user) return;
-
-      setCurrentUser(user);
-
       const carts: CartStateType[] = user.carts;
 
       const findActiveCart = carts.filter((cart) => cart.isActive === true);
@@ -54,10 +46,6 @@ const Cart = () => {
       if (findActiveCart.length) {
         findActiveCart[0].cart.forEach((product: CartItemType) => {
           const { _id, name, price, qty, imgUrl } = product;
-          // dispatch({
-          //   type: REDUCER_ACTIONS.LOAD,
-          //   payload: { _id, name, price, qty, imgUrl },
-          // });
           dispatch(loadItems({ _id, name, price, qty, imgUrl }));
         });
       }
@@ -74,10 +62,7 @@ const Cart = () => {
       <h1>Your Cart</h1>
       <ul className="cart">
         {cart.cart.map((item) => (
-          <CartItem
-            key={item._id}
-            item={item}
-          ></CartItem>
+          <CartItem key={item._id} item={item}></CartItem>
         ))}
       </ul>
       <div className="cartTotal">

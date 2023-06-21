@@ -7,13 +7,16 @@ import "./styles/style.scss";
 import { ProductsProvider } from "./context/ProductProvider";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
+import { fetchUser } from "./app/userSlice";
+
+store.dispatch(fetchUser());
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ProductsProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ProductsProvider>
   </BrowserRouter>
 );

@@ -9,7 +9,7 @@ import { addItems } from "../../app/cartSlice";
 
 interface ProductProps {
   product: ProductType;
-  currentUser: UserType | null;
+  currentUser: UserType;
 }
 
 const Product = ({ product, currentUser }: ProductProps): ReactElement => {

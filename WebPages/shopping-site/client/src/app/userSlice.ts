@@ -1,7 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { CartStateType } from "../context/CartProvider";
-import { useEffect } from "react";
+import type { RootState } from "./store";
 import axios from "axios";
+
+const USER_URL = "api/v1/users";
+
+export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
+  const response = await axios.get(`${USER_URL}/getUser`);
+  return response.data.user;
+});
 
 interface UserType {
   userName: string;
@@ -19,22 +26,6 @@ const initUser: UserType = {
   _id: "",
 };
 
-useEffect(() => {
-}, []);
-
-const fetchUser = async () => {
-  const { data } = await axios.get("api/v1/users/getUser");
-  const user = await data.user;
-  console.log(user);
-  login(user);
-};
-
-fetchUser();
-
-export interface state {
-  value: UserType;
-}
-
 export const userSlice = createSlice({
   name: "user",
   initialState: { value: initUser },
@@ -46,8 +37,15 @@ export const userSlice = createSlice({
       state.value = initUser;
     },
   },
+  extraReducers(builder) {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      state.value = action.payload;
+    });
+  },
 });
 
 export const { login, logout } = userSlice.actions;
+
+export const selectUser = (state: RootState) => state.user.value;
 
 export default userSlice.reducer;
