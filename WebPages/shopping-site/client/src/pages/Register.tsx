@@ -2,7 +2,7 @@ import "../styles/Register.scss";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { UserType } from "../App";
+import { UserType } from "../app/userSlice";
 import { login } from "../app/userSlice";
 import { useAppDispatch } from "../hooks/reduxHook";
 

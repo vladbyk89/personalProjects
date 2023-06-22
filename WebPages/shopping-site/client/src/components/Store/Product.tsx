@@ -1,8 +1,8 @@
 import axios from "axios";
-import { ProductType } from "../../context/ProductProvider";
+import { ProductType } from "../../app/productsSlice";
 import { ReactElement, useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { UserType } from "../../App";
+import { UserType } from "../../app/userSlice";
 import { CartStateType } from "../../app/cartSlice";
 import { useAppDispatch } from "../../hooks/reduxHook";
 import { addItems } from "../../app/cartSlice";

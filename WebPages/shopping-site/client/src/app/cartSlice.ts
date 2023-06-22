@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 
 export interface CartItemType {
@@ -18,8 +17,8 @@ export interface CartStateType {
 
 const initCartState: CartStateType = { cart: [], isActive: true, _id: "" };
 
-const postsSlice = createSlice({
-  name: "cartItems",
+const cartSlice = createSlice({
+  name: "cart",
   initialState: initCartState,
   reducers: {
     addItems(state, action) {
@@ -71,8 +70,8 @@ const postsSlice = createSlice({
 });
 
 export const { addItems, loadItems, submitCart, removeItem } =
-  postsSlice.actions;
+  cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
 
-export default postsSlice.reducer;
+export default cartSlice.reducer;

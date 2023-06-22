@@ -10,7 +10,7 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   return response.data.user;
 });
 
-interface UserType {
+export interface UserType {
   userName: string;
   email: string;
   password: string;
